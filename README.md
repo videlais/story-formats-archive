@@ -1,17 +1,27 @@
-# Archive of Twine 2 Story Formats
+# Archive of Twine Story Formats
 
-This is a historical archive of previous versions of story formats released with Twine 2. 
+This is an archive of story formats for Twine beginning with 2015 (Twine 1.4.2) through the present.
 
-It includes versions from Twine 2.0.4 (March 16, 2014) through Twine 2.4.0 (July 5, 2022).
+## Organization
 
-## Story Format Licenses
+Files are split between `twine1` and `twine2` directories with the version of the story format included in the folder name (e.g. `harlowe-3.3.0`).
 
-Each story format is published under a different license:
+For Twine 1 story formats, the version of Twine (e.g. `1.4.2`) is used unless explicitly mentioned by the build or author.
 
-| Name      | License      |
-|-----------|--------------|
-| Chapbook  | MIT          |
-| Harlowe   | Zlib         |
-| Paperthin | ZLib/Libpng  |
-| Snowman   | MIT          |
-| SugarCube | BSD-2-Clause |
+## Twine 2
+
+Each story format folder contains:
+
+- `format.js`: JSONP code. (See [Twine 2 Story Format output specification](https://github.com/iftechfoundation/twine-specs/blob/master/twine-2-storyformats-spec.md).)
+- `icon.svg`: Icon.
+- `LICENSE`: License text.
+
+## Twine 1
+
+Depending on the story format, there may be up to three files:
+
+- `header.html`: HTML, JavaScript, and CSS.
+- `LICENSE`: License text.
+- `code.js`: Additional JavaScript code.
+
+In cases where the `code.js` file is not included, the complete JavaScript of the story format can be assumed to be part of the `header.html` file.
