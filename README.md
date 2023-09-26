@@ -1,8 +1,10 @@
-# Archive of Twine Story Formats
+# Story Format Archive (SFA)
 
-This is a database of story formats for Twine beginning with 2015 (Twine 1.4.2) through the present (Twine 2.7.1).
+This is a JSON database of story formats for Twine beginning with 2015 (Twine 1.4.2) through the present (Twine 2.7.1).
 
-Each story format contains all necessary files and individual licenses.
+Each story format in the collection contains all necessary files and individual software licenses.
+
+Database URL: `https://videlais.github.io/story-formats-archive/index.json`
 
 ## Organization
 
