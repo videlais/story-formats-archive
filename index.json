@@ -3,6 +3,7 @@
         {
             "name": "jonah",
             "version": "1.4.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "code.js",
@@ -12,6 +13,7 @@
         {
             "name": "responsive",
             "version": "1.4.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "header.html"
@@ -20,6 +22,7 @@
         {
             "name": "sugarcane",
             "version": "1.4.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "code.js",
@@ -29,6 +32,7 @@
         {
             "name": "sugarcube",
             "version": "2.36.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "header.html"
@@ -38,7 +42,10 @@
     "twine2": [
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.0.0",
+            "proofing": false,
+            "description": "",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -47,7 +54,10 @@
         },
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.1.0",
+            "proofing": false,
+            "description": "",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -56,7 +66,10 @@
         },
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.2.0",
+            "proofing": false,
+            "description": "",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -65,7 +78,10 @@
         },
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.2.1",
+            "proofing": false,
+            "description": "",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -74,7 +90,10 @@
         },
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.2.2",
+            "proofing": false,
+            "description": "",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -83,7 +102,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.0.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -92,7 +113,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.1.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -101,7 +124,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.1.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -110,7 +135,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.2.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -119,7 +146,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.2.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -128,7 +157,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.2.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -137,7 +168,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.2.3",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -146,7 +179,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "1.2.4",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -155,7 +190,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "2.0.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -164,7 +201,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "2.0.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -173,7 +212,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "2.1.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -182,7 +223,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.0.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -191,7 +234,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.0.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -200,7 +245,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.1.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -209,7 +256,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.2.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -218,7 +267,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.2.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -227,7 +278,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.2.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -236,7 +289,9 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.2.3",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -245,7 +300,10 @@
         },
         {
             "name": "harlowe",
+            "author": "Leon Arnott",
             "version": "3.3.0",
+            "description": "The default story format for Twine 2, with numerous programming features and a rich passage editor. No HTML, JS or CSS experience required. Consult its documentation.",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -254,7 +312,10 @@
         },
         {
             "name": "paperthin",
+            "author": "Chris Klimas",
+            "description": "The default proofing format for Twine 2. Icon designed by Simon Child from the Noun Project.",
             "version": "1.0.0",
+            "proofing": true,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -263,7 +324,9 @@
         },
         {
             "name": "snowman",
+            "author": "Chris Klimas",
             "version": "1.0.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -272,7 +335,9 @@
         },
         {
             "name": "snowman",
+            "author": "Chris Klimas",
             "version": "1.0.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -281,7 +346,9 @@
         },
         {
             "name": "snowman",
+            "author": "Chris Klimas",
             "version": "1.1.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -290,7 +357,9 @@
         },
         {
             "name": "snowman",
+            "author": "Chris Klimas",
             "version": "1.2.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -299,7 +368,9 @@
         },
         {
             "name": "snowman",
+            "author": "Chris Klimas",
             "version": "1.3.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -308,7 +379,9 @@
         },
         {
             "name": "snowman",
+            "author": "Dan Cox",
             "version": "1.4.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -317,7 +390,9 @@
         },
         {
             "name": "snowman",
+            "author": "Dan Cox",
             "version": "2.0.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -326,7 +401,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "1.0.32",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -335,7 +412,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "1.0.34",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -344,7 +423,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "1.0.35",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -353,7 +434,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.12.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -362,7 +445,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.14.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -371,7 +456,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.18.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -380,7 +467,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.21.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -389,7 +478,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.28.2",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -398,7 +489,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.29.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -407,7 +500,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.30.0",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -416,7 +511,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.31.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -425,7 +522,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.34.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
@@ -434,7 +533,9 @@
         },
         {
             "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
             "version": "2.36.1",
+            "proofing": false,
             "files": [
                 "LICENSE",
                 "format.js",
