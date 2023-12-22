@@ -1,6 +1,6 @@
 # Story Format Archive (SFA)
 
-This is a JSON database of story formats for Twine beginning with 2015 (Twine 1.4.2).
+This is a collection of JSON files storing the files of story formats for Twine beginning with 2015 (Twine 1.4.2).
 
 Each story format in the collection contains all necessary files and individual software licenses.
 
