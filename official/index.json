@@ -105,6 +105,30 @@
             ]
         },
         {
+            "name": "chapbook",
+            "author": "Chris Klimas",
+            "version": "1.2.3",
+            "proofing": false,
+            "description": "",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "logo.svg"
+            ]
+        },
+        {
+            "name": "chapbook",
+            "author": "Chris Klimas",
+            "version": "2.2.0",
+            "proofing": false,
+            "description": "",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "logo.svg"
+            ]
+        },
+        {
             "name": "harlowe",
             "author": "Leon Arnott",
             "version": "1.0.1",
@@ -324,6 +348,18 @@
             "name": "harlowe",
             "author": "Leon Arnott",
             "version": "3.3.0",
+            "description": "The default story format for Twine 2, with numerous programming features and a rich passage editor. No HTML, JS or CSS experience required. Consult its documentation.",
+            "proofing": false,
+            "files": [
+                "LICENSE",
+                "format.js",
+                "icon.svg"
+            ]
+        },
+        {
+            "name": "harlowe",
+            "author": "Leon Arnott",
+            "version": "3.3.9",
             "description": "The default story format for Twine 2, with numerous programming features and a rich passage editor. No HTML, JS or CSS experience required. Consult its documentation.",
             "proofing": false,
             "files": [
@@ -576,6 +612,18 @@
             "name": "sugarcube",
             "author": "Thomas Michael Edwards",
             "version": "2.36.1",
+            "proofing": false,
+            "description": "",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "icon.svg"
+            ]
+        },
+        {
+            "name": "sugarcube",
+            "author": "Thomas Michael Edwards",
+            "version": "2.37.3",
             "proofing": false,
             "description": "",
             "files": [
