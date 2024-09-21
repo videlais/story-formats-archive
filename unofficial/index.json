@@ -9,8 +9,6 @@
 			"description": "Displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
 			"basedOn": "",
 			"files": [
-				"header.html",
-				"LICENSE"
 			]
 		},
         {
@@ -32,8 +30,6 @@
 			"description": "A horizontal variant of the Twine 1 stretchtext story format Jonah",
 			"basedOn": "Jonah",
 			"files": [
-				"header.html",
-				"LICENSE"
 			]
 		},
         {
@@ -89,12 +85,52 @@
 			]
 		},
 		{
+			"name": "Adventure Tome",
+			"author":"Sophie Houlden",
+			"repo": "https://sophiehoulden.com/twine/at/",
+			"proofing": false,
+			"description":"Displays twine stories as playable adventure gamebooks, complete with character sheet and full undo/redo.",
+			"basedOn": "",
+			"files": [
+			]
+		},
+		{
 			"name": "Botscripten",
 			"author": "Aibex, Inc",
 			"repo": "https://github.com/aibex/botscripten",
 			"proofing": false,
 			"description": "An interactive chat viewer",
 			"basedOn": "Trialogue",
+			"files": [
+			]
+		},
+		{
+			"name:": "Boundless",
+			"author": "Brandon Tom",
+			"repo": "https://github.com/magicink/boundless",
+			"proofing": false,
+			"description": "Boundless is a React-based story format for Twine ",
+			"basedOn": "",
+			"files": [
+			]
+		},
+		{
+			"name": "CopyPaste",
+			"author": "cocoknightcom",
+			"repo": "https://github.com/cocoknightcom/CopyPaste",
+			"proofing": true,
+			"description": "A Twine 2 Proofing Story Format that cuts it.",
+			"basedOn": "",
+			"files": [
+			]
+		},
+		{
+			"name": "Daelog",
+			"author": "Dan Cox",
+			"repo": "https://github.com/videlais/daelog",
+			"proofing": false,
+			"description": "Experimental Twine story format incorporating Tracery ",
+			"basedOn": "",
 			"files": [
 			]
 		},
@@ -172,7 +208,7 @@
 			"author": "Furkle Industries",
 			"repo": "",
 			"proofing": false,
-			"extendedDescription": "a rumored story format",
+			"description": "a rumored story format",
 			"basedOn": "",
 			"files": [
 			]
@@ -198,12 +234,31 @@
 			]
 		},
 		{
+			"name": "JTwine-to-JSON",
+			"author": "Jason Francis",
+			"repo": "https://github.com/BL-MSCH-C220/JTwine-to-JSON",
+			"proofing": true,
+			"description": "A story format for converting a Twine 2 story to JSON with special support for Harlowe 3.x. Specifically created for MSCH-C220 at Indiana University—Bloomington ",
+			"basedOn": "Twine-to-JSON",
+			"files": [
+			]
+		},
+		{
 			"name": "Mirapol",
 			"author": "",
-			"base": "",
 			"repo": "https://github.com/FuSoftware/Mirapol/",
 			"proofing": false,
 			"description": "a rumored story format",
+			"basedOn": "",
+			"files": [
+			]
+		},
+		{
+			"name": "Moontale",
+			"author": "Hamish Milne",
+			"repo": "https://github.com/hamish-milne/moontale",
+			"proofing": true,
+			"description": "A Twine 2 story format that outputs Lua",
 			"basedOn": "",
 			"files": [
 			]
@@ -224,6 +279,16 @@
 			"repo": "https://github.com/ChapelR/poof",
 			"proofing": true,
 			"description": "A proofing format.",
+			"basedOn": "",
+			"files": [
+			]
+		},
+		{
+			"name": "Poste-Monstre-Trésor",
+			"author": "Diane Landais",
+			"repo": "https://github.com/ker0chan/poste-monstre-tresor-story-format",
+			"proofing": true,
+			"description": "A custom Twine 2 format to render stories as a printable, linear blocks of text.",
 			"basedOn": "",
 			"files": [
 			]
@@ -273,7 +338,7 @@
 			"author": "Philo van Kemenade",
 			"repo": "https://github.com/phivk/trialogue",
 			"proofing": false,
-			"extendedDescription": "a chat story format",
+			"description": "a chat story format",
 			"basedOn": "Paloma",
 			"files": [
 			]
@@ -295,6 +360,26 @@
 			"proofing": false,
 			"description": "Allows one to use Twine to create Visual Novels for the Monogatari engine.",
 			"basedOn": "Twison",
+			"files": [
+			]
+		},
+		{
+			"name": "TwineSpace",
+			"author": "Dan Cox, PS Berge, Jack Murray, Anastasia Salter",
+			"repo": "https://github.com/videlais/twine-space",
+			"proofing": false,
+			"description": "Twine 2 story format supporting locative and mixed reality projects",
+			"basedOn": "Snowman",
+			"files": [
+			]
+		},
+		{
+			"name": "twine2-story-format",
+			"author": "Exercism",
+			"repo": "https://github.com/exercism/twine2-story-format",
+			"proofing": false,
+			"description": "No description or website provided.",
+			"basedOn": "Snowman",
 			"files": [
 			]
 		},
