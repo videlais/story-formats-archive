@@ -34,11 +34,11 @@ URL: `/official/index.json`
 }
 ```
 
-Directories within the major Twine versions include the minor version per story format (e.g. `harlowe-3.3.0`). For Twine 1 story formats, the version of Twine (e.g. `1.4.2`) is used unless explicitly mentioned by the build or author.
+Directories within the major Twine versions include story format and minor version per story format (e.g. `harlowe/3.3.0`). For Twine 1 story formats, the version of Twine (e.g. `1.4.2`) is used unless explicitly mentioned by the build or author.
 
 ### Directory Example
 
-URL: `/official/twine2/chapbook-1.0.0/`
+URL: `/official/twine2/chapbook/1.0.0/`
 
 ### Story Format Properties
 
@@ -69,7 +69,10 @@ Each story format has the following properties:
     "twine2": [
         {
             "name": "chapbook",
+            "author": "Chris Klimas",
             "version": "1.0.0",
+            "proofing": false,
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices.",
             "files": [
                 "LICENSE",
                 "format.js",

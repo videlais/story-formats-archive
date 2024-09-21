@@ -49,7 +49,7 @@
             "author": "Chris Klimas",
             "version": "1.0.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -61,7 +61,7 @@
             "author": "Chris Klimas",
             "version": "1.1.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices. Visit <a href=\"https://klembot.github.io/chapbook/guide/\">guide</a> for more information.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -73,7 +73,7 @@
             "author": "Chris Klimas",
             "version": "1.2.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices. Visit the <a href=\"https://klembot.github.io/chapbook/guide/\">guide</a> for more information.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -85,7 +85,7 @@
             "author": "Chris Klimas",
             "version": "1.2.1",
             "proofing": false,
-            "description": "",
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices. Visit the <a href=\"https://klembot.github.io/chapbook/guide/\">guide</a> for more information.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -97,7 +97,7 @@
             "author": "Chris Klimas",
             "version": "1.2.2",
             "proofing": false,
-            "description": "",
+            "description": "1.2.2",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -109,7 +109,7 @@
             "author": "Chris Klimas",
             "version": "1.2.3",
             "proofing": false,
-            "description": "",
+            "description": "1.2.3",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -121,7 +121,7 @@
             "author": "Chris Klimas",
             "version": "2.2.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices. Visit the <a href=\"https://klembot.github.io/chapbook/guide/\">guide</a> for more information.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -133,7 +133,7 @@
             "author": "Leon Arnott",
             "version": "1.0.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -145,7 +145,7 @@
             "author": "Leon Arnott",
             "version": "1.1.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -157,7 +157,7 @@
             "author": "Leon Arnott",
             "version": "1.1.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -169,7 +169,7 @@
             "author": "Leon Arnott",
             "version": "1.2.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -181,7 +181,7 @@
             "author": "Leon Arnott",
             "version": "1.2.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -193,7 +193,7 @@
             "author": "Leon Arnott",
             "version": "1.2.2",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -205,7 +205,7 @@
             "author": "Leon Arnott",
             "version": "1.2.3",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -217,7 +217,7 @@
             "author": "Leon Arnott",
             "version": "1.2.4",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -229,7 +229,7 @@
             "author": "Leon Arnott",
             "version": "2.0.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -241,7 +241,7 @@
             "author": "Leon Arnott",
             "version": "2.0.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -253,7 +253,7 @@
             "author": "Leon Arnott",
             "version": "2.1.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -265,7 +265,7 @@
             "author": "Leon Arnott",
             "version": "3.0.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -277,7 +277,7 @@
             "author": "Leon Arnott",
             "version": "3.0.2",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -289,7 +289,7 @@
             "author": "Leon Arnott",
             "version": "3.1.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -301,7 +301,7 @@
             "author": "Leon Arnott",
             "version": "3.2.0",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. See its <a href='http://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -313,7 +313,7 @@
             "author": "Leon Arnott",
             "version": "3.2.1",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. Now with an editor toolbar! Consult its <a href='https://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -325,7 +325,7 @@
             "author": "Leon Arnott",
             "version": "3.2.2",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. Now with an editor toolbar! Consult its <a href='https://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -337,7 +337,7 @@
             "author": "Leon Arnott",
             "version": "3.2.3",
             "proofing": false,
-            "description": "",
+            "description": "The default story format for Twine 2. Now with an editor toolbar! Consult its <a href='https://twine2.neocities.org/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -385,7 +385,7 @@
             "author": "Chris Klimas",
             "version": "1.0.0",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -397,7 +397,7 @@
             "author": "Chris Klimas",
             "version": "1.0.2",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -409,7 +409,7 @@
             "author": "Chris Klimas",
             "version": "1.1.0",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -421,7 +421,7 @@
             "author": "Chris Klimas",
             "version": "1.2.0",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -433,7 +433,7 @@
             "author": "Chris Klimas",
             "version": "1.3.0",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -445,7 +445,7 @@
             "author": "Dan Cox",
             "version": "1.4.0",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/1/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -457,7 +457,7 @@
             "author": "Dan Cox",
             "version": "2.0.2",
             "proofing": false,
-            "description": "",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/1/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -469,7 +469,7 @@
             "author": "Thomas Michael Edwards",
             "version": "1.0.32",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -481,7 +481,7 @@
             "author": "Thomas Michael Edwards",
             "version": "1.0.34",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -493,7 +493,7 @@
             "author": "Thomas Michael Edwards",
             "version": "1.0.35",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -505,7 +505,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.12.1",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -517,7 +517,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.14.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -529,7 +529,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.18.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -541,7 +541,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.21.0",
             "proofing": false,
-            "description": "",
+            "description": "A Twine 2 port of the Twine 1 story format by the same name.  See its <a href=\"http://www.motoslave.net/sugarcube/1/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -553,7 +553,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.28.2",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -565,7 +565,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.29.0",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -577,7 +577,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.30.0",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -589,7 +589,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.31.1",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -601,7 +601,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.34.1",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -613,7 +613,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.36.1",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -625,7 +625,7 @@
             "author": "Thomas Michael Edwards",
             "version": "2.37.3",
             "proofing": false,
-            "description": "",
+            "description": "A full featured, highly customizable story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",

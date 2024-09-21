@@ -28,24 +28,30 @@ function updateResults(results) {
     results.forEach(result => {
         let resultDiv = document.createElement('table');
 
-        let link = `https://videlais.github.io/story-formats-archive/${type}/twine${twineVersion}/${result.name}-${result.version}/`;
+        let link = `https://videlais.github.io/story-formats-archive/${type}/twine${twineVersion}/${result.name}/${result.version}/`;
+
+        let files = result.files.map(file => {
+            return `<li><a href="${link}${file}" target="_blank">${file}</a></li>`;
+        });
 
          resultDiv.innerHTML = `
             <table>
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
+                        <th scope="col">Version</th>
                         <th scope="col">Author</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Folder Link</th>
+                        <th scope="col">Files</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="row">${result.name}</td>
-                        <td>${result.author}</td>
-                        <td>${result.description}</td>
-                        <td><a href="${link}" target="_blank">${link}</a></td>
+                        <td>${result.version}</td>
+                        <td>${result.author !== undefined ? result.author : "(No value."}</td>
+                        <td>${result.description !== "" ? result.description : "(No value."}</td>
+                        <td><ul>${files.join('')}</ul></td>
                     </tr>
                 </tbody>
             </table>`;
