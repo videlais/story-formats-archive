@@ -1,8 +1,12 @@
 # Story Format Archive (SFA)
 
-This is a collection of JSON files storing the files of story formats for Twine beginning with 2015 (Twine 1.4.2).
+This is a flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2).
 
-Each story format in the collection contains all necessary files and individual software licenses.
+Each official story format in the collection contains all necessary files and individual software licenses. For unofficial story formats, a repository or website is listed.
+
+## SFA: Search
+
+[A simple search](https://videlais.github.io/story-formats-archive/) is provided to help verify entries and general data in the database.
 
 ## Database Base URLs
 
@@ -42,7 +46,9 @@ URL: `/official/twine2/chapbook/1.0.0/`
 
 ### Story Format Properties
 
-Each story format has the following properties:
+### Official
+
+Each official story format has the following properties:
 
 - `name`: (string) Name.
 - `author`: (string) Author(s) of the story format.
@@ -77,6 +83,36 @@ Each story format has the following properties:
                 "LICENSE",
                 "format.js",
                 "logo.svg"
+            ]
+        }
+    ]
+}
+```
+
+#### Unofficial
+
+Each unofficial story format has the following properties:
+
+- `name`: (string) Name.
+- `author`: (string) Author(s) of the story format.
+- `repo`: (string) GitHub repository or website.
+- `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
+- `description`: (string) Summary of story format.
+- `basedOn`: (string) Parent story format it is based on, if any.
+- `files`: Files of the story format.
+
+```json
+{
+    "twine1": [
+        {
+            "name": "DotGraph",
+            "author": "M. C. DeMarco",
+            "version": "2.2.0",
+            "repo": "https://github.com/mcdemarco/dotgraph",
+            "proofing": true,
+            "description": "Displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
+            "basedOn": "",
+            "files": [
             ]
         }
     ]
