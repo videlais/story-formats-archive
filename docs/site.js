@@ -34,23 +34,28 @@ function updateResults(results) {
             return `<li><a href="${link}${file}" target="_blank">${file}</a></li>`;
         });
 
+        // Twine 1 has repo and basedOn and doesn't have version.
          resultDiv.innerHTML = `
             <table>
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Version</th>
+                        ${result.version !== undefined ? '<th scope="col">Version</th>' : ''}
                         <th scope="col">Author</th>
                         <th scope="col">Description</th>
+                        ${result.basedOn !== undefined ? '<th scope="col">Based On</th>' : ''}
+                        ${result.repo !== undefined ? '<th scope="col">Repository</th>' : ''}
                         <th scope="col">Files</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td scope="row">${result.name}</td>
-                        <td>${result.version}</td>
-                        <td>${result.author !== undefined ? result.author : "(No value."}</td>
-                        <td>${result.description !== "" ? result.description : "(No value."}</td>
+                        ${result.version !== undefined ? `<td scope="row">${result.version}</td>` : ''}
+                        <td>${result.author !== undefined ? result.author : "(No value.)"}</td>
+                        <td>${result.description !== "" ? result.description : "(No value.)"}</td>
+                        ${result.basedOn !== undefined ? `<td scope="row">${result.basedOn}</td>` : ''}
+                        ${result.repo !== undefined ? `<td scope="row"><a href="${result.repo}" target="_blank">${result.repo}</a></td>` : ''}
                         <td><ul>${files.join('')}</ul></td>
                     </tr>
                 </tbody>

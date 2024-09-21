@@ -6,7 +6,7 @@
 			"version": "2.2.0",
 			"repo": "https://github.com/mcdemarco/dotgraph",
 			"proofing": true,
-			"description": "displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
+			"description": "Displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
 			"basedOn": "",
 			"files": [
 				"header.html",
@@ -18,8 +18,10 @@
 			"author": "M. C. DeMarco",
 			"repo": "https://github.com/mcdemarco/dotscap",
 			"proofing": true,
-			"description": "a DotGraph-like format that converts your story into a Scapple mind-map graph and includes a subset of DotGraph's rendering options",
-			"basedOn": "DotGraph"
+			"description": "A DotGraph-like format that converts your story into a Scapple mind-map graph and includes a subset of DotGraph's rendering options",
+			"basedOn": "DotGraph",
+			"files": [
+			]
 		},
         {
 			"name": "Journal",
@@ -27,7 +29,7 @@
 			"version": "1.0.0",
 			"repo": "https://www.glorioustrainwrecks.com/node/4997",
 			"proofing": false,
-			"description": "a horizontal variant of the Twine 1 stretchtext story format Jonah",
+			"description": "A horizontal variant of the Twine 1 stretchtext story format Jonah",
 			"basedOn": "Jonah",
 			"files": [
 				"header.html",
@@ -40,7 +42,9 @@
 			"repo": "https://github.com/mcdemarco/paloma/",
 			"proofing": false,
 			"description": "a Jonah-style stretchtext story format for Twine 1 and 2",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
         {
 			"name": "PrePub",
@@ -48,7 +52,9 @@
 			"repo": "https://github.com/mcdemarco/prepub/src/default/",
 			"proofing": true,
 			"description": "converts a Twine 1 or 2 story into a MultiMarkdown format used for generating eBooks",
-			"basedOn": "enscree"
+			"basedOn": "enscree",
+			"files": [
+			]
 		},
         {
 			"name": "Sisal",
@@ -56,7 +62,9 @@
 			"repo": "https://github.com/HarmlessTrouble/codename-Sisal/",
 			"proofing": false,
 			"description": "a rumored story format",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
         {
 			"name": "Wasteland",
@@ -64,7 +72,9 @@
 			"repo": "https://bitbucket.org/skullface/wasteland/",
 			"proofing": false,
 			"description": "a semantic Twine [1] Story Format focused on readability",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		}
     ],
     "twine2": [
@@ -74,7 +84,9 @@
 			"repo": "https://github.com/longwelwind/adventures/",
 			"proofing": false,
 			"description": "A story format to create RPG stories with health, loot, gold and more. See its <a href=\"https://longwelwind.github.io/adventures/\">documentation</a>",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "Botscripten",
@@ -82,7 +94,9 @@
 			"repo": "https://github.com/aibex/botscripten",
 			"proofing": false,
 			"description": "An interactive chat viewer",
-			"basedOn": "Trialogue"
+			"basedOn": "Trialogue",
+			"files": [
+			]
 		},
 		{
 			"name": "DotGraph",
@@ -90,7 +104,9 @@
 			"repo": "https://github.com/mcdemarco/dotgraph",
 			"proofing": true,
 			"description": "displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "DotScap",
@@ -98,7 +114,8 @@
 			"repo": "https://github.com/mcdemarco/dotscap",
 			"proofing": true,
 			"description": "a DotGraph-like format that converts your story into a Scapple mind-map graph and includes a subset of DotGraph's rendering options",
-			"basedOn": "DotGraph"
+			"files": [
+			]
 		},
 		{
 			"name": "Dramaturge",
@@ -106,7 +123,9 @@
 			"repo": "",
 			"proofing": false,
 			"description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript.",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "enscree",
@@ -114,7 +133,9 @@
 			"repo": "http://mcdemarco.net/tools/scree/enscree/",
 			"proofing": true,
 			"description": "exports a Twine 2 story into a MultiMarkdown format used for importing into Scrivener or Scree",
-			"basedOn": "Entweedle"
+			"basedOn": "Entweedle",
+			"files": [
+			]
 		},
 		{
 			"name": "entwee",
@@ -122,7 +143,9 @@
 			"repo": "http://mcdemarco.net/tools/entwee/",
 			"proofing": true,
 			"description": "exports a Twine 2 story into the twee plain text format and automatically downloads it as text",
-			"basedOn": "enscree"
+			"basedOn": "enscree",
+			"files": [
+			]
 		},
 		{
 			"name": "Entweedle",
@@ -130,7 +153,9 @@
 			"repo": "http://www.maximumverbosity.net/twine/Entweedle/",
 			"proofing": true,
 			"description": "the original twee-ifying story format for Twine 2",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Foil",
@@ -138,7 +163,9 @@
 			"repo": "https://github.com/kgroat/twine-foil",
 			"proofing": false,
 			"description": "similar to Snowman, and undocumented at the moment",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "Gately",
@@ -146,7 +173,9 @@
 			"repo": "",
 			"proofing": false,
 			"extendedDescription": "a rumored story format",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Illume",
@@ -154,7 +183,9 @@
 			"repo": "http://www.maximumverbosity.net/twine/Illume/",
 			"proofing": true,
 			"description": "an \"experiment in producing a proofing format for Twine 2 that offers more functionality than a simple text dump\"",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Jinx",
@@ -162,7 +193,9 @@
 			"repo": "https://github.com/derektb/jinx",
 			"proofing": false,
 			"description": "A Twine 2 story format for building and running interactive comics in Twine",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Mirapol",
@@ -171,7 +204,9 @@
 			"repo": "https://github.com/FuSoftware/Mirapol/",
 			"proofing": false,
 			"description": "a rumored story format",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "OldFashioned",
@@ -179,7 +214,9 @@
 			"repo": "https://github.com/blairmacintyre/oldfashioned",
 			"proofing": false,
 			"description": "An AR extension to the Twine 2 port of the Twine 1 SugarCube story format.  See its <a href=\"http://www.motoslave.net/sugarcube/2/#documentation\" target=\"_blank\">documentation</a>.",
-			"basedOn": "SugarCube"
+			"basedOn": "SugarCube",
+			"files": [
+			]
 		},
 		{
 			"name": "Poof",
@@ -187,7 +224,9 @@
 			"repo": "https://github.com/ChapelR/poof",
 			"proofing": true,
 			"description": "A proofing format.",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Protagonist",
@@ -195,7 +234,9 @@
 			"repo": "https://github.com/massivedanger/protagonist",
 			"proofing": false,
 			"description": "A Twine story format with power!",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "reach",
@@ -203,7 +244,9 @@
 			"repo": "https://github.com/UofTMADLab/reach-dist",
 			"proofing": false,
 			"description": "reach is a twine story format for authoring immersive XR narratives, environments and prototypes.",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "Screentastic",
@@ -211,7 +254,9 @@
 			"repo": "https://github.com/seansimonanimation/Screentastic",
 			"proofing": false,
 			"description": "A Twine 2 Story Format for creating Interactive Screenplays.",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "Snowcat",
@@ -219,7 +264,9 @@
 			"repo": "https://bitbucket.org/crzybvr69/snowcat/",
 			"proofing": false,
 			"description": "creating a merger of Snowman and Harlowe",
-			"basedOn": "Snowman"
+			"basedOn": "Snowman",
+			"files": [
+			]
 		},
 		{
 			"name": "Trialogue",
@@ -227,7 +274,9 @@
 			"repo": "https://github.com/phivk/trialogue",
 			"proofing": false,
 			"extendedDescription": "a chat story format",
-			"basedOn": "Paloma"
+			"basedOn": "Paloma",
+			"files": [
+			]
 		},
 		{
 			"name": "TwineJson",
@@ -235,7 +284,9 @@
 			"repo": "https://github.com/cauli/TwineJson",
 			"proofing": true,
 			"description": "exports a story to JSON, possibly in hierarchical format",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "twine-monogatari",
@@ -243,7 +294,9 @@
 			"repo": "https://github.com/haroldo-ok/twine-monogatari/",
 			"proofing": false,
 			"description": "Allows one to use Twine to create Visual Novels for the Monogatari engine.",
-			"basedOn": "Twison"
+			"basedOn": "Twison",
+			"files": [
+			]
 		},
 		{
 			"name": "TwingeX",
@@ -251,7 +304,9 @@
 			"repo": "https://github.com/benwinding/twingex",
 			"proofing": true,
 			"description": "The extremely simple 'twingex' format.",
-			"basedOn": "Entweedle"
+			"basedOn": "Entweedle",
+			"files": [
+			]
 		},
 		{
 			"name": "Twison",
@@ -259,7 +314,9 @@
 			"repo": "https://github.com/lazerwalker/twison",
 			"proofing": true,
 			"description": "Export your Twine 2 story as a JSON document",
-			"basedOn": "Entweedle"
+			"basedOn": "Entweedle",
+			"files": [
+			]
 		},
 		{
 			"name": "Twize",
@@ -267,7 +324,9 @@
 			"repo": "https://bitbucket.org/derektb/twize/",
 			"proofing": false,
 			"description": "An opinionated Twine storyformat designed for making Wizard Town-style interactive comics",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		},
 		{
 			"name": "WritingFantasy",
@@ -275,7 +334,9 @@
 			"repo": "https://sophiehoulden.com/twine/",
 			"proofing": false,
 			"description": "Outputs a twine story in gamebook format, listing all passages in a shuffled order, and changing links to a '(turn to 123)' instruction",
-			"basedOn": ""
+			"basedOn": "",
+			"files": [
+			]
 		}
     ]
 }
