@@ -1,5 +1,5 @@
 async function fetchDataAsync(folder) {
-    const myRequest = new Request(`../${folder}/index.json`);
+    const myRequest = new Request(`./${folder}.json`);
     const response = await fetch(myRequest);
     const data = await response.json();
     return data;
