@@ -450,6 +450,16 @@
 			"basedOn": "",
 			"files": [
 			]
+		},
+		{
+			"name": "YarnTwiner",
+			"author": "Khan-ali Ibrahim",
+			"repo": "https://github.com/KXI-System/YarnTwiner",
+			"proofing": false,
+			"description": "The Twine story format that lets you write and export to Yarn!",
+			"basedOn": "",
+			"files": [
+			]
 		}
     ]
 }
