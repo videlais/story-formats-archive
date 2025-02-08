@@ -185,7 +185,7 @@
 			"name": "Entweedle",
 			"author": "Michael McCollum",
 			"repo": "http://www.maximumverbosity.net/twine/Entweedle/",
-			"proofing": true,
+			"proofing": false,
 			"description": "the original twee-ifying story format for Twine 2",
 			"basedOn": "",
 			"files": [
@@ -438,6 +438,16 @@
 			"proofing": false,
 			"description": "Displays twine stories as playable adventure gamebooks, complete with character sheet and full undo/redo.",
 			"basedOn": "WritingFantasy",
+			"files": [
+			]
+		},
+		{
+			"name": "Twine to JSON",
+			"author": "Jonathan Schoonhoven",
+			"repo": "https://github.com/jtschoonhoven/twine-to-json",
+			"proofing": false,
+			"description": "Convert Twine story to JSON",
+			"basedOn": "",
 			"files": [
 			]
 		}
