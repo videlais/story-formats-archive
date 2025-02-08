@@ -420,6 +420,16 @@
 			"basedOn": "",
 			"files": [
 			]
+		},
+		{
+			"name": "Twiorg",
+			"author": "Danish Khatri",
+			"repo": "https://github.com/danishec/twiorg",
+			"proofing": false,
+			"description": "Export your Twine 2 story as an Org Mode Org file",
+			"basedOn": "Twison",
+			"files": [
+			]
 		}
     ]
 }
