@@ -430,6 +430,16 @@
 			"basedOn": "Twison",
 			"files": [
 			]
+		},
+		{
+			"name": "AdventureTome",
+			"author": "Sophie Houlden",
+			"repo": "https://codeberg.org/MxSophie/AdventureTome",
+			"proofing": false,
+			"description": "Displays twine stories as playable adventure gamebooks, complete with character sheet and full undo/redo.",
+			"basedOn": "WritingFantasy",
+			"files": [
+			]
 		}
     ]
 }
