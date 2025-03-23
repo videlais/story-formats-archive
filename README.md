@@ -1,8 +1,11 @@
 # Story Format Archive (SFA)
 
-This is a flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2).
+This project contains two parts:
 
-Each official story format in the collection contains all necessary files and individual software licenses. For unofficial story formats, a repository or website is listed.
+* SFA-Get, a Node.js tool for downloading story formats found in the `main` branch.
+* Flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2) found in the `docs` branch.
+
+SFA-Get can be invoked using `npx sfa-get`, which will provide two options "latest" and "specific". Choosing "latest" will download the database, figure out the latest versions, and then download the necessary files into `./story-formats/{name}/{version}` where the 'name' folder is based on the story format packed with Twine 2 and 'version' is their latest version.
 
 ## SFA: Search
 
@@ -10,8 +13,8 @@ Each official story format in the collection contains all necessary files and in
 
 ## Database Base URLs
 
-- Official: `https://videlais.github.io/story-formats-archive/official/index.json`
-- Unofficial: `https://videlais.github.io/story-formats-archive/unofficial/index.json`
+* Official: `https://videlais.github.io/story-formats-archive/official/index.json`
+* Unofficial: `https://videlais.github.io/story-formats-archive/unofficial/index.json`
 
 ## Organization
 
@@ -50,12 +53,12 @@ URL: `/official/twine2/chapbook/1.0.0/`
 
 Each official story format has the following properties:
 
-- `name`: (string) Name.
-- `author`: (string) Author(s) of the story format.
-- `version`: (string) Semantic version.
-- `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
-- `description`: (string) Summary of story format.
-- `files`: Files of the story format.
+* `name`: (string) Name.
+* `author`: (string) Author(s) of the story format.
+* `version`: (string) Semantic version.
+* `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
+* `description`: (string) Summary of story format.
+* `files`: Files of the story format.
 
 **Example:**
 
@@ -93,13 +96,13 @@ Each official story format has the following properties:
 
 Each unofficial story format has the following properties:
 
-- `name`: (string) Name.
-- `author`: (string) Author(s) of the story format.
-- `repo`: (string) GitHub repository or website.
-- `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
-- `description`: (string) Summary of story format.
-- `basedOn`: (string) Parent story format it is based on, if any.
-- `files`: Files of the story format.
+* `name`: (string) Name.
+* `author`: (string) Author(s) of the story format.
+* `repo`: (string) GitHub repository or website.
+* `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
+* `description`: (string) Summary of story format.
+* `basedOn`: (string) Parent story format it is based on, if any.
+* `files`: Files of the story format.
 
 ```json
 {
@@ -123,16 +126,16 @@ Each unofficial story format has the following properties:
 
 Each story format folder contains:
 
-- `format.js`: JSONP code. (See [Twine 2 Story Format output specification](https://github.com/iftechfoundation/twine-specs/blob/master/twine-2-storyformats-spec.md).)
-- `icon.svg`: Icon.
-- `LICENSE`: License text.
+* `format.js`: JSONP code. (See [Twine 2 Story Format output specification](https://github.com/iftechfoundation/twine-specs/blob/master/twine-2-storyformats-spec.md).)
+* `icon.svg`: Icon.
+* `LICENSE`: License text.
 
 ## Twine 1
 
 Depending on the story format, there may be up to three files:
 
-- `header.html`: HTML, JavaScript, and CSS.
-- `LICENSE`: License text.
-- `code.js`: Additional JavaScript code.
+* `header.html`: HTML, JavaScript, and CSS.
+* `LICENSE`: License text.
+* `code.js`: Additional JavaScript code.
 
 In cases where the `code.js` file is not included, the complete JavaScript of the story format can be assumed to be part of the `header.html` file.
