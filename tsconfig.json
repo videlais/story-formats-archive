@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "module": "Node18",
+      "declaration": true,
+      "moduleResolution": "node16",
+      "outDir": "./built",
+      "allowJs": true,
+      "target": "es2022",
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": true,
+      "strict": true,
+      "esModuleInterop": true
+    },
+    "include": ["./src/**/*"]
+}

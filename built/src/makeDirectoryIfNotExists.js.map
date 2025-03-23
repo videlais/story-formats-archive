@@ -1,0 +1,1 @@
+{"version":3,"file":"makeDirectoryIfNotExists.js","sourceRoot":"","sources":["../../src/makeDirectoryIfNotExists.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,SAAS,EAAC,MAAM,SAAS,CAAC;AAE/C;;;GAGG;AACH,MAAM,UAAU,wBAAwB,CAAC,GAAW;IAChD,4BAA4B;IAC5B,IAAI,CAAC,UAAU,CAAC,GAAG,CAAC,EAAC,CAAC;QAClB,wBAAwB;QACxB,SAAS,CAAC,GAAG,CAAC,CAAC;IACnB,CAAC;AACL,CAAC"}
