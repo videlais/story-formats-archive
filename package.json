@@ -3,7 +3,9 @@
   "version": "0.5.0",
   "description": "SFA-Get retrieves story formats from the Story Format Archive",
   "main": "index.ts",
-  "bin": "./built/src/index.js",
+  "bin": {
+    "sfa-get": "built/src/index.js"
+  },
   "scripts": {
     "lint": "npx eslint ./src/*.ts",
     "build": "tsc",
