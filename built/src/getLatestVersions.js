@@ -8,9 +8,9 @@ const base_URL = paths.base_URL;
  * Get the latest versions of each story format.
  * @param filteredDB:FilteredDatabase
  */
-export async function getLatestVersions(filteredDB) {
+export async function getLatestVersions(filteredDB, formats) {
     // Get the latest version of each story format.
-    const latestVersions = Object.keys(filteredDB).reduce((acc, key) => {
+    let latestVersions = Object.keys(filteredDB).reduce((acc, key) => {
         // Get the versions for the specific story format.
         const versions = filteredDB[key];
         // Get the latest version.
@@ -25,6 +25,13 @@ export async function getLatestVersions(filteredDB) {
     }, {});
     const dir = './story-formats';
     makeDirectoryIfNotExists(dir);
+    // Filter latestVersions based on the formats array.
+    latestVersions = Object.keys(latestVersions).reduce((acc, key) => {
+        if (formats.includes(key)) {
+            acc[key] = latestVersions[key];
+        }
+        return acc;
+    }, {});
     // For each key, create a directory with the name of the story format.
     for (const key in latestVersions) {
         const dirName = `${dir}/${key}`;

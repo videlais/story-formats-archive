@@ -1,6 +1,6 @@
 {
   "name": "sfa-get",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "SFA-Get retrieves story formats from the Story Format Archive",
   "main": "index.ts",
   "bin": {

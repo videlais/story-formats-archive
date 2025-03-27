@@ -60,6 +60,31 @@ Object.keys(twine2ByName).forEach((storyFormatName:string) => {
 // Show a message if the user is using the CLI.
 console.log('✅ Database fetched.');
 
+// Check if any CLI arguments were passed.
+if (process.argv.length > 2) {
+    // Get the story format name from the CLI arguments.
+    const storyFormatName = process.argv[2];
+    // Get the version from the CLI arguments.
+    const version = process.argv[3];
+    // Check if the story format name exists in the filtered database.
+    if (filteredDB[storyFormatName]) {
+        // Is version "latest"?
+        if (version === 'latest') {
+            // Get the latest version of the story format.
+            await getLatestVersions(filteredDB, [storyFormatName]);
+        }
+        else {
+            // Get the specific version of the story format.
+            await getSpecificVersion(filteredDB, storyFormatName, version);
+        }
+    } else {
+        // Show an error message if the story format name doesn't exist.
+        console.error('❌ Story format not found.');
+    }
+    // Exit the process.
+    process.exit();
+}
+
 // Ask the user if they want to download the latest versions of all story formats or a specific version.
 const answer = await select({
     message: 'Select installation',
@@ -79,7 +104,7 @@ const answer = await select({
 
 if (answer === 'latest') {
     // Get the latest versions of each story format.
-    await getLatestVersions(filteredDB);
+    await getLatestVersions(filteredDB, Object.keys(filteredDB));
 } else if (answer === 'specific') {
     // Ask the user for the story format name.
     const answer = await input({ message: 'Enter story format name:' });
