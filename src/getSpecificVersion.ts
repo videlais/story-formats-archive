@@ -1,6 +1,6 @@
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists.js';
-import { FilteredDatabase } from '../types/FilteredDatabase.js';
-import { ServerResponse } from '../types/ServerResponse.js';
+import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists';
+import { FilteredDatabase } from '../types/FilteredDatabase';
+import { ServerResponse } from '../types/ServerResponse';
 import { writeFileSync } from 'fs';
 import axios from 'axios';
 import { paths } from "./paths.js";

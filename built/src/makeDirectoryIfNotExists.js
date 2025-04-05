@@ -10,4 +10,3 @@ export function makeDirectoryIfNotExists(dir) {
         mkdirSync(dir);
     }
 }
-//# sourceMappingURL=makeDirectoryIfNotExists.js.map

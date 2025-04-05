@@ -1,7 +1,7 @@
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists.js';
+import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists';
 import axios from 'axios';
 import { writeFileSync } from 'fs';
-import { paths } from "./paths.js";
+import { paths } from "./paths";
 // Define the base URL.
 const base_URL = paths.base_URL;
 /**
@@ -61,4 +61,3 @@ export async function getLatestVersions(filteredDB, formats) {
         }
     }
 }
-//# sourceMappingURL=getLatestVersions.js.map

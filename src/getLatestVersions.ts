@@ -1,10 +1,10 @@
-import { FilteredDatabase } from '../types/FilteredDatabase.js';
-import { ServerResponse } from '../types/ServerResponse.js';
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists.js';
-import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
+import { FilteredDatabase } from '../types/FilteredDatabase';
+import { ServerResponse } from '../types/ServerResponse';
+import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists';
+import { StoryFormatEntry } from '../types/StoryFormatEntry';
 import axios from 'axios';
 import { writeFileSync } from 'fs';
-import { paths } from "./paths.js";
+import { paths } from "./paths";
 
 // Define the base URL.
 const base_URL = paths.base_URL;

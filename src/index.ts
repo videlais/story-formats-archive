@@ -1,12 +1,12 @@
 #! /usr/bin/env node
 
-import { OfficialDatabase } from '../types/OfficialDatabase.js';
-import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
-import { FilteredDatabase } from '../types/FilteredDatabase.js';
-import { getJSONDatabase } from './getJSONDatabase.js';
-import { getSpecificVersion } from './getSpecificVersion.js';
-import { getLatestVersions } from './getLatestVersions.js';
-import { paths } from "./paths.js";
+import { OfficialDatabase } from '../types/OfficialDatabase';
+import { StoryFormatEntry } from '../types/StoryFormatEntry';
+import { FilteredDatabase } from '../types/FilteredDatabase';
+import { getJSONDatabase } from './getJSONDatabase';
+import { getSpecificVersion } from './getSpecificVersion';
+import { getLatestVersions } from './getLatestVersions';
+import { paths } from "./paths";
 import { select, input } from '@inquirer/prompts';
 import { AxiosResponse } from 'axios';
 

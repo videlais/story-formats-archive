@@ -88,4 +88,3 @@ else if (answer === 'specific') {
     // Get the specific version of the story format.
     await getSpecificVersion(filteredDB, answer, version);
 }
-//# sourceMappingURL=index.js.map

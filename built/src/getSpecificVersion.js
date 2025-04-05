@@ -54,4 +54,3 @@ export async function getSpecificVersion(filteredDB, name, version) {
         console.log(`\tDownloaded ${file} to ${filePath}`);
     }
 }
-//# sourceMappingURL=getSpecificVersion.js.map
