@@ -11,8 +11,9 @@ import { AxiosResponse } from 'axios';
 
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+
 // Import the paths from the config file.
-const configPath = resolve(__dirname, '../paths.json');
+const configPath = resolve('paths.json');
 const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 
 // Show a message if the user is using the CLI.

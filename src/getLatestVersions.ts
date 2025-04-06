@@ -5,10 +5,8 @@ import axios from 'axios';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import {resolve } from 'path';
 
-const configPath = resolve(__dirname, '../../paths.json');
+const configPath = resolve(import.meta.dirname, '../../paths.json');
 const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
-
-console.log("Paths:", paths);
 
 // Define the base URL.
 const base_URL = paths.base_URL;
