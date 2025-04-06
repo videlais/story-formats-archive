@@ -1,9 +1,21 @@
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists.js';
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import axios from 'axios';
-import { paths } from "./paths.js";
+import { resolve } from 'path';
+const configPath = resolve(import.meta.dirname, '../../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 // Define the base URL.
 const base_URL = paths.base_URL;
+/**
+ * Make a directory if it doesn't exist.
+ * @param String dir Directory path.
+ */
+function makeDirectoryIfNotExists(dir) {
+    // Does the directory exist?
+    if (!existsSync(dir)) {
+        // Create the directory.
+        mkdirSync(dir);
+    }
+}
 /**
  * Get a specific version of a story format.
  * @param name
@@ -54,4 +66,3 @@ export async function getSpecificVersion(filteredDB, name, version) {
         console.log(`\tDownloaded ${file} to ${filePath}`);
     }
 }
-//# sourceMappingURL=getSpecificVersion.js.map

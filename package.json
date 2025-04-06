@@ -7,11 +7,13 @@
     "sfa-get": "built/src/index.js"
   },
   "scripts": {
-    "lint": "npx eslint ./src/*.ts",
+    "clean": "rimraf built",
+    "lint": "npx eslint ./src/*.ts --fix",
+    "lint:test": "npx eslint ./tests/*.test.ts --fix",
     "build": "tsc",
     "test": "jest --coverage --silent",
     "start": "node built/src/index.js",
-    "all": "npm run lint && npm run test && npm run build"
+    "all": "npm run clean && npm run build && npm run lint && npm run lint:test && npm run test"
   },
   "repository": {
     "type": "git",
@@ -34,17 +36,29 @@
     "axios": "^1.8.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.27.0",
     "@eslint/js": "^9.23.0",
+    "@inquirer/testing": "^2.1.46",
+    "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.14",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "babel-jest": "^29.7.0",
+    "babel-plugin-transform-import-meta": "^2.3.2",
     "eslint": "^9.23.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "globals": "^16.0.0",
     "jest": "^29.7.0",
-    "ts-jest": "^29.2.6",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.3.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.27.0"
+    "typescript-eslint": "^8.28.0"
   },
   "type": "module"
 }

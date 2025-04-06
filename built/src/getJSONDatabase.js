@@ -11,4 +11,3 @@ export async function getJSONDatabase(path) {
     }
     return response;
 }
-//# sourceMappingURL=getJSONDatabase.js.map

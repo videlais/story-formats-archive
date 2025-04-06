@@ -1,9 +1,17 @@
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists.js';
 import axios from 'axios';
-import { writeFileSync } from 'fs';
-import { paths } from "./paths.js";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { resolve } from 'path';
+const configPath = resolve(import.meta.dirname, '../../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 // Define the base URL.
 const base_URL = paths.base_URL;
+function makeDirectoryIfNotExists(dir) {
+    // Does the directory exist?
+    if (!existsSync(dir)) {
+        // Create the directory.
+        mkdirSync(dir);
+    }
+}
 /**
  * Get the latest versions of each story format.
  * @param filteredDB:FilteredDatabase
@@ -61,4 +69,3 @@ export async function getLatestVersions(filteredDB, formats) {
         }
     }
 }
-//# sourceMappingURL=getLatestVersions.js.map
