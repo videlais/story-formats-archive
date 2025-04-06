@@ -1,14 +1,19 @@
 #! /usr/bin/env node
 
-import { OfficialDatabase } from '../types/OfficialDatabase';
-import { StoryFormatEntry } from '../types/StoryFormatEntry';
-import { FilteredDatabase } from '../types/FilteredDatabase';
-import { getJSONDatabase } from './getJSONDatabase';
-import { getSpecificVersion } from './getSpecificVersion';
-import { getLatestVersions } from './getLatestVersions';
-import { paths } from "./paths";
+import { OfficialDatabase } from '../types/OfficialDatabase.js';
+import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
+import { FilteredDatabase } from '../types/FilteredDatabase.js';
+import { getJSONDatabase } from './getJSONDatabase.js';
+import { getSpecificVersion } from './getSpecificVersion.js';
+import { getLatestVersions } from './getLatestVersions.js';
 import { select, input } from '@inquirer/prompts';
 import { AxiosResponse } from 'axios';
+
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+// Import the paths from the config file.
+const configPath = resolve(__dirname, '../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 
 // Show a message if the user is using the CLI.
 console.log('🌐 Fetching latest JSON database...');

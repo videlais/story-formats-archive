@@ -1,10 +1,7 @@
 import { getSpecificVersion } from '../src/getSpecificVersion.js';
-import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import axios from 'axios';
-
 jest.mock('axios');
-
-const filteredDB: FilteredDatabase = {
+const filteredDB = {
     'format1': [
         {
             version: '1.0',
@@ -34,7 +31,6 @@ const filteredDB: FilteredDatabase = {
         }
     ]
 };
-
 const name = 'format1';
 const version = '2.0';
 //const fileURL = `${paths.base_URL}/${name}/${version}/file3.js`;
@@ -42,10 +38,9 @@ const version = '2.0';
 //    data: Buffer.from('file content'),
 //};
 //const filePath = `./story-formats/${name}/${version}/file3.js`;
-
 describe('getSpecificVersion', () => {
     beforeEach(() => {
-        (axios.get as jest.Mock).mockResolvedValue({
+        axios.get.mockResolvedValue({
             data: {
                 format1: {
                     '2.0': {
@@ -62,28 +57,22 @@ describe('getSpecificVersion', () => {
             },
         });
     });
-
     afterEach(() => {
         jest.resetAllMocks();
-      });
-
+    });
     it('should handle a non-existent story format', async () => {
         const nonExistentName = 'nonExistentFormat';
         await getSpecificVersion(filteredDB, nonExistentName, version);
         expect(axios.get).not.toHaveBeenCalled();
-    }
-    );
+    });
     it('should handle a non-existent version for a story format', async () => {
         const nonExistentVersion = 'nonExistentVersion';
         await getSpecificVersion(filteredDB, name, nonExistentVersion);
-
         expect(axios.get).not.toHaveBeenCalled();
-    }
-    );
+    });
     it('should handle an empty filteredDB', async () => {
-        const emptyDB: FilteredDatabase = {};
+        const emptyDB = {};
         await getSpecificVersion(emptyDB, name, version);
-
         expect(axios.get).not.toHaveBeenCalled();
-    }
-    );});
+    });
+});

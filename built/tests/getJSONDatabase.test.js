@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getJSONDatabase } from '../src/getJSONDatabase';
+import { getJSONDatabase } from '../src/getJSONDatabase.js';
 jest.mock('axios');
 describe('getJSONDatabase', () => {
     const path = 'https://example.com/data.json';

@@ -1,12 +1,26 @@
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists';
-import { FilteredDatabase } from '../types/FilteredDatabase';
-import { ServerResponse } from '../types/ServerResponse';
-import { writeFileSync } from 'fs';
+import { FilteredDatabase } from '../types/FilteredDatabase.js';
+import { ServerResponse } from '../types/ServerResponse.js';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import axios from 'axios';
-import { paths } from "./paths.js";
+import { resolve } from 'path';
+
+const configPath = resolve(__dirname, '../../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 
 // Define the base URL.
 const base_URL = paths.base_URL;
+
+/**
+ * Make a directory if it doesn't exist.
+ * @param String dir Directory path.
+ */
+function makeDirectoryIfNotExists(dir: string) {
+    // Does the directory exist?
+    if (!existsSync(dir)){
+        // Create the directory.
+        mkdirSync(dir);
+    }
+}
 
 /**
  * Get a specific version of a story format.

@@ -1,7 +1,12 @@
-import { getLatestVersions } from '../src/getLatestVersions';
-import { FilteredDatabase } from '../types/FilteredDatabase';
-import { paths } from '../src/paths';
+import { getLatestVersions } from '../src/getLatestVersions.js';
+import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import axios from 'axios';
+
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+
+const configPath = resolve(__dirname, '../../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
 
 jest.mock('axios');
 

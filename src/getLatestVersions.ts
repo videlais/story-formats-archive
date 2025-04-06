@@ -1,13 +1,25 @@
-import { FilteredDatabase } from '../types/FilteredDatabase';
-import { ServerResponse } from '../types/ServerResponse';
-import { makeDirectoryIfNotExists } from './makeDirectoryIfNotExists';
-import { StoryFormatEntry } from '../types/StoryFormatEntry';
+import { FilteredDatabase } from '../types/FilteredDatabase.js';
+import { ServerResponse } from '../types/ServerResponse.js';
+import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import axios from 'axios';
-import { writeFileSync } from 'fs';
-import { paths } from "./paths";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import {resolve } from 'path';
+
+const configPath = resolve(__dirname, '../../paths.json');
+const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
+
+console.log("Paths:", paths);
 
 // Define the base URL.
 const base_URL = paths.base_URL;
+
+function makeDirectoryIfNotExists(dir: string) {
+    // Does the directory exist?
+    if (!existsSync(dir)){
+        // Create the directory.
+        mkdirSync(dir);
+    }
+}
 
 /**
  * Get the latest versions of each story format.
