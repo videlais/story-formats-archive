@@ -9,15 +9,54 @@ This project contains two parts:
 
 SFA-Get can be invoked using `npx sfa-get`.
 
-### Default, Latest Versions
+### Interactive Mode
 
-To automatically grab the latest versions of all official story formats packaged with Twine, use the `latest` keyword:
+Without any additional command-line arguments, SFA-Get will run interactive mode:
 
 ```bash
-npx sfa-get latest
+npx sfa-get
 ```
 
-The previous command will get the latest versions of each story format and place them in a directory named `./story-formats/{name}/{version}`.
+This will then retrieve the JSON index and build a new database:
+
+```bash
+🌐 Fetching latest JSON database...
+✅ Database fetched.
+✔ Select installation
+```
+
+The installation option is either `latest` or `specific`.
+
+Choosing `latest` will download the highest versions found of each official story format found in the database. For example, the following output might be produced based on the versions found:
+
+```bash
+✔ Select installation latest
+    Downloaded LICENSE to ./story-formats/chapbook/2.3.0/LICENSE
+    Downloaded format.js to ./story-formats/chapbook/2.3.0/format.js
+    Downloaded logo.svg to ./story-formats/chapbook/2.3.0/logo.svg
+    Downloaded LICENSE to ./story-formats/harlowe/3.3.9/LICENSE
+    Downloaded format.js to ./story-formats/harlowe/3.3.9/format.js
+    Downloaded icon.svg to ./story-formats/harlowe/3.3.9/icon.svg
+    Downloaded LICENSE to ./story-formats/paperthin/1.0.0/LICENSE
+    Downloaded format.js to ./story-formats/paperthin/1.0.0/format.js
+    Downloaded icon.svg to ./story-formats/paperthin/1.0.0/icon.svg
+    Downloaded LICENSE to ./story-formats/snowman/2.0.2/LICENSE
+    Downloaded format.js to ./story-formats/snowman/2.0.2/format.js
+    Downloaded icon.svg to ./story-formats/snowman/2.0.2/icon.svg
+    Downloaded LICENSE to ./story-formats/sugarcube/2.37.3/LICENSE
+    Downloaded format.js to ./story-formats/sugarcube/2.37.3/format.js
+    Downloaded icon.svg to ./story-formats/sugarcube/2.37.3/icon.svg
+```
+
+Alternatively, if choosing `specific`, it will ask for the story format name in lowercase and the version number.
+
+```bash
+✔ Select installation specific
+✔ Enter story format name:
+✔ Enter version: 
+```
+
+### Specific Mode
 
 Specific story formats can also be accessed by name and version. For example, to retrieve only Harlowe 3.3.9, it would be the following:
 
@@ -31,7 +70,7 @@ The previous command would create only the directory `./story-formats/harlowe/3.
 * `format.js`
 * `icon.svg`
 
-### SFA: Search
+### SFA: Web Search
 
 [A simple search](https://videlais.github.io/story-formats-archive/) is provided to help verify entries and general data in the database.
 
