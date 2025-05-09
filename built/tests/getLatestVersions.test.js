@@ -1,9 +1,6 @@
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import axios from 'axios';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-const configPath = resolve(__dirname, '../../paths.json');
-const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
+import paths from '../src/paths.js';
 jest.mock('axios');
 const filteredDB = {
     'format1': [

@@ -2,21 +2,45 @@
 
 This project contains two parts:
 
-* SFA-Get, a Node.js tool for downloading story formats found in the `main` branch.
+* SFA-Get, a [Node.js](https://nodejs.org/en) tool for downloading story formats found in the `main` branch.
 * Flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2) found in the `docs` branch.
 
-SFA-Get can be invoked using `npx sfa-get`, which will provide two options "latest" and "specific". Choosing "latest" will download the database, figure out the latest versions, and then download the necessary files into `./story-formats/{name}/{version}` where the 'name' folder is based on the story format packed with Twine 2 and 'version' is their latest version.
+## `npx sfa-get`
 
-## SFA: Search
+SFA-Get can be invoked using `npx sfa-get`.
+
+### Default, Latest Versions
+
+To automatically grab the latest versions of all official story formats packaged with Twine, use the `latest` keyword:
+
+```bash
+npx sfa-get latest
+```
+
+The previous command will get the latest versions of each story format and place them in a directory named `./story-formats/{name}/{version}`.
+
+Specific story formats can also be accessed by name and version. For example, to retrieve only Harlowe 3.3.9, it would be the following:
+
+```bash
+npx sfa-get harlowe 3.3.9
+```
+
+The previous command would create only the directory `./story-formats/harlowe/3.3.9/` with the following files based on the [GitHub directory of the same name and version](https://github.com/videlais/story-formats-archive/tree/docs/official/twine2/harlowe/3.3.9):
+
+* `LICENSE`
+* `format.js`
+* `icon.svg`
+
+### SFA: Search
 
 [A simple search](https://videlais.github.io/story-formats-archive/) is provided to help verify entries and general data in the database.
 
-## Database Base URLs
+## Archive Database
 
 * Official: `https://videlais.github.io/story-formats-archive/official/index.json`
 * Unofficial: `https://videlais.github.io/story-formats-archive/unofficial/index.json`
 
-## Organization
+### Organization
 
 Organization is split between `official` and `unofficial`. If a story format currently is or was packaged with Twine at any point in time, it is considered "official" with all others falling into the "unofficial" collection. Generally, those in the "unofficial" collection are more experimental in nature with some providing complex functionality and others, for example, the ability to export Twine data in different file formats.
 
@@ -49,7 +73,7 @@ URL: `/official/twine2/chapbook/1.0.0/`
 
 ### Story Format Properties
 
-### Official
+#### Official
 
 Each official story format has the following properties:
 
@@ -122,7 +146,7 @@ Each unofficial story format has the following properties:
 }
 ```
 
-## Twine 2
+### Twine 2
 
 Each story format folder contains:
 
@@ -130,7 +154,7 @@ Each story format folder contains:
 * `icon.svg`: Icon.
 * `LICENSE`: License text.
 
-## Twine 1
+### Twine 1
 
 Depending on the story format, there may be up to three files:
 

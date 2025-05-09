@@ -1,8 +1,6 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import axios from 'axios';
-import { resolve } from 'path';
-const configPath = resolve(import.meta.dirname, '../../paths.json');
-const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
+import paths from './paths.js';
 // Define the base URL.
 const base_URL = paths.base_URL;
 /**

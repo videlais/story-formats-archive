@@ -3,11 +3,7 @@ import { getJSONDatabase } from './getJSONDatabase.js';
 import { getSpecificVersion } from './getSpecificVersion.js';
 import { getLatestVersions } from './getLatestVersions.js';
 import { select, input } from '@inquirer/prompts';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-// Import the paths from the config file.
-const configPath = resolve('paths.json');
-const paths = JSON.parse(readFileSync(configPath, 'utf-8'));
+import paths from './paths.js';
 // Show a message if the user is using the CLI.
 console.log('🌐 Fetching latest JSON database...');
 // Get the official database.
