@@ -4,6 +4,7 @@ import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import axios from 'axios';
 
 import paths from './paths.js';
+import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 
 // Define the base URL.
 const base_URL = paths.base_URL;
@@ -36,17 +37,17 @@ export async function getSpecificVersion(filteredDB:FilteredDatabase, name: stri
 
     let files:string[] = [];
 
+    // Search for the specific version in the database.
+    // 'filteredDB[name]' is an array of StoryFormatEntry objects.
+    const format:StoryFormatEntry|undefined = filteredDB[name].find((item: { version: string; }) => item.version === version);
+
     // Does 'version' exist for the specific 'name'?
-    if (!filteredDB[name].some((item: { version: string; }) => item.version === version)) {
+    if (format === undefined) {
         console.error(`❌ Version ${version} for ${name} not found.`);
         return;
     } else {
         console.log(`✅ Found version ${version} for ${name}.`);
-        // Get the files for the specific version.
-        const format = filteredDB[name].find((item: { version: string; }) => item.version === version);
-        if (format) {
-            files = format.files;
-        }
+        files = format.files;
     }
 
     const dir:string = './story-formats';
