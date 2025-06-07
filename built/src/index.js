@@ -2,6 +2,7 @@
 import { getJSONDatabase } from './getJSONDatabase.js';
 import { getSpecificVersion } from './getSpecificVersion.js';
 import { getLatestVersions } from './getLatestVersions.js';
+import { checkInstalled } from './checkInstalled.js';
 import { select, input } from '@inquirer/prompts';
 import paths from './paths.js';
 /**
@@ -68,6 +69,16 @@ async function filterDatabase(database) {
  * @param filteredDB - The filtered database to process user input against.
  */
 async function processUserInput(filteredDB) {
+    // Check if a single CLI argument was passed.
+    if (process.argv.length === 3) {
+        // Check if the first argument is "-l" for the "list" command.
+        if (process.argv[2] === '-l') {
+            // Show the list of installed story formats.
+            console.log('📜 Installed story formats:');
+            checkInstalled();
+            return;
+        }
+    }
     // Check if any CLI arguments were passed.
     if (process.argv.length > 2) {
         // Get the story format name from the CLI arguments.

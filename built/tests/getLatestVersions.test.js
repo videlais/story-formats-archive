@@ -6,7 +6,7 @@ jest.mock('axios');
 const filteredDB = {
     'format1': [
         {
-            version: '1.0',
+            version: '1.0.0',
             files: ['file1.js', 'file2.js'],
             name: 'format1',
             description: 'Description for format 1',
@@ -14,7 +14,7 @@ const filteredDB = {
             proofing: false,
         },
         {
-            version: '2.0',
+            version: '2.0.0',
             files: ['file3.js', 'file4.js'],
             name: 'format1',
             description: 'Description for format 1',
@@ -24,7 +24,7 @@ const filteredDB = {
     ],
     'format2': [
         {
-            version: '1.0',
+            version: '1.0.0',
             files: ['file5.js', 'file6.js'],
             name: 'format2',
             description: 'Description for format 2',
@@ -39,13 +39,13 @@ describe('getLatestVersions', () => {
         axios.get.mockResolvedValue({
             data: {
                 format1: {
-                    '2.0': {
+                    '2.0.0': {
                         file3: 'file3.js',
                         file4: 'file4.js',
                     },
                 },
                 format2: {
-                    '1.0': {
+                    '1.0.0': {
                         file5: 'file5.js',
                         file6: 'file6.js',
                     },
@@ -59,15 +59,41 @@ describe('getLatestVersions', () => {
     it('should get the latest versions of each story format', async () => {
         await getLatestVersions(filteredDB, formats);
         expect(axios.get).toHaveBeenCalledTimes(4);
-        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0/file3.js`, { "responseType": "arraybuffer" });
-        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0/file4.js`, { "responseType": "arraybuffer" });
-        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0/file5.js`, { "responseType": "arraybuffer" });
-        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0/file6.js`, { "responseType": "arraybuffer" });
+        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0.0/file3.js`, { "responseType": "arraybuffer" });
+        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0.0/file4.js`, { "responseType": "arraybuffer" });
+        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0.0/file5.js`, { "responseType": "arraybuffer" });
+        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0.0/file6.js`, { "responseType": "arraybuffer" });
     });
     it('should handle empty filteredDB', async () => {
         const emptyDB = {};
         await getLatestVersions(emptyDB, formats);
         expect(axios.get).not.toHaveBeenCalled();
+    });
+    it('should handle filtererDB with no keys', async () => {
+        const emptyDB = { 'format1': [] };
+        await getLatestVersions(emptyDB, formats);
+        expect(axios.get).not.toHaveBeenCalled();
+    });
+    it('should handle formats not in filteredDB', async () => {
+        const nonExistentFormats = ['format3'];
+        await getLatestVersions(filteredDB, nonExistentFormats);
+        expect(axios.get).not.toHaveBeenCalled();
+    });
+    it('should handle formats with no versions', async () => {
+        // Mock console.warn to capture warnings
+        jest.spyOn(console, 'warn').mockImplementation(() => { });
+        // Create a filteredDB with no versions for 'format1' and 'format2'
+        // This simulates a scenario where the story format exists but has no versions.
+        // This is useful for testing how the function handles such cases.
+        const noVersionDB = {
+            'format1': [],
+            'format2': []
+        };
+        const noVersionFormats = ['format1', 'format2'];
+        await getLatestVersions(noVersionDB, noVersionFormats);
+        expect(axios.get).not.toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalledWith('⚠️ No versions found for story format: format1');
+        expect(console.warn).toHaveBeenCalledWith('⚠️ No versions found for story format: format2');
     });
     it('should handle empty formats array', async () => {
         const emptyFormats = [];
@@ -88,7 +114,7 @@ describe('getLatestVersions', () => {
         const singleVersionDB = {
             'format1': [
                 {
-                    version: '1.0',
+                    version: '1.0.0',
                     files: ['file1.js'],
                     name: 'format1',
                     description: 'Description for format 1',
@@ -99,7 +125,7 @@ describe('getLatestVersions', () => {
         };
         const singleVersionFormats = ['format1'];
         await getLatestVersions(singleVersionDB, singleVersionFormats);
-        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/1.0/file1.js`, { "responseType": "arraybuffer" });
+        expect(axios.get).toHaveBeenCalledWith(`${paths.base_URL}/format1/1.0.0/file1.js`, { "responseType": "arraybuffer" });
         expect(axios.get).toHaveBeenCalledTimes(1);
     });
 });
@@ -131,7 +157,7 @@ describe('getLatestVersions without story-formats directory', () => {
         expect(fs.existsSync(dir)).toBe(true);
     });
     it('should create subdirectories for each version of a story format', async () => {
-        const dir = './story-formats/format1/2.0';
+        const dir = './story-formats/format1/2.0.0';
         const makeDirectoryIfNotExists = (path) => {
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path, { recursive: true });

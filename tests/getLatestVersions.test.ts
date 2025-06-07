@@ -9,7 +9,7 @@ jest.mock('axios');
 const filteredDB: FilteredDatabase = {
     'format1': [
         {
-            version: '1.0',
+            version: '1.0.0',
             files: ['file1.js', 'file2.js'],
             name: 'format1',
             description: 'Description for format 1',
@@ -17,7 +17,7 @@ const filteredDB: FilteredDatabase = {
             proofing: false,
         },
         {
-            version: '2.0',
+            version: '2.0.0',
             files: ['file3.js', 'file4.js'],
             name: 'format1',
             description: 'Description for format 1',
@@ -27,7 +27,7 @@ const filteredDB: FilteredDatabase = {
     ],
     'format2': [
         {
-            version: '1.0',
+            version: '1.0.0',
             files: ['file5.js', 'file6.js'],
             name: 'format2',
             description: 'Description for format 2',
@@ -43,13 +43,13 @@ describe('getLatestVersions', () => {
         (axios.get as jest.Mock).mockResolvedValue({
             data: {
                 format1: {
-                    '2.0': {
+                    '2.0.0': {
                         file3: 'file3.js',
                         file4: 'file4.js',
                     },
                 },
                 format2: {
-                    '1.0': {
+                    '1.0.0': {
                         file5: 'file5.js',
                         file6: 'file6.js',
                     },
@@ -66,10 +66,10 @@ describe('getLatestVersions', () => {
         await getLatestVersions(filteredDB, formats);
 
         expect((axios.get as jest.Mock)).toHaveBeenCalledTimes(4);
-        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0/file3.js`, {"responseType": "arraybuffer"});
-        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0/file4.js`, {"responseType": "arraybuffer"});
-        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0/file5.js`, {"responseType": "arraybuffer"});
-        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0/file6.js`, {"responseType": "arraybuffer"});
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0.0/file3.js`, {"responseType": "arraybuffer"});
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0.0/file4.js`, {"responseType": "arraybuffer"});
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0.0/file5.js`, {"responseType": "arraybuffer"});
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0.0/file6.js`, {"responseType": "arraybuffer"});
     });
 
     it('should handle empty filteredDB', async () => {
@@ -77,6 +77,36 @@ describe('getLatestVersions', () => {
         await getLatestVersions(emptyDB, formats);
 
         expect((axios.get as jest.Mock)).not.toHaveBeenCalled();
+    });
+
+    it('should handle filtererDB with no keys', async () => {
+        const emptyDB: FilteredDatabase = { 'format1': [] };
+        await getLatestVersions(emptyDB, formats);
+        expect((axios.get as jest.Mock)).not.toHaveBeenCalled();
+    });
+
+    it('should handle formats not in filteredDB', async () => {
+        const nonExistentFormats = ['format3'];
+        await getLatestVersions(filteredDB, nonExistentFormats);
+
+        expect((axios.get as jest.Mock)).not.toHaveBeenCalled();
+    });
+
+    it('should handle formats with no versions', async () => {
+        // Mock console.warn to capture warnings
+        jest.spyOn(console, 'warn').mockImplementation(() => {});
+        // Create a filteredDB with no versions for 'format1' and 'format2'
+        // This simulates a scenario where the story format exists but has no versions.
+        // This is useful for testing how the function handles such cases.
+        const noVersionDB: FilteredDatabase = {
+            'format1': [],
+            'format2': []
+        };
+        const noVersionFormats = ['format1', 'format2'];
+        await getLatestVersions(noVersionDB, noVersionFormats);
+        expect((axios.get as jest.Mock)).not.toHaveBeenCalled();
+        expect(console.warn).toHaveBeenCalledWith('⚠️ No versions found for story format: format1');
+        expect(console.warn).toHaveBeenCalledWith('⚠️ No versions found for story format: format2');
     });
 
     it('should handle empty formats array', async () => {
@@ -104,7 +134,7 @@ describe('getLatestVersions', () => {
         const singleVersionDB: FilteredDatabase = {
             'format1': [
                 {
-                    version: '1.0',
+                    version: '1.0.0',
                     files: ['file1.js'],
                     name: 'format1',
                     description: 'Description for format 1',
@@ -114,7 +144,7 @@ describe('getLatestVersions', () => {
             ]};
         const singleVersionFormats = ['format1'];
         await getLatestVersions(singleVersionDB, singleVersionFormats);
-        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/1.0/file1.js`, {"responseType": "arraybuffer"});
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/1.0.0/file1.js`, {"responseType": "arraybuffer"});
         expect((axios.get as jest.Mock)).toHaveBeenCalledTimes(1);
     });
 });
@@ -155,7 +185,7 @@ describe('getLatestVersions without story-formats directory', () => {
     });
 
     it('should create subdirectories for each version of a story format', async () => {
-        const dir = './story-formats/format1/2.0';
+        const dir = './story-formats/format1/2.0.0';
         const makeDirectoryIfNotExists = (path: string) => {
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path, { recursive: true });

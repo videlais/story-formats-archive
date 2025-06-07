@@ -3,6 +3,7 @@ import { ServerResponse } from '../types/ServerResponse.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import axios from 'axios';
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import semver from 'semver';
 
 import paths from './paths.js';
 
@@ -26,16 +27,30 @@ export async function getLatestVersions(filteredDB:FilteredDatabase, formats:str
     let latestVersions = Object.keys(filteredDB).reduce((acc: { [key: string]: StoryFormatEntry }, key) => {
         // Get the versions for the specific story format.
         const versions = filteredDB[key];
+        
+        // If there are no versions, skip this key.
+        if (versions.length === 0) {
+            console.warn(`⚠️ No versions found for story format: ${key}`);
+            return acc;
+        }
+        
         // Get the latest version.
         const latestVersion = versions.reduce((latest, current) => {
             // Compare the versions.
-            return current.version > latest.version ? current : latest;
+            // Use semver to compare for better version handling.
+            return semver.gt(current.version, latest.version) ? current : latest;
         });
         // Add the latest version to the accumulator.
         acc[key] = latestVersion;
         // Return the accumulator.
         return acc;
     }, {});
+
+    // If latestVersions is empty, show an error message and return.
+    if (Object.keys(latestVersions).length === 0) {
+        console.error('❌ No story formats found in the database.');
+        return;
+    }
 
     const dir = './story-formats';
     makeDirectoryIfNotExists(dir);

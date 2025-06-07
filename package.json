@@ -1,6 +1,6 @@
 {
   "name": "sfa-get",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "description": "SFA-Get retrieves story formats from the Story Format Archive",
   "main": "index.ts",
   "bin": {
@@ -13,7 +13,7 @@
     "lint": "npx eslint ./src/*.ts --fix",
     "lint:test": "npx eslint ./tests/*.test.ts --fix",
     "build": "tsc",
-    "test": "jest --coverage",
+    "test": "jest --coverage --silent",
     "start": "node built/src/index.js",
     "all": "npm run clean && npm run build && npm run lint && npm run lint:test && npm run test && npm run clean-test"
   },
@@ -35,7 +35,8 @@
   "homepage": "https://github.com/videlais/story-formats-archive#readme",
   "dependencies": {
     "@inquirer/prompts": "^7.4.1",
-    "axios": "^1.8.4"
+    "axios": "^1.8.4",
+    "semver": "^7.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
@@ -47,6 +48,7 @@
     "@types/jest": "^29.5.14",
     "@types/mock-fs": "^4.13.4",
     "@types/node": "^22.15.30",
+    "@types/semver": "^7.7.0",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.33.1",
     "babel-jest": "^29.7.0",

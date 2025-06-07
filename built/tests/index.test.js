@@ -172,4 +172,11 @@ describe('processUserInput', () => {
         expect(input).toHaveBeenCalledWith({ message: 'Enter version:' });
         expect(getSpecificVersionMock).toHaveBeenCalledTimes(1);
     });
+    it('should handle the CLI argument of "-l" to list installed story formats', async () => {
+        process.argv = ['node', 'index.js', '-l'];
+        const checkInstalledMock = jest.spyOn(await import('../src/checkInstalled.js'), 'checkInstalled').mockImplementation(() => { });
+        await processUserInput({});
+        expect(checkInstalledMock).toHaveBeenCalled();
+        expect(console.log).toHaveBeenCalledWith('📜 Installed story formats:');
+    });
 });
