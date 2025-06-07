@@ -27,18 +27,17 @@ export async function getSpecificVersion(filteredDB, name, version) {
         return;
     }
     let files = [];
+    // Search for the specific version in the database.
+    // 'filteredDB[name]' is an array of StoryFormatEntry objects.
+    const format = filteredDB[name].find((item) => item.version === version);
     // Does 'version' exist for the specific 'name'?
-    if (!filteredDB[name].some((item) => item.version === version)) {
+    if (format === undefined) {
         console.error(`❌ Version ${version} for ${name} not found.`);
         return;
     }
     else {
         console.log(`✅ Found version ${version} for ${name}.`);
-        // Get the files for the specific version.
-        const format = filteredDB[name].find((item) => item.version === version);
-        if (format) {
-            files = format.files;
-        }
+        files = format.files;
     }
     const dir = './story-formats';
     // Make the directory if it doesn't exist.

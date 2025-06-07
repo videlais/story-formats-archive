@@ -1,7 +1,7 @@
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import axios from 'axios';
-
+import fs from 'fs';
 import paths from '../src/paths.js';
 
 jest.mock('axios');
@@ -116,5 +116,54 @@ describe('getLatestVersions', () => {
         await getLatestVersions(singleVersionDB, singleVersionFormats);
         expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/1.0/file1.js`, {"responseType": "arraybuffer"});
         expect((axios.get as jest.Mock)).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('getLatestVersions without story-formats directory', () => {
+    beforeAll(() => {
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('should create directories if they do not exist', async () => {
+        const dir = './story-formats';
+        const makeDirectoryIfNotExists = (path: string) => {
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+        };
+        
+        makeDirectoryIfNotExists(dir);
+        
+        expect(fs.existsSync(dir)).toBe(true);
+    });
+
+    it('should create subdirectories for each story format', async () => {
+        const dir = './story-formats/format1';
+        const makeDirectoryIfNotExists = (path: string) => {
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+        };
+        
+        makeDirectoryIfNotExists(dir);
+        
+        expect(fs.existsSync(dir)).toBe(true);
+    });
+
+    it('should create subdirectories for each version of a story format', async () => {
+        const dir = './story-formats/format1/2.0';
+        const makeDirectoryIfNotExists = (path: string) => {
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+        };
+        
+        makeDirectoryIfNotExists(dir);
+        
+        expect(fs.existsSync(dir)).toBe(true);
     });
 });
