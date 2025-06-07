@@ -30,7 +30,7 @@ function makeDirectoryIfNotExists(dir: string) {
 export async function getSpecificVersion(filteredDB:FilteredDatabase, name: string, version: string) {
 
     // Does 'name' exist in the database?
-    if (!filteredDB[name]) {
+    if (Object.prototype.hasOwnProperty.call(filteredDB, name) == false) {
         console.error(`❌ Story format ${name} not found.`);
         return;
     }
