@@ -149,8 +149,8 @@ describe('processUserInput', () => {
             Format2: [{ name: 'Format2', version: '2.0.0', author: 'Author1', proofing: false, description: 'Description1', files: [] }]
         };
         select.mockResolvedValue('specific');
-        input.mockResolvedValue('Format1');
-        input.mockResolvedValue('1.0.0');
+        input.mockResolvedValueOnce('Format1');
+        input.mockResolvedValueOnce('1.0.0');
         const getSpecificVersionMock = jest.spyOn(await import('../src/getSpecificVersion.js'), 'getSpecificVersion').mockResolvedValue(undefined);
         await processUserInput(filteredDatabase);
         expect(select).toHaveBeenCalledWith({
