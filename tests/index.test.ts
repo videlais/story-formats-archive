@@ -190,8 +190,8 @@ describe('processUserInput', () => {
         };
 
         (select as jest.MockedFunction<typeof select>).mockResolvedValue('specific');
-        (input as jest.MockedFunction<typeof input>).mockResolvedValue('Format1');
-        (input as jest.MockedFunction<typeof input>).mockResolvedValue('1.0.0');
+        (input as jest.MockedFunction<typeof input>).mockResolvedValueOnce('Format1');
+        (input as jest.MockedFunction<typeof input>).mockResolvedValueOnce('1.0.0');
 
         const getSpecificVersionMock = jest.spyOn(await import('../src/getSpecificVersion.js'), 'getSpecificVersion').mockResolvedValue(undefined);
         
