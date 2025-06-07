@@ -1,6 +1,7 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { checkInstalled } from '../src/checkInstalled.js';
-import * as fs from 'fs';
-jest.mock('fs');
+import * as fs from 'node:fs';
+jest.mock('node:fs');
 describe('checkInstalled', () => {
     let consoleLogSpy;
     beforeEach(() => {
@@ -63,7 +64,7 @@ describe('checkInstalled', () => {
         expect(consoleLogSpy).toHaveBeenCalledWith('\tformatB (version: 1.0.1)');
     });
     it('should skip files without version in story-formats directory', () => {
-        fs.existsSync.mockImplementation((path) => path === './story-formats' || path === './story-formats/format.js');
+        fs.existsSync.mockImplementation((path => path === './story-formats' || path === './story-formats/format.js'));
         fs.readdirSync.mockImplementation((path) => {
             if (path === './story-formats') {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
@@ -126,9 +127,11 @@ describe('checkInstalled', () => {
             return [];
         });
         fs.readFileSync.mockImplementation((path) => {
-            if (path.endsWith('formatA/format.js'))
+            // Create copy of path as a string to avoid TypeScript error
+            const pathString = path;
+            if (pathString.endsWith('formatA/format.js'))
                 return '{"version": "2.1.0"}';
-            if (path.endsWith('formatB/1.0.0/format.js'))
+            if (pathString.endsWith('formatB/1.0.0/format.js'))
                 return '{"version": "1.0.0"}';
             return '';
         });
@@ -164,11 +167,12 @@ describe('checkInstalled', () => {
             return [];
         });
         fs.readFileSync.mockImplementation((path) => {
-            if (path.endsWith('story-formats/format.js'))
+            const pathString = path;
+            if (pathString.endsWith('story-formats/format.js'))
                 return '{"version": "0.9.0"}';
-            if (path.endsWith('formatC/format.js'))
+            if (pathString.endsWith('formatC/format.js'))
                 return '{"version": "3.2.1"}';
-            if (path.endsWith('formatD/1.2.3/format.js'))
+            if (pathString.endsWith('formatD/1.2.3/format.js'))
                 return '{"version": "1.2.3"}';
             return '';
         });

@@ -2,7 +2,7 @@ import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { ServerResponse } from '../types/ServerResponse.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import axios from 'axios';
-import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import semver from 'semver';
 
 import paths from './paths.js';

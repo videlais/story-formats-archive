@@ -1,7 +1,7 @@
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import axios from 'axios';
-import fs from 'fs';
+import fs from 'node:fs';
 import paths from '../src/paths.js';
 
 jest.mock('axios');

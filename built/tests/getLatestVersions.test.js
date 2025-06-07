@@ -1,6 +1,6 @@
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import axios from 'axios';
-import fs from 'fs';
+import fs from 'node:fs';
 import paths from '../src/paths.js';
 jest.mock('axios');
 const filteredDB = {

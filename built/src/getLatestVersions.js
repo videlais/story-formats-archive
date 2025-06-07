@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import semver from 'semver';
 import paths from './paths.js';
 // Define the base URL.

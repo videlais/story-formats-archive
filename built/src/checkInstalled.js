@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 /**
  * Checks if any story format files are installed using the following structure:
  * (A) `story-formats/format.js`, (B) `story-formats/<format-name>/format.js`, or
