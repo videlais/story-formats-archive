@@ -196,4 +196,90 @@ describe('getLatestVersions without story-formats directory', () => {
         
         expect(fs.existsSync(dir)).toBe(true);
     });
+
+    it('should warn and skip formats with no versions', async () => {
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+        await getLatestVersions({ 'format1': [] }, ['format1']);
+        expect(warnSpy).toHaveBeenCalledWith('⚠️ No versions found for story format: format1');
+        warnSpy.mockRestore();
+    });
+
+    it('should error and return if no story formats found', async () => {
+        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        await getLatestVersions({}, []);
+        expect(errorSpy).toHaveBeenCalledWith('❌ No story formats found in the database.');
+        errorSpy.mockRestore();
+    });
+
+    it('should only process formats present in the formats array', async () => {
+        (axios.get as jest.Mock).mockResolvedValue({ data: Buffer.from('test') });
+        const db: FilteredDatabase = {
+            'format1': [{
+                version: '1.0.0',
+                files: ['file1.js'],
+                name: 'format1',
+                description: '',
+                author: '',
+                proofing: false
+            }],
+            'format2': [{
+                version: '1.0.0',
+                files: ['file2.js'],
+                name: 'format2',
+                description: '',
+                author: '',
+                proofing: false
+            }]
+        };
+        await getLatestVersions(db, ['format2']);
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format2/1.0.0/file2.js`, { responseType: 'arraybuffer' });
+        expect((axios.get as jest.Mock)).toHaveBeenCalledTimes(1);
+    });
+
+    it('should use semver to select the latest version', async () => {
+        (axios.get as jest.Mock).mockResolvedValue({ data: Buffer.from('test') });
+        const db: FilteredDatabase = {
+            'format1': [
+                {
+                    version: '1.0.0',
+                    files: ['file1.js'],
+                    name: 'format1',
+                    description: '',
+                    author: '',
+                    proofing: false
+                },
+                {
+                    version: '2.0.0',
+                    files: ['file2.js'],
+                    name: 'format1',
+                    description: '',
+                    author: '',
+                    proofing: false
+                }
+            ]
+        };
+        await getLatestVersions(db, ['format1']);
+        expect((axios.get as jest.Mock)).toHaveBeenCalledWith(`${paths.base_URL}/format1/2.0.0/file2.js`, { responseType: 'arraybuffer' });
+    });
+
+    it('should create directories for each format and version', async () => {
+        const mkdirSpy = jest.spyOn(fs, 'mkdirSync').mockImplementation((path: fs.PathLike) => path.toString());
+        jest.spyOn(fs, 'existsSync').mockReturnValue(false);
+        (axios.get as jest.Mock).mockResolvedValue({ data: Buffer.from('test') });
+        const db: FilteredDatabase = {
+            'format1': [{
+                version: '1.0.0',
+                files: ['file1.js'],
+                name: 'format1',
+                description: '',
+                author: '',
+                proofing: false
+            }]
+        };
+        await getLatestVersions(db, ['format1']);
+        expect(mkdirSpy).toHaveBeenCalledWith('./story-formats');
+        expect(mkdirSpy).toHaveBeenCalledWith('./story-formats/format1');
+        expect(mkdirSpy).toHaveBeenCalledWith('./story-formats/format1/1.0.0');
+        mkdirSpy.mockRestore();
+    });
 });
