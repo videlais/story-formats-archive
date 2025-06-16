@@ -1,13 +1,11 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { SpyInstance } from 'jest-mock';
 import { checkInstalled } from '../src/checkInstalled.js';
 import * as fs from 'node:fs';
 
 jest.mock('node:fs');
 
 describe('checkInstalled', () => {
-    let consoleLogSpy: SpyInstance;
-
+    let consoleLogSpy: jest.Spied<typeof console.log>;
     beforeEach(() => {
         jest.clearAllMocks();
         consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
