@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["deno.window"],
+    "strict": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 4,
+    "semiColons": true,
+    "singleQuote": false,
+    "proseWrap": "preserve"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --allow-write --allow-env deno/index.ts",
+    "start": "deno run --allow-net --allow-read --allow-write --allow-env deno/index.ts",
+    "test": "deno test --allow-net --allow-read --allow-write --allow-env deno/tests/",
+    "lint": "deno lint deno/",
+    "fmt": "deno fmt deno/"
+  },
+  "imports": {
+    "@std/fs": "https://deno.land/std@0.210.0/fs/mod.ts",
+    "@std/path": "https://deno.land/std@0.210.0/path/mod.ts",
+    "@std/semver": "https://deno.land/std@0.210.0/semver/mod.ts",
+    "@std/assert": "https://deno.land/std@0.210.0/assert/mod.ts",
+    "axios": "npm:axios@^1.10.0",
+    "@inquirer/prompts": "npm:@inquirer/prompts@^7.7.1"
+  }
+}

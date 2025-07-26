@@ -1,11 +1,22 @@
 # Story Format Archive (SFA)
 
-This project contains two parts:
+This project contains three parts:
 
 * SFA-Get, a [Node.js](https://nodejs.org/en) tool for downloading story formats found in the `main` branch.
+* SFA-Get Deno version, a [Deno](https://deno.land/) compatible version of the tool.
 * Flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2) found in the `docs` branch.
 
-## `npx sfa-get`
+## Runtime Support
+
+### Node.js Version
+
+Use `npx sfa-get` for the Node.js version.
+
+### Deno Version
+
+Use `deno task start` for the Deno version. See [deno/README.md](deno/README.md) for detailed instructions.
+
+## `npx sfa-get` (Node.js)
 
 SFA-Get can be invoked using `npx sfa-get`.
 
