@@ -226,3 +226,45 @@ describe('processUserInput', () => {
         expect(console.log).toHaveBeenCalledWith('📜 Installed story formats:');
     });
 });
+describe('filterDatabase - additional coverage', () => {
+    it('should handle multiple story formats with the same name', async () => {
+        const mockDatabase: StoryFormatEntry[] = [
+            { name: 'Format1', version: '1.0', author: 'Author1', proofing: false, description: 'Description1', files: [] },
+            { name: 'Format1', version: '1.1', author: 'Author1', proofing: false, description: 'Description1', files: [] },
+            { name: 'Format2', version: '2.0', author: 'Author2', proofing: false, description: 'Description2', files: [] },
+        ];
+        
+        const result = await filterDatabase(mockDatabase);
+        
+        expect(result).toEqual({
+            Format1: [
+                { name: 'Format1', version: '1.0', author: 'Author1', proofing: false, description: 'Description1', files: [] },
+                { name: 'Format1', version: '1.1', author: 'Author1', proofing: false, description: 'Description1', files: [] }
+            ],
+            Format2: [
+                { name: 'Format2', version: '2.0', author: 'Author2', proofing: false, description: 'Description2', files: [] }
+            ]
+        });
+    });
+});
+
+describe('processUserInput - additional coverage', () => {
+    it('should call getSpecificVersion when CLI arguments are passed with specific version', async () => {
+        const mockArgs = ['node', 'index.js', 'Format1', '1.5'];
+        process.argv = mockArgs;
+
+        const filteredDatabase: FilteredDatabase = {
+            Format1: [
+                { name: 'Format1', version: '1.0', author: 'Author1', proofing: false, description: 'Description1', files: [] },
+                { name: 'Format1', version: '1.5', author: 'Author1', proofing: false, description: 'Description1', files: [] }
+            ],
+            Format2: [{ name: 'Format2', version: '2.0', author: 'Author1', proofing: false, description: 'Description1', files: [] }]
+        };
+
+        const getSpecificVersionMock = jest.spyOn(await import('../src/getSpecificVersion.js'), 'getSpecificVersion').mockResolvedValue(undefined);
+
+        await processUserInput(filteredDatabase);
+        
+        expect(getSpecificVersionMock).toHaveBeenCalledWith(filteredDatabase, 'Format1', '1.5');
+    });
+});
