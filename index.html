@@ -3,39 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story Formats Archive: Search</title>
-    <link rel="stylesheet" href="site.css">
+    <title>Story Format Archive (SFA)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the SFA: Search</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Search</h2>
-            <label for="type">Select type to search:</label><br />
-            (An unofficial story format is one that has never been packaged with Twine.)<br /> 
-            <p>
-                <select id="type">
-                    <option value="official">Official</option>
-                    <option value="unofficial">Unofficial</option>
-                </select>
-            </p>
-            <label for="type">Select major Twine version to search:</label><br />
-            <p>
-                <select id="twineVersion">
-                    <option value="2">Twine 2</option>
-                    <option value="1">Twine 1</option>
-                </select>
-            </p>
-            <label for="search">Enter a story format name:</label><br />
-            <p><input type="search" id="name" /></p>
-        </section>
-        <section>
-            <h2>Results</h2>
-            <div id="results"></div>
-        </section>
-    </main>
-    <script src="site.js"></script>
+    <h1>Story Format Archive (SFA)</h1>
+
+    <p>This is a flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2).</p>
+
+    <p>Each official story format in the collection contains all necessary files and individual software licenses. For unofficial story formats, a repository or website is listed.</p>
+
+    <h2>SFA: Search</h2>
+
+    <p><a href="https://videlais.github.io/story-formats-archive/">A simple search</a> is provided to help verify entries and general data in the database.</p>
+
+    <h2>Database Base URLs</h2>
+
+    <ul>
+        <li>Official: <code>https://videlais.github.io/story-formats-archive/official/index.json</code></li>
+        <li>Unofficial: <code>https://videlais.github.io/story-formats-archive/unofficial/index.json</code></li>
+    </ul>
+
+    <h2>Organization</h2>
+
+    <p>Organization is split between <code>official</code> and <code>unofficial</code>. If a story format currently is or was packaged with Twine at any point in time, it is considered "official" with all others falling into the "unofficial" collection. Generally, those in the "unofficial" collection are more experimental in nature with some providing complex functionality and others, for example, the ability to export Twine data in different file formats.</p>
+
+    <p>Story formats are additionally sorted into <code>twine1</code> and <code>twine2</code> sub-collections. In some cases, a story format might be in both categories if it was originally published during the transitory period between major versions.</p>
+
+    <h3>Organization Example</h3>
+
+    <p>URL: <code>/official/index.json</code></p>
+
+    <pre><code>{
+    "twine1": [
+        {
+
+        }
+    ],
+    "twine2":[
+        {
+
+        }
+    ]
+}</code></pre>
+
+    <p>Directories within the major Twine versions include story format and minor version per story format (e.g. <code>harlowe/3.3.0</code>). For Twine 1 story formats, the version of Twine (e.g. <code>1.4.2</code>) is used unless explicitly mentioned by the build or author.</p>
+
+    <h3>Directory Example</h3>
+
+    <p>URL: <code>/official/twine2/chapbook/1.0.0/</code></p>
+
+    <h3>Story Format Properties</h3>
+
+    <h3>Official</h3>
+
+    <p>Each official story format has the following properties:</p>
+
+    <ul>
+        <li><code>name</code>: (string) Name.</li>
+        <li><code>author</code>: (string) Author(s) of the story format.</li>
+        <li><code>version</code>: (string) Semantic version.</li>
+        <li><code>proofing</code>: (boolean) <code>true</code> if story format is for proofing and <code>false</code> otherwise.</li>
+        <li><code>description</code>: (string) Summary of story format.</li>
+        <li><code>files</code>: Files of the story format.</li>
+    </ul>
+
+    <p><strong>Example:</strong></p>
+
+    <pre><code>{
+    "twine1": [
+        {
+            "name": "jonah",
+            "version": "1.4.2",
+            "files": [
+                "LICENSE",
+                "code.js",
+                "header.html"
+            ]
+        }
+    ],
+    "twine2": [
+        {
+            "name": "chapbook",
+            "author": "Chris Klimas",
+            "version": "1.0.0",
+            "proofing": false,
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices.",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "logo.svg"
+            ]
+        }
+    ]
+}</code></pre>
+
+    <h4>Unofficial</h4>
+
+    <p>Each unofficial story format has the following properties:</p>
+
+    <ul>
+        <li><code>name</code>: (string) Name.</li>
+        <li><code>author</code>: (string) Author(s) of the story format.</li>
+        <li><code>repo</code>: (string) GitHub repository or website.</li>
+        <li><code>proofing</code>: (boolean) <code>true</code> if story format is for proofing and <code>false</code> otherwise.</li>
+        <li><code>description</code>: (string) Summary of story format.</li>
+        <li><code>basedOn</code>: (string) Parent story format it is based on, if any.</li>
+        <li><code>files</code>: Files of the story format.</li>
+    </ul>
+
+    <pre><code>{
+    "twine1": [
+        {
+            "name": "DotGraph",
+            "author": "M. C. DeMarco",
+            "version": "2.2.0",
+            "repo": "https://github.com/mcdemarco/dotgraph",
+            "proofing": true,
+            "description": "Displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
+            "basedOn": "",
+            "files": [
+            ]
+        }
+    ]
+}</code></pre>
+
+    <h2>Twine 2</h2>
+
+    <p>Each story format folder contains:</p>
+
+    <ul>
+        <li><code>format.js</code>: JSONP code. (See <a href="https://github.com/iftechfoundation/twine-specs/blob/master/twine-2-storyformats-spec.md">Twine 2 Story Format output specification</a>.)</li>
+        <li><code>icon.svg</code>: Icon.</li>
+        <li><code>LICENSE</code>: License text.</li>
+    </ul>
+
+    <h2>Twine 1</h2>
+
+    <p>Depending on the story format, there may be up to three files:</p>
+
+    <ul>
+        <li><code>header.html</code>: HTML, JavaScript, and CSS.</li>
+        <li><code>LICENSE</code>: License text.</li>
+        <li><code>code.js</code>: Additional JavaScript code.</li>
+    </ul>
+
+    <p>In cases where the <code>code.js</code> file is not included, the complete JavaScript of the story format can be assumed to be part of the <code>header.html</code> file.</p>
 </body>
 </html>

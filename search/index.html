@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Format Archive Search</title>
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Story Format Archive Search</h1>
+        
+        <div class="api-info">
+            <h3>API Endpoints</h3>
+            <p>Search the story format database programmatically:</p>
+            <div class="api-endpoint">GET ?search=query&source=official|unofficial|all&twine=1|2|all&proofing=true|false</div>
+            <div class="api-endpoint">GET ?name=exact_name&source=official|unofficial|all</div>
+            <div class="api-endpoint">GET ?author=author_name&source=official|unofficial|all</div>
+            <p><strong>Response:</strong> JSON array of matching story formats</p>
+        </div>
+
+        <form class="search-form" id="searchForm">
+            <input type="text" id="searchInput" class="search-input" 
+                   placeholder="Search story formats..." 
+                   value="">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="sourceFilter">Source:</label>
+                <select id="sourceFilter">
+                    <option value="all">All Sources</option>
+                    <option value="official">Official Only</option>
+                    <option value="unofficial">Unofficial Only</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="twineFilter">Twine Version:</label>
+                <select id="twineFilter">
+                    <option value="all">All Versions</option>
+                    <option value="1">Twine 1</option>
+                    <option value="2">Twine 2</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="proofingFilter">Type:</label>
+                <select id="proofingFilter">
+                    <option value="all">All Types</option>
+                    <option value="false">Story Formats</option>
+                    <option value="true">Proofing Formats</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            Loading story formats...
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        class StoryFormatSearch {
+            constructor() {
+                this.officialData = null;
+                this.unofficialData = null;
+                this.isLoading = false;
+                this.versionGroups = new Map(); // Store version group data
+                this.init();
+            }
+
+            async init() {
+                await this.loadData();
+                this.bindEvents();
+                this.handleURLParams();
+            }
+
+            async loadData() {
+                this.showLoading(true);
+                try {
+                    const [officialResponse, unofficialResponse] = await Promise.all([
+                        fetch('https://videlais.github.io/story-formats-archive/official/index.json'),
+                        fetch('https://videlais.github.io/story-formats-archive/unofficial/index.json')
+                    ]);
+
+                    if (!officialResponse.ok || !unofficialResponse.ok) {
+                        throw new Error('Failed to fetch data');
+                    }
+
+                    this.officialData = await officialResponse.json();
+                    this.unofficialData = await unofficialResponse.json();
+                    
+                    this.showLoading(false);
+                } catch (error) {
+                    this.showError('Failed to load story format data: ' + error.message);
+                    this.showLoading(false);
+                }
+            }
+
+            bindEvents() {
+                const form = document.getElementById('searchForm');
+                const input = document.getElementById('searchInput');
+                const filters = ['sourceFilter', 'twineFilter', 'proofingFilter'];
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.performSearch();
+                });
+
+                input.addEventListener('input', () => {
+                    this.debounceSearch();
+                });
+
+                filters.forEach(filterId => {
+                    document.getElementById(filterId).addEventListener('change', () => {
+                        this.performSearch();
+                    });
+                });
+            }
+
+            debounceSearch() {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => this.performSearch(), 300);
+            }
+
+            handleURLParams() {
+                const params = new URLSearchParams(window.location.search);
+                
+                // If this is an API request, return JSON
+                if (params.size > 0 && this.isAPIRequest()) {
+                    this.handleAPIRequest(params);
+                    return;
+                }
+
+                // Set form values from URL parameters
+                if (params.get('search')) {
+                    document.getElementById('searchInput').value = params.get('search');
+                }
+                if (params.get('source')) {
+                    document.getElementById('sourceFilter').value = params.get('source');
+                }
+                if (params.get('twine')) {
+                    document.getElementById('twineFilter').value = params.get('twine');
+                }
+                if (params.get('proofing')) {
+                    document.getElementById('proofingFilter').value = params.get('proofing');
+                }
+
+                // Perform search if there are parameters
+                if (params.size > 0) {
+                    this.performSearch();
+                }
+            }
+
+            isAPIRequest() {
+                const accept = document.querySelector('meta[http-equiv="Accept"]')?.content;
+                return window.location.search.includes('format=json') || 
+                       (accept && accept.includes('application/json'));
+            }
+
+            async handleAPIRequest(params) {
+                await this.loadData();
+                const results = this.search(
+                    params.get('search') || params.get('name') || params.get('author') || '',
+                    params.get('source') || 'all',
+                    params.get('twine') || 'all',
+                    params.get('proofing') || 'all',
+                    params.get('name') ? 'name' : params.get('author') ? 'author' : 'all'
+                );
+                
+                // Output JSON
+                document.head.innerHTML = '';
+                document.body.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+                document.body.style.fontFamily = 'monospace';
+            }
+
+            search(query, source = 'all', twineVersion = 'all', proofing = 'all', searchType = 'all') {
+                if (!this.officialData || !this.unofficialData) {
+                    return [];
+                }
+
+                let results = [];
+
+                // Collect data based on source filter
+                if (source === 'all' || source === 'official') {
+                    if (twineVersion === 'all' || twineVersion === '1') {
+                        results = results.concat(this.officialData.twine1.map(item => ({
+                            ...item,
+                            source: 'official',
+                            twineVersion: 1
+                        })));
+                    }
+                    if (twineVersion === 'all' || twineVersion === '2') {
+                        results = results.concat(this.officialData.twine2.map(item => ({
+                            ...item,
+                            source: 'official',
+                            twineVersion: 2
+                        })));
+                    }
+                }
+
+                if (source === 'all' || source === 'unofficial') {
+                    if (twineVersion === 'all' || twineVersion === '1') {
+                        results = results.concat(this.unofficialData.twine1.map(item => ({
+                            ...item,
+                            source: 'unofficial',
+                            twineVersion: 1
+                        })));
+                    }
+                    if (twineVersion === 'all' || twineVersion === '2') {
+                        results = results.concat(this.unofficialData.twine2.map(item => ({
+                            ...item,
+                            source: 'unofficial',
+                            twineVersion: 2
+                        })));
+                    }
+                }
+
+                // Filter by proofing
+                if (proofing !== 'all') {
+                    const isProofing = proofing === 'true';
+                    results = results.filter(item => item.proofing === isProofing);
+                }
+
+                // Filter by search query
+                if (query) {
+                    const searchLower = query.toLowerCase();
+                    results = results.filter(item => {
+                        switch (searchType) {
+                            case 'name':
+                                return item.name && item.name.toLowerCase() === searchLower;
+                            case 'author':
+                                return item.author && item.author.toLowerCase().includes(searchLower);
+                            default:
+                                return (
+                                    (item.name && item.name.toLowerCase().includes(searchLower)) ||
+                                    (item.author && item.author.toLowerCase().includes(searchLower)) ||
+                                    (item.description && item.description.toLowerCase().includes(searchLower)) ||
+                                    (item.basedOn && item.basedOn.toLowerCase().includes(searchLower))
+                                );
+                        }
+                    });
+                }
+
+                // Sort results by name
+                results.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+                return results;
+            }
+
+            performSearch() {
+                const query = document.getElementById('searchInput').value;
+                const source = document.getElementById('sourceFilter').value;
+                const twineVersion = document.getElementById('twineFilter').value;
+                const proofing = document.getElementById('proofingFilter').value;
+
+                // Update URL without reloading page
+                const params = new URLSearchParams();
+                if (query) params.set('search', query);
+                if (source !== 'all') params.set('source', source);
+                if (twineVersion !== 'all') params.set('twine', twineVersion);
+                if (proofing !== 'all') params.set('proofing', proofing);
+
+                const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                window.history.replaceState({}, '', newURL);
+
+                const results = this.search(query, source, twineVersion, proofing);
+                this.displayResults(results);
+            }
+
+            displayResults(results) {
+                const resultsContainer = document.getElementById('results');
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = '<div class="no-results">No story formats found matching your criteria.</div>';
+                    return;
+                }
+
+                // Group results by name to handle multiple versions
+                const groupedResults = {};
+                results.forEach(item => {
+                    const key = `${item.name}-${item.source}`;
+                    if (!groupedResults[key]) {
+                        groupedResults[key] = [];
+                    }
+                    groupedResults[key].push(item);
+                });
+
+                // Sort versions within each group (newest first)
+                Object.keys(groupedResults).forEach(key => {
+                    groupedResults[key].sort((a, b) => {
+                        // Simple version comparison - newer versions first
+                        return (b.version || '').localeCompare(a.version || '', undefined, { numeric: true, sensitivity: 'base' });
+                    });
+                });
+
+                const html = Object.keys(groupedResults).map(groupKey => {
+                    const group = groupedResults[groupKey];
+                    const primaryItem = group[0]; // Use first (newest) version as primary display
+                    
+                    return this.renderResultItem(primaryItem, group);
+                }).join('');
+
+                resultsContainer.innerHTML = html;
+                
+                // Bind all event listeners
+                this.bindEventListeners(resultsContainer);
+            }
+
+            renderResultItem(item, group = [item]) {
+                const hasMultipleVersions = group.length > 1;
+                const groupKey = `${item.name}-${item.source}`;
+                
+                const badges = [];
+                badges.push(`<span class="badge badge-${item.source}">${item.source}</span>`);
+                badges.push(`<span class="badge badge-twine${item.twineVersion}">Twine ${item.twineVersion}</span>`);
+                if (item.proofing) {
+                    badges.push(`<span class="badge badge-proofing">Proofing</span>`);
+                }
+
+                // Store group data and create dropdown
+                let versionDropdown = '';
+                if (hasMultipleVersions) {
+                    // Store the group data in our Map
+                    this.versionGroups.set(groupKey, group);
+                    
+                    versionDropdown = `
+                        <div class="result-meta">
+                            <strong>Version:</strong> 
+                            <select class="version-select" data-group-key="${groupKey}" style="margin-left: 8px; padding: 2px 4px; font-size: 12px;">
+                                ${group.map(version => 
+                                    `<option value="${version.version}" ${version.version === item.version ? 'selected' : ''}>${version.version}</option>`
+                                ).join('')}
+                            </select>
+                            ${group.length > 1 ? `<span style="color: #666; font-size: 12px; margin-left: 8px;">(${group.length} versions)</span>` : ''}
+                        </div>
+                    `;
+                } else if (item.version) {
+                    versionDropdown = `<div class="result-meta"><strong>Version:</strong> ${item.version}</div>`;
+                }
+
+                const files = item.files && item.files.length > 0 
+                    ? `<div class="result-files"><strong>Files:</strong> ${item.files.join(', ')}</div>`
+                    : '';
+
+                const repo = item.repo 
+                    ? `<div class="result-meta"><strong>Repository:</strong> <a href="${item.repo}" target="_blank">${item.repo}</a></div>`
+                    : '';
+
+                const basedOn = item.basedOn 
+                    ? `<div class="result-meta"><strong>Based on:</strong> ${item.basedOn}</div>`
+                    : '';
+
+                // Generate format.js URL for this specific result
+                let formatJsUrl = '';
+                if (item.name && item.version) {
+                    const baseArchiveUrl = 'https://videlais.github.io/story-formats-archive';
+                    const twineVersionPath = `twine${item.twineVersion}`;
+                    const nameLower = item.name.toLowerCase();
+                    formatJsUrl = `${baseArchiveUrl}/${item.source}/${twineVersionPath}/${nameLower}/${item.version}/format.js`;
+                }
+
+                const formatJsLink = formatJsUrl ? `
+                    <div class="result-api">
+                        <strong>Format File:</strong> 
+                        <span class="api-endpoint" style="font-size: 11px; padding: 4px 8px; margin-left: 8px;">
+                            <a href="${formatJsUrl}" target="_blank" style="color: #666; text-decoration: none;">${formatJsUrl}</a>
+                        </span>
+                        <button class="copy-btn" data-url="${formatJsUrl}" style="margin-left: 8px; padding: 4px 8px; font-size: 11px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="result-item" data-group-key="${groupKey}">
+                        <div class="result-name">${item.name || 'Unknown'}</div>
+                        <div class="result-meta">
+                            ${badges.join('')}
+                        </div>
+                        ${item.author ? `<div class="result-meta"><strong>Author:</strong> ${item.author}</div>` : ''}
+                        ${versionDropdown}
+                        ${repo}
+                        ${basedOn}
+                        ${item.description ? `<div class="result-description"><strong>Description:</strong> ${item.description}</div>` : ''}
+                        ${files}
+                        ${formatJsLink}
+                    </div>
+                `;
+            }
+
+            bindEventListeners(container) {
+                // Add event listeners for copy buttons
+                container.querySelectorAll('.copy-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const url = e.target.getAttribute('data-url');
+                        this.copyToClipboard(url, e.target);
+                    });
+                });
+
+                // Add event listeners for version dropdowns
+                container.querySelectorAll('.version-select').forEach(select => {
+                    select.addEventListener('change', (e) => {
+                        const resultItem = e.target.closest('.result-item');
+                        const selectedVersion = e.target.value;
+                        
+                        const groupKey = e.target.getAttribute('data-group-key');
+                        const groupData = this.versionGroups.get(groupKey);
+                        
+                        if (!groupData) {
+                            console.error('No group data found for key:', groupKey);
+                            return;
+                        }
+                        
+                        const selectedItem = groupData.find(item => item.version === selectedVersion);
+                        
+                        if (selectedItem) {
+                            // Update formatJsUrl based on selected version
+                            const baseArchiveUrl = 'https://videlais.github.io/story-formats-archive';
+                            const twineVersionPath = `twine${selectedItem.twineVersion}`;
+                            const nameLower = selectedItem.name.toLowerCase();
+                            const formatJsUrl = `${baseArchiveUrl}/${selectedItem.source}/${twineVersionPath}/${nameLower}/${selectedItem.version}/format.js`;
+                            
+                            // Update the format link display
+                            const formatLink = resultItem.querySelector('.result-api .api-endpoint a');
+                            const copyButton = resultItem.querySelector('.result-api .copy-btn');
+                            const formatContainer = resultItem.querySelector('.result-api .api-endpoint');
+                            
+                            if (formatLink && copyButton && formatContainer) {
+                                // Update the link URL and text
+                                formatLink.href = formatJsUrl;
+                                formatLink.textContent = formatJsUrl;
+                                
+                                // Update the copy button data
+                                copyButton.setAttribute('data-url', formatJsUrl);
+                                
+                                // Show visual feedback that URL has been updated
+                                formatContainer.style.transition = 'all 0.3s ease';
+                                formatContainer.style.backgroundColor = '#e8f5e8';
+                                formatContainer.style.borderLeft = '3px solid #28a745';
+                                formatContainer.style.paddingLeft = '8px';
+                                
+                                // Show "Updated!" message briefly
+                                const originalButtonText = copyButton.textContent;
+                                copyButton.textContent = 'Updated!';
+                                copyButton.style.background = '#28a745';
+                                
+                                setTimeout(() => {
+                                    formatContainer.style.backgroundColor = '';
+                                    formatContainer.style.borderLeft = '';
+                                    formatContainer.style.paddingLeft = '';
+                                    copyButton.textContent = originalButtonText;
+                                    copyButton.style.background = '#007bff';
+                                }, 1500);
+                            }
+                        }
+                    });
+                });
+            }
+
+            showLoading(show) {
+                document.getElementById('loading').style.display = show ? 'block' : 'none';
+                this.isLoading = show;
+            }
+
+            showError(message) {
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+            }
+
+            async copyToClipboard(text, button) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    
+                    // Visual feedback
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007bff';
+                    }, 2000);
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    // Visual feedback
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = '#28a745';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '#007bff';
+                    }, 2000);
+                }
+            }
+        }
+
+        // Initialize the search when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new StoryFormatSearch();
+        });
+    </script>
+</body>
+</html>
