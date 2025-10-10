@@ -55,7 +55,8 @@ Each official story format has the following properties:
 - `version`: (string) Semantic version.
 - `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
 - `description`: (string) Summary of story format.
-- `files`: Files of the story format.
+- `files`: (array) List of files in the story format.
+- `checksums`: (object) SHA256 checksums for each file, keyed by filename.
 
 **Example:**
 
@@ -69,7 +70,12 @@ Each official story format has the following properties:
                 "LICENSE",
                 "code.js",
                 "header.html"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "6449c2dad1102ebce8a0f1f07c01abccc4c44d81b6f46b35f967f62373f4ba3b",
+                "code.js": "1b66dfad4f18c9e03881253d616f8574ceda35628dfa48db608ba80e84328b4a",
+                "header.html": "a4beac5e2b240119a0cd459379e3baf948340a8aa1d16dd8ffb1dbca986aa9af"
+            }
         }
     ],
     "twine2": [
@@ -83,9 +89,42 @@ Each official story format has the following properties:
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "abc123...",
+                "format.js": "def456...",
+                "logo.svg": "ghi789..."
+            }
         }
     ]
+}
+```
+
+#### File Integrity Verification
+
+Each file in official story formats includes a SHA256 checksum in the `checksums` object. You can verify file integrity by comparing the downloaded file's SHA256 hash with the value in the index.
+
+**Example verification (command line):**
+
+```bash
+# Download a file
+curl -o format.js https://videlais.github.io/story-formats-archive/official/twine2/harlowe/3.3.9/format.js
+
+# Calculate SHA256 hash  
+openssl dgst -sha256 format.js
+# Should match: 803a0d9d4fb8c3c1c99eaf16f37db6feaad72e36fc7e5f6c5a168465419895f3
+```
+
+**Example verification (JavaScript):**
+
+```javascript
+async function verifyFile(fileUrl, expectedChecksum) {
+    const response = await fetch(fileUrl);
+    const arrayBuffer = await response.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex === expectedChecksum;
 }
 ```
 
@@ -99,7 +138,8 @@ Each unofficial story format has the following properties:
 - `proofing`: (boolean) `true` if story format is for proofing and `false` otherwise.
 - `description`: (string) Summary of story format.
 - `basedOn`: (string) Parent story format it is based on, if any.
-- `files`: Files of the story format.
+- `files`: (array) List of files in the story format (usually empty, as files are hosted externally).
+- `checksums`: (object) SHA256 checksums for each file (usually empty for unofficial formats).
 
 ```json
 {

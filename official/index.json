@@ -9,7 +9,12 @@
                 "LICENSE",
                 "code.js",
                 "header.html"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "6449c2dad1102ebce8a0f1f07c01abccc4c44d81b6f46b35f967f62373f4ba3b",
+                "code.js": "1b66dfad4f18c9e03881253d616f8574ceda35628dfa48db608ba80e84328b4a",
+                "header.html": "a4beac5e2b240119a0cd459379e3baf948340a8aa1d16dd8ffb1dbca986aa9af"
+            }
         },
         {
             "name": "responsive",
@@ -19,7 +24,11 @@
             "files": [
                 "LICENSE",
                 "header.html"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "3f563e4c5778c4007b5a3168021bfd53e9923ddb7634e622b303e4bcfa4f8642",
+                "header.html": "5627355403ec90cf22e13da18b6784cb6da58f9d5294f81145cd4eb4e39214ad"
+            }
         },
         {
             "name": "sugarcane",
@@ -30,7 +39,12 @@
                 "LICENSE",
                 "code.js",
                 "header.html"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "d8e3179bdaca2374ea433e8e90b0b92d16a21318674665b9cedee6bb110a69b1",
+                "code.js": "cb417561b9e93b287ee1c1e82d67d5de3c0590c0b97437bb97e5085f41dfd072",
+                "header.html": "3d0dae80c076d77069ce36c3add4cd2d0e710eb2b6d65ce0b49a658d47a97e1a"
+            }
         },
         {
             "name": "sugarcube",
@@ -40,7 +54,11 @@
             "files": [
                 "LICENSE",
                 "header.html"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "46d6d9d5c642a35faa706c1e178969e012943febfc8ed8e90224543134f7dc1c",
+                "header.html": "1471e5183243e8e83e745ba476a93dfe0c9e400ec5791ff6993112476c0be209"
+            }
         }
     ],
     "twine2": [
@@ -54,7 +72,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "eb8940a8466487d5c5691618fee03550212a5b7a9fda361ffa3eb30790c5d89a",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -66,7 +89,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "f6d67f5ae61fb7f322b02ae4e572e0037c816a2c12cdd32fff489eb1361c3da3",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -78,7 +106,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "5fe03d45d53c44c69f91971a1018555e94ba6184e313dbc37915368ab653db14",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -90,7 +123,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "7d8d94ca7e54eba048800289f0c03140ab75fefbf66ddbfd649d62e947bfd1fc",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -102,7 +140,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "fb506893b3eee592765d4c415cc0b2fe4ae95b2f2488dc9395f59fe85092eccc",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -114,7 +157,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "ffa65cffd4b05d23ef2db2da9751e09c6ba42054df05c051099838116d0b69e4",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -126,7 +174,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "d7dbb45a8852bdc51bc0412f696e6b4ccffce89f9a831d1d2cae9e65835e85b8",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "chapbook",
@@ -138,7 +191,12 @@
                 "LICENSE",
                 "format.js",
                 "logo.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "238939f244ab0bb2036046b140ebc4de4b8aa2d0f661422d607bf0b8e1ad2dd8",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
         },
         {
             "name": "harlowe",
@@ -150,7 +208,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "1c7b29c3bb2a754ef1440d341587b11dbd39246e5117f8cd52ab280e456d1924",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -162,7 +225,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "15d499806952a303e35a47aa62156a95d25a33ad2b69df33ab10e8a8fb0e5d04",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -174,7 +242,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "c381dd2f4c8fb7bbbcc7455aff1f88d230f9c514779a72a09e6cc554a26c0f32",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -186,7 +259,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "ddc319a26082fe9bdc8388f455190971c7944f675ef06a80634139ff936fbb1a",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -198,7 +276,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "d792eeca552e88712f0b412e086028fba8ceaf9ee59f6216715e14aaf591a156",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -210,7 +293,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "573d12bb291958da91f1b638592bf6d12a6c36770241a265290430250fd59b18",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -222,7 +310,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "a02fa9ad789a7c065a545f4a797e6aa8f35314c7e9f3a719a3bb3fddba651a2b",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -234,7 +327,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "cb250c77906d574de0e7f082cb67e2561897ee4484f5ff74f51a76e29459dab1",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -246,7 +344,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "6573985aab60be8536da0755c112c98abaf725017a8e48ecd6a02c50886ac0ba",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -258,7 +361,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "17fa511337b8620cd413e3b99bb7aa95cf6536c68f1913d8afa676044e00df1e",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -270,7 +378,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "6386115a70d3588b78ea467bed282b52cfaf0ab63b3a55e009a69dc58ffbc3c5",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -282,7 +395,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "75fc0e251167fa2bb6dc21f4357a82244601f1c7bea17ce0cfa37e49b82cd9bd",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -294,7 +412,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "5753eb8f40a04e6bef533e9a6a074ff87caff2e4b952cc0f075f76d27652188a",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -306,7 +429,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "340fdea83879803621a734f721ca65a624fb590e5dc749aee20ee1af45eb412b",
+                "icon.svg": "b5ff38f886647a56a725735c5188b61a538abcb1b0d15358e774f29910d1ad2e"
+            }
         },
         {
             "name": "harlowe",
@@ -318,7 +446,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "78eb6cc5882fb3f7d102d0b062bac1d315d14056e6fdd565d8ec018f7397bc67",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "harlowe",
@@ -330,7 +463,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "2d46529663e691166e74f6bf7f832aa71b41f65c7c23a0e48d7b24c9b8b0cefb",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "harlowe",
@@ -342,7 +480,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "93630720ba3584bb29fa76d29f541a1d77899edfe738f99f6130b60d224903ec",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "harlowe",
@@ -354,7 +497,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "4d6746265ae8827a042eb612f43b94df56986cf3917b33a71279ed60d7355c03",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "harlowe",
@@ -366,7 +514,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "cddbd7ea08932af8fe3f6f4211185f076536298855afe13dd575d198371e28a0",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "harlowe",
@@ -378,7 +531,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db17d28bb88d22d4b7c1e580189f153cedab8951aa8fffcef4c195b6bdd74805",
+                "format.js": "803a0d9d4fb8c3c1c99eaf16f37db6feaad72e36fc7e5f6c5a168465419895f3",
+                "icon.svg": "f2fe9e2366698371f1148d6bfc501636cc21e75cd95cfd6e318cc20a3e82f62b"
+            }
         },
         {
             "name": "paperthin",
@@ -390,7 +548,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "0cf08ca40cb935cc42450e631210267187ffa00f2415396f41960585b79b90e9",
+                "format.js": "a321c183c9596077b9d88fa2f408638ab6542559fedc9f80d725bef1efe9f698",
+                "icon.svg": "04068c827d4103e65cc54d6da00cf3f03d7702bb2f5474ca11bac8c18f997323"
+            }
         },
         {
             "name": "snowman",
@@ -402,7 +565,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "8206d4ba30068e6e5b1269609b4f8531c1c48549dc9323bde4fcfd89493cd2cf",
+                "format.js": "4e7771c1ccbb1905418350ab1cbc7d8dfa4770593bbb1ecdd375c76274583257",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -414,7 +582,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "8206d4ba30068e6e5b1269609b4f8531c1c48549dc9323bde4fcfd89493cd2cf",
+                "format.js": "ad319518b7a6ed083cd1ec6f9e0407a2ad0f7d1df0702ee8b26ca04bc7bb7767",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -426,7 +599,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "8206d4ba30068e6e5b1269609b4f8531c1c48549dc9323bde4fcfd89493cd2cf",
+                "format.js": "7aa903c56424af8b1743f169e621cb5dd136240c69d7c78c09ba639008573937",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -438,7 +616,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "8206d4ba30068e6e5b1269609b4f8531c1c48549dc9323bde4fcfd89493cd2cf",
+                "format.js": "00b687ee37987300342bcd65a13cd07a93ce485614d5b9a44171dcf85bbe1914",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -450,7 +633,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "8206d4ba30068e6e5b1269609b4f8531c1c48549dc9323bde4fcfd89493cd2cf",
+                "format.js": "8528e6962897d9e344770576735a99023336be921e3db52b47e3a9fb36258892",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -462,7 +650,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "9ab3a3490443c5d38c0c6a8b071c6aa80f5aa7da92ee60d1f02cac461a1280d3",
+                "format.js": "e2209ad81172a0698d7ac06f11d7ede7f7d7b22270a02f13aa0fca228b8a505c",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "snowman",
@@ -474,7 +667,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "9ab3a3490443c5d38c0c6a8b071c6aa80f5aa7da92ee60d1f02cac461a1280d3",
+                "format.js": "1c39b252739073b8f8854e803abab965da9f7f15d7f76ed6c40b72625f8071b0",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
         },
         {
             "name": "sugarcube",
@@ -486,7 +684,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "099100271a4f5e10d42bdbfa583267782f0c7394aaf571c08868fb75d7863f20",
+                "format.js": "e19afb42fd5bb3eaefdba960fee0879da4017eedd866729b658b7d8df08aa088",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -498,7 +701,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "099100271a4f5e10d42bdbfa583267782f0c7394aaf571c08868fb75d7863f20",
+                "format.js": "9a7b4aea161073701d0bc6dee7e11251c1b1d07cade1fc4490b85b3e8a67c102",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -510,7 +718,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "12921476575614ad127cd3945677ba7e968976f170a58a829f81ef27e7fd0806",
+                "format.js": "262fb7cbc8080855ae09701059af22c6ba0ffe096baea068172de1b888daa770",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -522,7 +735,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "12921476575614ad127cd3945677ba7e968976f170a58a829f81ef27e7fd0806",
+                "format.js": "18c8244cd156b5a4b5915baefc593f404b3d735df8ffe3e780880659d4b19053",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -534,7 +752,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "fd1a4fbb79a96d91e3a71a4c062547b5772afabe6b0e74fe538e765769cd8e8f",
+                "format.js": "317a41fb5ff52b7fc7e2fd3111e3c3565abd21b82fd8f76aeda1ef2333782c11",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -546,7 +769,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "b1c5e5cd3ab2b980d86a48689673bc5b8a3126ee8e86e791b4f43c1ac3c2f33d",
+                "format.js": "f5c67f9d08b5f22ad59acd4df74a12bd686a9a62d91b16cbf93fd7828e450639",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -558,7 +786,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "b1c5e5cd3ab2b980d86a48689673bc5b8a3126ee8e86e791b4f43c1ac3c2f33d",
+                "format.js": "391dddba3f7360fd682cd6bb8cfb8b40a2f74be6438f3f1867813e077d7cab39",
+                "icon.svg": "30640e1e3568f866167dae1d8aa9d29dc38f984edbd2d2271ddbbb55d64c7144"
+            }
         },
         {
             "name": "sugarcube",
@@ -570,7 +803,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "db07c424599a0e0e4ec6067d1f76bb6f99b6b8f2c92a1b5a37e672c95c11c2f2",
+                "format.js": "d9b6f136f9e35c78e0932b4fbb318abf514663e9b616d6e499b1c50229d001b7",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -582,7 +820,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "c86a0701a7394f1bba0d26041d48e96b5d4bb9bf92286990b076ac9222c4d73c",
+                "format.js": "f51074be34173be412810353df7c51c463104aea24171379c7c42d747850319c",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -594,7 +837,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "c86a0701a7394f1bba0d26041d48e96b5d4bb9bf92286990b076ac9222c4d73c",
+                "format.js": "82dd9079f9730d46766d0b3c96f696c6ff4839837f94c031abeec628ad6c53e9",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -606,7 +854,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "830e5732e9aa1ce561a4d38d8af7ed955ce12efc60b9cdb067e3ef894f6a5657",
+                "format.js": "89569a858c3741ba7c84d4359b14cf9009772f87544751b4a68272a58fdb74c1",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -618,7 +871,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "830e5732e9aa1ce561a4d38d8af7ed955ce12efc60b9cdb067e3ef894f6a5657",
+                "format.js": "5fa3ac2ccdd0e073aeffef1e9f445f03900af375c0fb5ef8940f632d1cdc9cd3",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -630,7 +888,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "46d6d9d5c642a35faa706c1e178969e012943febfc8ed8e90224543134f7dc1c",
+                "format.js": "1f34329153a0ddce74081e498f03d923ece8e8727305d4b120226ea02ada9d82",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         },
         {
             "name": "sugarcube",
@@ -642,7 +905,12 @@
                 "LICENSE",
                 "format.js",
                 "icon.svg"
-            ]
+            ],
+            "checksums": {
+                "LICENSE": "bb227ad97f6422347e1e64ad9211d40215e92edf47940c1382973c2a27eb8b27",
+                "format.js": "64ccdac806a162d250273aba3c39aee85765fedab4cf70e6176154a8c34b8820",
+                "icon.svg": "8a93fab081f23fe641f018b811db88e4fddbcdab2039847895533afceaa8783d"
+            }
         }
     ]
 }
