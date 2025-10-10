@@ -7,11 +7,55 @@ This project contains two parts:
 
 ## `npx sfa-get`
 
-SFA-Get can be invoked using `npx sfa-get`.
+SFA-Get can be invoked using `npx sfa-get`. The tool now supports enhanced CLI options, concurrent downloads, retry logic with exponential backoff, progress indicators, and file integrity verification.
+
+### CLI Options
+
+```bash
+npx sfa-get --help
+```
+
+Available options:
+
+* `-c, --concurrency <number>`: Number of concurrent downloads (default: 3)
+* `-r, --retries <number>`: Number of retry attempts (default: 3)
+* `-t, --timeout <number>`: Timeout in milliseconds (default: 30000)
+* `--no-progress`: Disable progress indicators
+* `-V, --version`: Output the version number
+
+### Commands
+
+#### List Installed Formats
+
+```bash
+npx sfa-get list
+# or
+npx sfa-get ls
+```
+
+#### Download Latest Versions
+
+```bash
+# Download latest versions of all story formats
+npx sfa-get latest
+
+# Download latest versions of specific formats
+npx sfa-get latest --formats harlowe sugarcube
+```
+
+#### Download Specific Version
+
+```bash
+# Download a specific version
+npx sfa-get get harlowe 3.3.9
+
+# Download latest version of a specific format
+npx sfa-get get harlowe latest
+```
 
 ### Interactive Mode
 
-Without any additional command-line arguments, SFA-Get will run interactive mode:
+Without any command, SFA-Get will run interactive mode:
 
 ```bash
 npx sfa-get
@@ -69,6 +113,29 @@ The previous command would create only the directory `./story-formats/harlowe/3.
 * `LICENSE`
 * `format.js`
 * `icon.svg`
+
+## New Features
+
+### Enhanced Performance & Reliability
+
+* **Concurrent Downloads**: Downloads multiple files simultaneously with configurable concurrency limits
+* **Retry Logic**: Automatic retry with exponential backoff for failed downloads
+* **Progress Indicators**: Real-time progress bars showing download status
+* **File Integrity**: SHA-256 checksum verification ensures downloaded files are intact
+* **Improved CLI**: Better command-line interface with help, version, and structured commands
+
+### Usage Examples with New Features
+
+```bash
+# Download with custom concurrency and retries
+npx sfa-get --concurrency 5 --retries 5 latest
+
+# Download without progress indicators
+npx sfa-get --no-progress get harlowe 3.3.9
+
+# Download with custom timeout
+npx sfa-get --timeout 60000 latest
+```
 
 ### SFA: Web Search
 

@@ -1,5 +1,5 @@
-import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import axios from 'axios';
+import { existsSync, mkdirSync } from 'node:fs';
+import { downloadFiles, createDownloadTasks } from './downloadUtils.js';
 import paths from './paths.js';
 // Define the base URL.
 const base_URL = paths.base_URL;
@@ -16,11 +16,13 @@ function makeDirectoryIfNotExists(dir) {
 }
 /**
  * Get a specific version of a story format.
- * @param name
- * @param version
+ * @param filteredDB:FilteredDatabase
+ * @param name:string
+ * @param version:string
+ * @param options:DownloadOptions
  * @returns
  */
-export async function getSpecificVersion(filteredDB, name, version) {
+export async function getSpecificVersion(filteredDB, name, version, options = {}) {
     // Does 'name' exist in the database?
     if (Object.prototype.hasOwnProperty.call(filteredDB, name) == false) {
         console.error(`❌ Story format ${name} not found.`);
@@ -47,19 +49,15 @@ export async function getSpecificVersion(filteredDB, name, version) {
     // Create a directory for the specific version.
     const versionDir = `${dirName}/${version}`;
     makeDirectoryIfNotExists(versionDir);
-    // For each file, download it.
-    for (const file of files) {
-        // Define the file path and URL.
-        const filePath = `${dirName}/${version}/${file}`;
-        // Define the file URL.
-        const fileURL = `${base_URL}/${name}/${version}/${file}`;
-        // Download the file.
-        const fileResponse = await axios.get(fileURL, { responseType: 'arraybuffer' });
-        // Convert the file response to a string.
-        const fileData = fileResponse.data.toString();
-        // Write the file to the file path.
-        writeFileSync(filePath, fileData);
-        // Show a message if the user is using the CLI.
-        console.log(`\tDownloaded ${file} to ${filePath}`);
+    // Create download tasks for all files
+    const downloadTasks = createDownloadTasks(base_URL, name, version, files, './story-formats');
+    // Download all files concurrently
+    if (downloadTasks.length > 0) {
+        const downloadResults = await downloadFiles(downloadTasks, options);
+        // Log individual successful downloads
+        const successful = downloadResults.filter(r => r.success);
+        successful.forEach(result => {
+            console.log(`\tDownloaded ${result.filePath.split('/').pop()} to ${result.filePath}`);
+        });
     }
 }

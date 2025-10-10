@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import semver from 'semver';
+import { downloadFiles, createDownloadTasks } from './downloadUtils.js';
 import paths from './paths.js';
 // Define the base URL.
 const base_URL = paths.base_URL;
@@ -14,8 +14,10 @@ function makeDirectoryIfNotExists(dir) {
 /**
  * Get the latest versions of each story format.
  * @param filteredDB:FilteredDatabase
+ * @param formats:string[]
+ * @param options:DownloadOptions
  */
-export async function getLatestVersions(filteredDB, formats) {
+export async function getLatestVersions(filteredDB, formats, options = {}) {
     // Get the latest version of each story format.
     let latestVersions = Object.keys(filteredDB).reduce((acc, key) => {
         // Get the versions for the specific story format.
@@ -55,27 +57,25 @@ export async function getLatestVersions(filteredDB, formats) {
         const dirName = `${dir}/${key}`;
         makeDirectoryIfNotExists(dirName);
     }
-    // For each key in latestVersion, download every file listed in the 'files' array.
+    // Create download tasks for all files
+    const allDownloadTasks = [];
     for (const key in latestVersions) {
         // Get the version for the specific story format.
         const version = latestVersions[key];
-        // Get the files for the specific
-        const files = version.files;
         // For every version, create a directory based on it.
         const versionDir = `${dir}/${key}/${version.version}`;
-        // Make the directory if it doesn't exist.
         makeDirectoryIfNotExists(versionDir);
-        for (const file of files) {
-            // Define the file path and URL.
-            const filePath = `./story-formats/${key}/${version.version}/${file}`;
-            // Define the file URL.
-            const fileURL = `${base_URL}/${key}/${version.version}/${file}`;
-            // Download the file data
-            const fileResponse = await axios.get(fileURL, { responseType: 'arraybuffer' });
-            // Write the file to disk
-            writeFileSync(filePath, fileResponse.data.toString());
-            // Log the download.
-            console.log(`\tDownloaded ${file} to ${filePath}`);
-        }
+        // Create download tasks for this format
+        const formatTasks = createDownloadTasks(base_URL, key, version.version, version.files, dir);
+        allDownloadTasks.push(...formatTasks);
+    }
+    // Download all files concurrently
+    if (allDownloadTasks.length > 0) {
+        const downloadResults = await downloadFiles(allDownloadTasks, options);
+        // Log individual successful downloads
+        const successful = downloadResults.filter(r => r.success);
+        successful.forEach(result => {
+            console.log(`\tDownloaded ${result.filePath.split('/').pop()} to ${result.filePath}`);
+        });
     }
 }

@@ -1,10 +1,26 @@
 #! /usr/bin/env node
+import { Command } from 'commander';
 import { getJSONDatabase } from './getJSONDatabase.js';
 import { getSpecificVersion } from './getSpecificVersion.js';
 import { getLatestVersions } from './getLatestVersions.js';
-import { checkInstalled } from './checkInstalled.js';
 import { select, input } from '@inquirer/prompts';
 import paths from './paths.js';
+// Read package.json for version info
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+// Handle import.meta.url safely for both runtime and test environments
+let packageJson;
+try {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    packageJson = JSON.parse(readFileSync(join(__dirname, '../../package.json'), 'utf-8'));
+}
+catch {
+    // Fallback for test environments
+    packageJson = { version: '1.1.0', name: 'sfa-get', description: 'SFA-Get retrieves story formats from the Story Format Archive' };
+}
+let program;
 /**
  * Get the latest JSON database from the official URL.
  * This function fetches the latest JSON database from the official URL and returns the Twine2 array.
@@ -61,100 +77,162 @@ async function filterDatabase(database) {
     return filteredDB;
 }
 /**
- * Process user input to either get the latest versions of all story formats or a specific version of a story format.
- * This function checks if any CLI arguments were passed, and if so, it processes them accordingly.
- * If no CLI arguments were passed, it prompts the user to select an option.
- * If the user selects to get the latest versions, it fetches the latest versions of all story formats.
- * If the user selects to get a specific version, it prompts the user for the story format name and version, and then fetches that specific version.
- * @param filteredDB - The filtered database to process user input against.
+ * Run interactive mode when no specific command is provided
  */
-async function processUserInput(filteredDB) {
-    // Check if a single CLI argument was passed.
-    if (process.argv.length === 3) {
-        // Check if the first argument is "-l" for the "list" command.
-        if (process.argv[2] === '-l') {
-            // Show the list of installed story formats.
-            console.log('📜 Installed story formats:');
-            checkInstalled();
-            return;
-        }
+async function runInteractiveMode(filteredDB, options) {
+    // Ask the user if they want to download the latest versions of all story formats or a specific version.
+    const answer = await select({
+        message: 'Select installation',
+        choices: [
+            {
+                name: 'latest',
+                value: 'latest',
+                description: 'Download the latest versions of all story formats',
+            },
+            {
+                name: 'specific',
+                value: 'specific',
+                description: 'Download a specific version of a story format',
+            },
+        ],
+    });
+    if (answer === 'latest') {
+        // Get the latest versions of each story format.
+        await getLatestVersions(filteredDB, Object.keys(filteredDB), options);
     }
-    // Check if any CLI arguments were passed.
-    if (process.argv.length > 2) {
-        // Get the story format name from the CLI arguments.
-        const storyFormatName = process.argv[2];
-        // Get the version from the CLI arguments.
-        const version = process.argv[3];
-        // Check if the passed name exists in the filtered database.
-        const nameIsInDatabase = Object.prototype.hasOwnProperty.call(filteredDB, storyFormatName);
-        // If the name is not in the database, show an error message and return.
-        if (nameIsInDatabase == false) {
-            console.error(`❌ Story format "${storyFormatName}" not found in the database.`);
-            return;
-        }
-        // Is version "latest"?
-        if (version === 'latest') {
-            // Get the latest version of the story format.
-            await getLatestVersions(filteredDB, [storyFormatName]);
-        }
-        else {
-            // Get the specific version of the story format.
-            await getSpecificVersion(filteredDB, storyFormatName, version);
-        }
-    }
-    else {
-        // Ask the user if they want to download the latest versions of all story formats or a specific version.
-        const answer = await select({
-            message: 'Select installation',
-            choices: [
-                {
-                    name: 'latest',
-                    value: 'latest',
-                    description: 'Download the latest versions of all story formats',
-                },
-                {
-                    name: 'specific',
-                    value: 'specific',
-                    description: 'Download a specific version of a story format',
-                },
-            ],
-        });
-        if (answer === 'latest') {
-            // Get the latest versions of each story format.
-            await getLatestVersions(filteredDB, Object.keys(filteredDB));
-        }
-        else if (answer === 'specific') {
-            // Ask the user for the story format name.
-            const answer = await input({ message: 'Enter story format name:' });
-            // Ask the user for the version.
-            const version = await input({ message: 'Enter version:' });
-            // Get the specific version of the story format.
-            await getSpecificVersion(filteredDB, answer, version);
-        }
+    else if (answer === 'specific') {
+        // Ask the user for the story format name.
+        const formatName = await input({ message: 'Enter story format name:' });
+        // Ask the user for the version.
+        const version = await input({ message: 'Enter version:' });
+        // Get the specific version of the story format.
+        await getSpecificVersion(filteredDB, formatName, version, options);
     }
 }
 /**
+ * Set up commander.js program with commands and options
+ */
+function setupProgram() {
+    // Initialize the program
+    program = new Command();
+    // Set up commander.js program
+    program
+        .name('sfa-get')
+        .description('SFA-Get retrieves story formats from the Story Format Archive')
+        .version(packageJson.version)
+        .option('-c, --concurrency <number>', 'Number of concurrent downloads', '3')
+        .option('-r, --retries <number>', 'Number of retry attempts', '3')
+        .option('-t, --timeout <number>', 'Timeout in milliseconds', '30000')
+        .option('--no-progress', 'Disable progress indicators');
+    // List available story formats command
+    program
+        .command('list')
+        .description('List all available story formats')
+        .action(async () => {
+        try {
+            const { filteredDB } = await initializeDatabase();
+            console.log('\n📋 Available Story Formats:');
+            Object.keys(filteredDB).forEach(format => {
+                console.log(`  • ${format}`);
+            });
+        }
+        catch (error) {
+            console.error('❌ An error occurred:', error.message);
+            process.exit(1);
+        }
+    });
+    // Download latest versions command
+    program
+        .command('latest [formats...]')
+        .description('Download the latest versions of story formats (all if no formats specified)')
+        .action(async (formats) => {
+        try {
+            const downloadOptions = getDownloadOptions();
+            const { filteredDB } = await initializeDatabase();
+            const formatsToDownload = formats.length > 0 ? formats : Object.keys(filteredDB);
+            await getLatestVersions(filteredDB, formatsToDownload, downloadOptions);
+        }
+        catch (error) {
+            console.error('❌ An error occurred:', error.message);
+            process.exit(1);
+        }
+    });
+    // Download specific version command
+    program
+        .command('get <format> <version>')
+        .description('Download a specific version of a story format')
+        .action(async (format, version) => {
+        try {
+            const downloadOptions = getDownloadOptions();
+            const { filteredDB } = await initializeDatabase();
+            // Check if the format exists in the database
+            if (!Object.prototype.hasOwnProperty.call(filteredDB, format)) {
+                console.error(`❌ Story format "${format}" not found in the database.`);
+                process.exit(1);
+            }
+            if (version === 'latest') {
+                await getLatestVersions(filteredDB, [format], downloadOptions);
+            }
+            else {
+                await getSpecificVersion(filteredDB, format, version, downloadOptions);
+            }
+        }
+        catch (error) {
+            console.error('❌ An error occurred:', error.message);
+            process.exit(1);
+        }
+    });
+    // If no command is provided, run in interactive mode
+    if (process.argv.length === 2) {
+        (async () => {
+            try {
+                const downloadOptions = getDownloadOptions();
+                const { filteredDB } = await initializeDatabase();
+                await runInteractiveMode(filteredDB, downloadOptions);
+            }
+            catch (error) {
+                console.error('❌ An error occurred:', error.message);
+                process.exit(1);
+            }
+        })();
+    }
+}
+/**
+ * Get download options from command line arguments
+ */
+function getDownloadOptions(programInstance) {
+    const opts = (programInstance || program).opts();
+    return {
+        concurrency: parseInt(opts.concurrency, 10),
+        retries: parseInt(opts.retries, 10),
+        timeout: parseInt(opts.timeout, 10),
+        showProgress: opts.progress !== false
+    };
+}
+/**
+ * Initialize database by fetching and filtering
+ */
+async function initializeDatabase() {
+    const latestDatabase = await getLatestJSONDatabase();
+    const filteredDB = await filterDatabase(latestDatabase);
+    return { filteredDB };
+}
+/**
  * Main function to execute the script.
- * This function fetches the latest JSON database, filters it, and processes user input.
- * It handles errors and exits the process gracefully.
+ * This function sets up commander.js and processes arguments.
  * @returns Promise<void>
  */
 async function main() {
-    // Get the latest JSON database.
-    const latestDatabase = await getLatestJSONDatabase();
-    // Filter the database.
-    const filteredDB = await filterDatabase(latestDatabase);
-    // Process user input.
-    await processUserInput(filteredDB);
+    setupProgram();
+    program.parse();
 }
-main()
-    .then(() => {
-    // Exit the process.
-    //process.exit();
-})
-    .catch((error) => {
-    // Log the error.
-    console.error('❌ An error occurred:', error.message);
-    // Exit the process with an error code.
-});
-export { main, getLatestJSONDatabase, filterDatabase, processUserInput };
+// Only run main if this file is executed directly
+// Use a more robust check that works in both Node.js and test environments  
+const isMainModule = import.meta.url && process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
+if (isMainModule) {
+    main().catch((error) => {
+        console.error('❌ An error occurred:', error.message);
+        process.exit(1);
+    });
+}
+export { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, getDownloadOptions, setupProgram };
