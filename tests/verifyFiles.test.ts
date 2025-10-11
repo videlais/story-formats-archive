@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
 import { verifyFormatVersion, verifyAllInstalledFiles, printVerificationResults, VerificationResult } from '../src/verifyFiles.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
-import { existsSync, mkdirSync, writeFileSync, rmSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, rmSync} from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 
@@ -358,5 +358,7 @@ describe('verifyFiles', () => {
             const licenseResult = results.find(r => r.file === 'LICENSE');
             expect(licenseResult?.status).toBe('missing');
         });
+
+
     });
 });

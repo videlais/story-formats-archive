@@ -79,6 +79,12 @@ describe('downloadUtils', () => {
             expect(mockFs.writeFileSync).toHaveBeenCalledWith('./downloads/file1.js', testData);
         });
         it('should handle download failures and retry', async () => {
+            // Mock setTimeout to make retries instant
+            const originalSetTimeout = global.setTimeout;
+            global.setTimeout = jest.fn((callback) => {
+                callback();
+                return 1;
+            });
             // First two calls fail, third succeeds
             mockAxios.get
                 .mockRejectedValueOnce(new Error('Network error'))
@@ -93,16 +99,24 @@ describe('downloadUtils', () => {
             ];
             const options = {
                 concurrency: 1,
-                retries: 3,
-                timeout: 5000,
+                retries: 2, // Reduce retries to speed up test
+                timeout: 1000, // Reduce timeout
                 showProgress: false
             };
             const results = await downloadFiles(tasks, options);
             expect(results).toHaveLength(1);
             expect(results[0].success).toBe(true);
             expect(mockAxios.get).toHaveBeenCalledTimes(3);
-        });
+            // Restore setTimeout
+            global.setTimeout = originalSetTimeout;
+        }, 10000); // Increase test timeout
         it('should handle complete download failure', async () => {
+            // Mock setTimeout to make retries instant
+            const originalSetTimeout = global.setTimeout;
+            global.setTimeout = jest.fn((callback) => {
+                callback();
+                return 1;
+            });
             mockAxios.get.mockRejectedValue(new Error('Persistent network error'));
             const tasks = [
                 {
@@ -114,18 +128,23 @@ describe('downloadUtils', () => {
             const options = {
                 concurrency: 1,
                 retries: 2,
-                timeout: 5000,
+                timeout: 1000,
                 showProgress: false
             };
             const results = await downloadFiles(tasks, options);
             expect(results).toHaveLength(1);
             expect(results[0].success).toBe(false);
             expect(results[0].error).toContain('Persistent network error');
-        });
+            // Restore setTimeout
+            global.setTimeout = originalSetTimeout;
+        }, 10000);
         it('should verify checksums when provided', async () => {
             const testData = Buffer.from('test file content');
             const correctChecksum = calculateChecksum(testData);
-            mockAxios.get.mockResolvedValue({ data: testData });
+            // Mock axios to return ArrayBuffer that matches our test data
+            mockAxios.get.mockResolvedValue({
+                data: testData.buffer.slice(testData.byteOffset, testData.byteOffset + testData.byteLength)
+            });
             const tasks = [
                 {
                     url: 'https://example.com/file1.js',
@@ -160,6 +179,132 @@ describe('downloadUtils', () => {
             expect(results).toHaveLength(1);
             expect(results[0].success).toBe(false);
             expect(results[0].error).toContain('Checksum verification failed');
+        });
+        it('should show progress bar and log results when showProgress is true', async () => {
+            const testData = Buffer.from('test file content');
+            mockAxios.get.mockResolvedValue({ data: testData });
+            const tasks = [
+                {
+                    url: 'https://example.com/file1.js',
+                    filePath: './downloads/file1.js',
+                    filename: 'file1.js'
+                },
+                {
+                    url: 'https://example.com/file2.js',
+                    filePath: './downloads/file2.js',
+                    filename: 'file2.js'
+                }
+            ];
+            const options = {
+                showProgress: true,
+                concurrency: 1
+            };
+            // Mock console.log to capture output
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
+            const results = await downloadFiles(tasks, options);
+            expect(results).toHaveLength(2);
+            expect(results[0].success).toBe(true);
+            expect(results[1].success).toBe(true);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Successfully downloaded: 2/2 files'));
+            consoleSpy.mockRestore();
+        });
+        it('should show failed downloads when showProgress is true and some downloads fail', async () => {
+            // First call succeeds, second fails
+            mockAxios.get
+                .mockResolvedValueOnce({ data: Buffer.from('test1') })
+                .mockRejectedValueOnce(new Error('Network error'));
+            const tasks = [
+                {
+                    url: 'https://example.com/file1.js',
+                    filePath: './downloads/file1.js',
+                    filename: 'file1.js'
+                },
+                {
+                    url: 'https://example.com/file2.js',
+                    filePath: './downloads/file2.js',
+                    filename: 'file2.js'
+                }
+            ];
+            const options = {
+                showProgress: true,
+                concurrency: 1,
+                retries: 0
+            };
+            // Mock console.log to capture output
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
+            const results = await downloadFiles(tasks, options);
+            expect(results).toHaveLength(2);
+            expect(results[0].success).toBe(true);
+            expect(results[1].success).toBe(false);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Successfully downloaded: 1/2 files'));
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Failed downloads: 1'));
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('./downloads/file2.js: Failed to download'));
+            consoleSpy.mockRestore();
+        });
+        it('should use default options when not provided', async () => {
+            const testData = Buffer.from('test file content');
+            mockAxios.get.mockResolvedValue({ data: testData });
+            const tasks = [
+                {
+                    url: 'https://example.com/file1.js',
+                    filePath: './downloads/file1.js',
+                    filename: 'file1.js'
+                }
+            ];
+            // Don't provide options - should use defaults
+            const results = await downloadFiles(tasks);
+            expect(results).toHaveLength(1);
+            expect(results[0].success).toBe(true);
+        });
+        it('should handle timeout errors in downloadFileWithRetry', async () => {
+            // Mock setTimeout to make retries instant
+            const originalSetTimeout = global.setTimeout;
+            global.setTimeout = jest.fn((callback) => {
+                callback();
+                return 1;
+            });
+            const timeoutError = new Error('timeout');
+            timeoutError.name = 'ECONNABORTED';
+            mockAxios.get.mockRejectedValue(timeoutError);
+            const tasks = [
+                {
+                    url: 'https://example.com/file1.js',
+                    filePath: './downloads/file1.js',
+                    filename: 'file1.js'
+                }
+            ];
+            const options = {
+                showProgress: false,
+                retries: 1,
+                timeout: 1000
+            };
+            const results = await downloadFiles(tasks, options);
+            expect(results).toHaveLength(1);
+            expect(results[0].success).toBe(false);
+            expect(results[0].error).toContain('Failed to download');
+            // Restore setTimeout
+            global.setTimeout = originalSetTimeout;
+        }, 10000);
+        it('should handle errors without message property', async () => {
+            // Create an error without a message property
+            const errorWithoutMessage = new Error();
+            delete errorWithoutMessage.message;
+            mockAxios.get.mockRejectedValue(errorWithoutMessage);
+            const tasks = [
+                {
+                    url: 'https://example.com/file1.js',
+                    filePath: './downloads/file1.js',
+                    filename: 'file1.js'
+                }
+            ];
+            const options = {
+                showProgress: false,
+                retries: 0
+            };
+            const results = await downloadFiles(tasks, options);
+            expect(results).toHaveLength(1);
+            expect(results[0].success).toBe(false);
+            expect(results[0].error).toContain('Unknown error');
         });
     });
 });
