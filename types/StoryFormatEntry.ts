@@ -6,4 +6,5 @@ export interface StoryFormatEntry {
     proofing: boolean;
     description: string;
     files: string[];
+    checksums?: { [filename: string]: string };
 }

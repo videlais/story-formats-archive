@@ -1,6 +1,6 @@
 {
   "name": "sfa-get",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "SFA-Get retrieves story formats from the Story Format Archive",
   "main": "index.ts",
   "bin": {
@@ -51,7 +51,7 @@
     "@types/cli-progress": "^3.11.6",
     "@types/jest": "^30.0.0",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^24.7.1",
+    "@types/node": "^24.7.2",
     "@types/semver": "^7.7.1",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",

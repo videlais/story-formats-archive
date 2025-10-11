@@ -7,6 +7,7 @@ import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { getJSONDatabase } from './getJSONDatabase.js';
 import { getSpecificVersion } from './getSpecificVersion.js';
 import { getLatestVersions } from './getLatestVersions.js';
+import { verifyFormatVersion, verifyAllInstalledFiles, printVerificationResults } from './verifyFiles.js';
 
 import { select, input } from '@inquirer/prompts';
 import { AxiosResponse } from 'axios';
@@ -159,6 +160,7 @@ function setupProgram(): void {
     // List available story formats command
     program
         .command('list')
+        .alias('ls')
         .description('List all available story formats')
         .action(async () => {
             try {
@@ -208,6 +210,46 @@ function setupProgram(): void {
                     await getLatestVersions(filteredDB, [format], downloadOptions);
                 } else {
                     await getSpecificVersion(filteredDB, format, version, downloadOptions);
+                }
+            } catch (error) {
+                console.error('❌ An error occurred:', (error as Error).message);
+                process.exit(1);
+            }
+        });
+
+    // Verify downloaded files command
+    program
+        .command('verify [format] [version]')
+        .description('Verify downloaded files against checksums from the database')
+        .action(async (format?: string, version?: string) => {
+            try {
+                const { filteredDB } = await initializeDatabase();
+                
+                if (format && version) {
+                    // Verify specific format and version
+                    const results = verifyFormatVersion(filteredDB, format, version);
+                    printVerificationResults(results);
+                } else if (format) {
+                    // Verify all versions of a specific format
+                    const allResults = verifyAllInstalledFiles(filteredDB);
+                    const formatResults = allResults.filter(r => r.format === format);
+                    
+                    if (formatResults.length === 0) {
+                        console.log(`❌ No installed files found for format "${format}"`);
+                        process.exit(1);
+                    }
+                    
+                    printVerificationResults(formatResults);
+                } else {
+                    // Verify all installed files
+                    const results = verifyAllInstalledFiles(filteredDB);
+                    
+                    if (results.length === 0) {
+                        console.log('❌ No installed story formats found in ./story-formats directory');
+                        process.exit(1);
+                    }
+                    
+                    printVerificationResults(results);
                 }
             } catch (error) {
                 console.error('❌ An error occurred:', (error as Error).message);

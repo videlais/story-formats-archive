@@ -53,6 +53,66 @@ npx sfa-get get harlowe 3.3.9
 npx sfa-get get harlowe latest
 ```
 
+#### Verify Downloaded Files
+
+```bash
+# Verify all downloaded files against database checksums
+npx sfa-get verify
+
+# Verify all versions of a specific format
+npx sfa-get verify harlowe
+
+# Verify a specific version of a format
+npx sfa-get verify harlowe 3.3.9
+```
+
+### File Integrity Verification
+
+SFA-Get now includes SHA-256 checksum verification to ensure downloaded files are intact and haven't been corrupted during download or storage. The database includes checksums for all files:
+
+```json
+{
+    "name": "jonah",
+    "version": "1.4.2", 
+    "proofing": false,
+    "description": "",
+    "files": ["LICENSE", "code.js", "header.html"],
+    "checksums": {
+        "LICENSE": "6449c2dad1102ebce8a0f1f07c01abccc4c44d81b6f46b35f967f62373f4ba3b",
+        "code.js": "1b66dfad4f18c9e03881253d616f8574ceda35628dfa48db608ba80e84328b4a", 
+        "header.html": "a4beac5e2b240119a0cd459379e3baf948340a8aa1d16dd8ffb1dbca986aa9af"
+    }
+}
+```
+
+The verify command will check all downloaded files against their expected checksums and report any discrepancies:
+
+```bash
+🔍 File Verification Results:
+═══════════════════════════════════════════════════════════════════════════════
+
+📦 harlowe@3.3.9:
+  ✅ LICENSE - VALID
+  ✅ format.js - VALID  
+  ✅ icon.svg - VALID
+
+📦 sugarcube@2.37.3:
+  ✅ LICENSE - VALID
+  ❌ format.js - INVALID
+     Expected: abc123...
+     Actual:   def456...
+  ✅ icon.svg - VALID
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 Summary: 6 files checked
+   ✅ Valid: 5
+   ❌ Invalid: 1
+   ❓ Missing: 0
+   ⚪ No checksum: 0
+
+⚠️  Some files failed verification. Consider re-downloading them.
+```
+
 ### Interactive Mode
 
 Without any command, SFA-Get will run interactive mode:
