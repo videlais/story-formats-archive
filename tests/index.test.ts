@@ -5,6 +5,11 @@ import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { select, input } from '@inquirer/prompts';
 
+// Global mock for process.exit to prevent Jest worker crashes
+jest.spyOn(process, 'exit').mockImplementation(() => {
+    return undefined as never;
+});
+
 jest.mock('axios');
 jest.mock('@inquirer/prompts', () => ({
     select: jest.fn(),
@@ -12,6 +17,22 @@ jest.mock('@inquirer/prompts', () => ({
 }));
 
 const mockGetJSONDatabase = axios.get as jest.MockedFunction<typeof axios.get>;
+
+// Global setup to ensure process.exit mock is always active
+beforeEach(() => {
+    // Mock console functions to prevent output during tests
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+afterEach(() => {
+    // Clear all mocks but keep process.exit mock active
+    jest.clearAllMocks();
+    // Re-apply the process.exit mock to prevent worker crashes
+    jest.spyOn(process, 'exit').mockImplementation(() => {
+        return undefined as never;
+    });
+});
 
 describe('main', () => {
     beforeEach(() => {

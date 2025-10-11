@@ -2,12 +2,30 @@ import { jest } from '@jest/globals';
 import { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, setupProgram, getDownloadOptions } from '../src/index.js';
 import axios from 'axios';
 import { select, input } from '@inquirer/prompts';
+// Global mock for process.exit to prevent Jest worker crashes
+jest.spyOn(process, 'exit').mockImplementation(() => {
+    return undefined;
+});
 jest.mock('axios');
 jest.mock('@inquirer/prompts', () => ({
     select: jest.fn(),
     input: jest.fn()
 }));
 const mockGetJSONDatabase = axios.get;
+// Global setup to ensure process.exit mock is always active
+beforeEach(() => {
+    // Mock console functions to prevent output during tests
+    jest.spyOn(console, 'log').mockImplementation(() => { });
+    jest.spyOn(console, 'error').mockImplementation(() => { });
+});
+afterEach(() => {
+    // Clear all mocks but keep process.exit mock active
+    jest.clearAllMocks();
+    // Re-apply the process.exit mock to prevent worker crashes
+    jest.spyOn(process, 'exit').mockImplementation(() => {
+        return undefined;
+    });
+});
 describe('main', () => {
     beforeEach(() => {
         jest.clearAllMocks();
