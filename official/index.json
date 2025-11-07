@@ -660,9 +660,26 @@
         {
             "name": "snowman",
             "author": "Dan Cox",
+            "version": "1.5.0",
+            "proofing": false,
+            "description": "An advanced story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/1/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "icon.svg"
+            ],
+            "checksums": {
+                "LICENSE": "041da52797754260ab3b32de0fe7b20f6e18f4315281b345c518599f03b945c3",
+                "format.js": "a44d90f8b27e4d46d445a3dd7150a8678202e56228820d104e5daca5289a70ee",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
+        },
+        {
+            "name": "snowman",
+            "author": "Dan Cox",
             "version": "2.0.2",
             "proofing": false,
-            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/1/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
+            "description": "A minimal story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/2/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
             "files": [
                 "LICENSE",
                 "format.js",
@@ -671,6 +688,23 @@
             "checksums": {
                 "LICENSE": "9ab3a3490443c5d38c0c6a8b071c6aa80f5aa7da92ee60d1f02cac461a1280d3",
                 "format.js": "1c39b252739073b8f8854e803abab965da9f7f15d7f76ed6c40b72625f8071b0",
+                "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
+            }
+        },
+        {
+            "name": "snowman",
+            "author": "Dan Cox",
+            "version": "2.1.1",
+            "proofing": false,
+            "description": "An advanced story format for authors experienced with HTML, CSS, and JavaScript. See its <a href='https://videlais.github.io/snowman/2/' target='_blank' rel='noopener noreferrer'>documentation</a>.",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "icon.svg"
+            ],
+            "checksums": {
+                "LICENSE": "a3212c3b5f313bd06dfa8b57f6b3c607d9e126289134b1c6011ec30ba42ab37e",
+                "format.js": "2265af33f5de8515f99a9c68772f7fb49998cd912d2b93c2a00de3416ace0f85",
                 "icon.svg": "4df02fe123c42b7814a73620939dccf8395725673308ab92f4d3afd18596b15b"
             }
         },
