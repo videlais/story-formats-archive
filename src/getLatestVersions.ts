@@ -1,6 +1,7 @@
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import { existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import semver from 'semver';
 import { downloadFiles, createDownloadTasks, type DownloadOptions } from './downloadUtils.js';
 
@@ -12,8 +13,8 @@ const base_URL = paths.base_URL;
 function makeDirectoryIfNotExists(dir: string) {
     // Does the directory exist?
     if (!existsSync(dir)){
-        // Create the directory.
-        mkdirSync(dir);
+        // Create the directory (recursive for safety).
+        mkdirSync(dir, { recursive: true });
     }
 }
 
@@ -57,7 +58,7 @@ export async function getLatestVersions(
         return;
     }
 
-    const dir = './story-formats';
+    const dir = resolve('./story-formats');
     makeDirectoryIfNotExists(dir);
 
     // Filter latestVersions based on the formats array.

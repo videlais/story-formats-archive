@@ -1,10 +1,12 @@
 import { getSpecificVersion } from '../src/getSpecificVersion.js';
 import * as downloadUtils from '../src/downloadUtils.js';
 import * as fs from 'node:fs';
+import { resolve } from 'node:path';
 jest.mock('../src/downloadUtils.js');
 jest.mock('node:fs');
 const mockFs = fs;
 const mockDownloadUtils = downloadUtils;
+const SF = resolve('./story-formats');
 describe('getSpecificVersion', () => {
     const filteredDB = {
         'format1': [
@@ -85,9 +87,9 @@ describe('getSpecificVersion', () => {
     it('should create directories if they do not exist', async () => {
         mockFs.existsSync.mockReturnValue(false);
         await getSpecificVersion(filteredDB, 'format1', '2.0');
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats');
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats/format1');
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats/format1/2.0');
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(SF, { recursive: true });
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(`${SF}/format1`, { recursive: true });
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(`${SF}/format1/2.0`, { recursive: true });
     });
     it('should handle download options', async () => {
         const options = { concurrency: 5, retries: 2, timeout: 10000, showProgress: false };

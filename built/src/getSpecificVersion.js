@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { downloadFiles, createDownloadTasks } from './downloadUtils.js';
-import paths from './paths.js';
+import paths, { validatePathComponent } from './paths.js';
 // Define the base URL.
 const base_URL = paths.base_URL;
 /**
@@ -10,8 +11,8 @@ const base_URL = paths.base_URL;
 function makeDirectoryIfNotExists(dir) {
     // Does the directory exist?
     if (!existsSync(dir)) {
-        // Create the directory.
-        mkdirSync(dir);
+        // Create the directory (recursive for safety).
+        mkdirSync(dir, { recursive: true });
     }
 }
 /**
@@ -24,7 +25,7 @@ function makeDirectoryIfNotExists(dir) {
  */
 export async function getSpecificVersion(filteredDB, name, version, options = {}) {
     // Does 'name' exist in the database?
-    if (Object.prototype.hasOwnProperty.call(filteredDB, name) == false) {
+    if (Object.prototype.hasOwnProperty.call(filteredDB, name) === false) {
         console.error(`❌ Story format ${name} not found.`);
         return;
     }
@@ -41,7 +42,10 @@ export async function getSpecificVersion(filteredDB, name, version, options = {}
         console.log(`✅ Found version ${version} for ${name}.`);
         files = format.files;
     }
-    const dir = './story-formats';
+    const dir = resolve('./story-formats');
+    // Validate path components
+    validatePathComponent(name);
+    validatePathComponent(version);
     // Make the directory if it doesn't exist.
     makeDirectoryIfNotExists(dir);
     const dirName = `${dir}/${name}`;
@@ -50,7 +54,7 @@ export async function getSpecificVersion(filteredDB, name, version, options = {}
     const versionDir = `${dirName}/${version}`;
     makeDirectoryIfNotExists(versionDir);
     // Create download tasks for all files
-    const downloadTasks = createDownloadTasks(base_URL, name, version, files, './story-formats');
+    const downloadTasks = createDownloadTasks(base_URL, name, version, files, dir);
     // Download all files concurrently
     if (downloadTasks.length > 0) {
         const downloadResults = await downloadFiles(downloadTasks, options);

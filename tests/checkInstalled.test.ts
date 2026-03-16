@@ -1,8 +1,11 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { checkInstalled } from '../src/checkInstalled.js';
 import * as fs from 'node:fs';
+import { resolve } from 'node:path';
 
 jest.mock('node:fs');
+
+const SF = resolve('./story-formats');
 
 describe('checkInstalled', () => {
     let consoleLogSpy: jest.Spied<typeof console.log>;
@@ -20,7 +23,7 @@ describe('checkInstalled', () => {
     });
 
     it('should print message if story-formats directory exists but is empty', () => {
-        (fs.existsSync as jest.Mock).mockImplementation((path) => path === './story-formats');
+        (fs.existsSync as jest.Mock).mockImplementation((path) => path === SF);
         (fs.readdirSync as jest.Mock).mockReturnValue([]);
 
         checkInstalled();
@@ -29,9 +32,9 @@ describe('checkInstalled', () => {
     });
 
     it('should detect format.js directly under story-formats', () => {
-        (fs.existsSync as jest.Mock).mockImplementation((path) => path === './story-formats' || path === './story-formats/format.js');
+        (fs.existsSync as jest.Mock).mockImplementation((path) => path === SF || path === `${SF}/format.js`);
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
             return [];
@@ -45,14 +48,14 @@ describe('checkInstalled', () => {
 
     it('should detect format.js inside a format directory', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatA/format.js'
+            path === SF ||
+            path === `${SF}/formatA/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => false, isDirectory: () => true, name: 'formatA' }];
             }
-            if (path === './story-formats/formatA') {
+            if (path === `${SF}/formatA`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
             return [];
@@ -66,14 +69,14 @@ describe('checkInstalled', () => {
 
     it('should detect format.js inside a versioned subdirectory', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatB/1.0.1/format.js'
+            path === SF ||
+            path === `${SF}/formatB/1.0.1/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => false, isDirectory: () => true, name: 'formatB' }];
             }
-            if (path === './story-formats/formatB') {
+            if (path === `${SF}/formatB`) {
                 return [{ isFile: () => false, isDirectory: () => true, name: '1.0.1' }];
             }
             return [];
@@ -86,9 +89,9 @@ describe('checkInstalled', () => {
     });
 
     it('should skip files without version in story-formats directory', () => {
-        (fs.existsSync as jest.Mock).mockImplementation((path => path === './story-formats' || path === './story-formats/format.js'));
+        (fs.existsSync as jest.Mock).mockImplementation((path => path === SF || path === `${SF}/format.js`));
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
             return [];
@@ -102,14 +105,14 @@ describe('checkInstalled', () => {
 
     it('should skip files without version in story-formats/formatA directory', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatA/format.js'
+            path === SF ||
+            path === `${SF}/formatA/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => false, isDirectory: () => true, name: 'formatA' }];
             }
-            if (path === './story-formats/formatA') {
+            if (path === `${SF}/formatA`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
             return [];
@@ -123,14 +126,14 @@ describe('checkInstalled', () => {
 
     it('should skip files without version in story-formats/formatB/1.0.0 directory', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatB/1.0.0/format.js'
+            path === SF ||
+            path === `${SF}/formatB/1.0.0/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => false, isDirectory: () => true, name: 'formatB' }];
             }
-            if (path === './story-formats/formatB') {
+            if (path === `${SF}/formatB`) {
                 return [{ isFile: () => false, isDirectory: () => true, name: '1.0.0' }];
             }
             return [];
@@ -144,21 +147,21 @@ describe('checkInstalled', () => {
 
     it('should list multiple formats', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatA/format.js' ||
-            path === './story-formats/formatB/1.0.0/format.js'
+            path === SF ||
+            path === `${SF}/formatA/format.js` ||
+            path === `${SF}/formatB/1.0.0/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [
                     { isFile: () => false, isDirectory: () => true, name: 'formatA' },
                     { isFile: () => false, isDirectory: () => true, name: 'formatB' }
                 ];
             }
-            if (path === './story-formats/formatA') {
+            if (path === `${SF}/formatA`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
-            if (path === './story-formats/formatB') {
+            if (path === `${SF}/formatB`) {
                 return [{ isFile: () => false, isDirectory: () => true, name: '1.0.0' }];
             }
             return [];
@@ -179,29 +182,29 @@ describe('checkInstalled', () => {
 
     it('should handle when story-formats directory contains format.js file, the story format directory contains a format.js file, and there is a version directory that also contains a format.js file', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/format.js' ||
-            path === './story-formats/formatC/format.js' ||
-            path === './story-formats/formatD/1.2.3/format.js'
+            path === SF ||
+            path === `${SF}/format.js` ||
+            path === `${SF}/formatC/format.js` ||
+            path === `${SF}/formatD/1.2.3/format.js`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [
                     { isFile: () => true, isDirectory: () => false, name: 'format.js' },
                     { isFile: () => false, isDirectory: () => true, name: 'formatC' },
                     { isFile: () => false, isDirectory: () => true, name: 'formatD' }
                 ];
             }
-            if (path === './story-formats/formatC') {
+            if (path === `${SF}/formatC`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
-            if (path === './story-formats/formatD') {
+            if (path === `${SF}/formatD`) {
                 return [{ isFile: () => false, isDirectory: () => true, name: '1.2.3' }];
             }
-            if (path === './story-formats/formatD/1.2.3') {
+            if (path === `${SF}/formatD/1.2.3`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
-            if (path === './story-formats/format.js') {
+            if (path === `${SF}/format.js`) {
                 return [{ isFile: () => true, isDirectory: () => false, name: 'format.js' }];
             }
             return [];
@@ -233,18 +236,18 @@ describe('checkInstalled', () => {
 
     it('should handle searching story-formats, story-formats/formatA, and story-formats/formatB/1.0.0 when none of them have a format.js file', () => {
         (fs.existsSync as jest.Mock).mockImplementation((path) =>
-            path === './story-formats' ||
-            path === './story-formats/formatA' ||
-            path === './story-formats/formatB/1.0.0'
+            path === SF ||
+            path === `${SF}/formatA` ||
+            path === `${SF}/formatB/1.0.0`
         );
         (fs.readdirSync as jest.Mock).mockImplementation((path) => {
-            if (path === './story-formats') {
+            if (path === SF) {
                 return [{ isFile: () => false, isDirectory: () => true, name: 'formatA' }, { isFile: () => false, isDirectory: () => true, name: 'formatB' }];
             }
-            if (path === './story-formats/formatA') {
+            if (path === `${SF}/formatA`) {
                 return [];
             }
-            if (path === './story-formats/formatB') {
+            if (path === `${SF}/formatB`) {
                 return [{ isFile: () => false, isDirectory: () => true, name: '1.0.0' }];
             }
             return [];

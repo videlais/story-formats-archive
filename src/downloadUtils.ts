@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { writeFileSync } from 'node:fs';
 import pLimit from 'p-limit';
 import * as cliProgress from 'cli-progress';
+import { validatePathComponent, ensureWithinBaseDir } from './paths.js';
 
 export interface DownloadOptions {
     concurrency?: number;
@@ -66,13 +67,13 @@ async function downloadFileWithRetry(
             
             if (attempt < retries) {
                 const delay = getBackoffDelay(attempt);
-                console.log(`⚠️ Download failed for ${url}, retrying in ${delay}ms... (attempt ${attempt + 1}/${retries + 1})`);
+                console.log(`⚠️ Download failed, retrying in ${delay}ms... (attempt ${attempt + 1}/${retries + 1})`);
                 await sleep(delay);
             }
         }
     }
     
-    throw new Error(`Failed to download ${url} after ${retries + 1} attempts: ${lastError?.message || 'Unknown error'}`);
+    throw new Error(`Failed to download after ${retries + 1} attempts: ${lastError?.message || 'Unknown error'}`);
 }
 
 /**
@@ -136,8 +137,10 @@ export async function downloadFiles(
                     timeout
                 );
                 
-                // Verify checksum if provided
-                if (task.expectedChecksum && !verifyChecksum(data, task.expectedChecksum)) {
+                // Verify checksum
+                if (!task.expectedChecksum) {
+                    console.warn(`⚠️ No checksum available for ${task.filename}, skipping integrity verification`);
+                } else if (!verifyChecksum(data, task.expectedChecksum)) {
                     throw new Error(`Checksum verification failed for ${task.filename}`);
                 }
                 
@@ -201,9 +204,31 @@ export function createDownloadTasks(
     files: string[],
     baseDir: string
 ): DownloadTask[] {
-    return files.map(file => ({
-        url: `${baseUrl}/${format}/${version}/${file}`,
-        filePath: `${baseDir}/${format}/${version}/${file}`,
-        filename: file
-    }));
+    // Validate path components to prevent directory traversal
+    validatePathComponent(format);
+    validatePathComponent(version);
+
+    // Parse the expected hostname from the base URL for SSRF prevention
+    const expectedHost = new URL(baseUrl).hostname;
+
+    return files.map(file => {
+        validatePathComponent(file);
+
+        const filePath = `${baseDir}/${format}/${version}/${file}`;
+        // Ensure the resolved path stays within the base directory
+        ensureWithinBaseDir(filePath, baseDir);
+
+        const url = `${baseUrl}/${format}/${version}/${file}`;
+        // Validate URL hostname matches expected origin
+        const parsedUrl = new URL(url);
+        if (parsedUrl.hostname !== expectedHost) {
+            throw new Error('URL hostname mismatch detected');
+        }
+
+        return {
+            url,
+            filePath,
+            filename: file
+        };
+    });
 }

@@ -1,7 +1,8 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { calculateChecksum } from './downloadUtils.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
+import { validatePathComponent, ensureWithinBaseDir } from './paths.js';
 
 export interface VerificationResult {
     format: string;
@@ -38,6 +39,11 @@ export function verifyFormatVersion(
     storyFormatsDir = './story-formats'
 ): VerificationResult[] {
     const results: VerificationResult[] = [];
+    const resolvedDir = resolve(storyFormatsDir);
+
+    // Validate path components to prevent directory traversal
+    validatePathComponent(formatName);
+    validatePathComponent(version);
     
     // Check if format exists in database
     if (!filteredDB[formatName]) {
@@ -51,7 +57,9 @@ export function verifyFormatVersion(
 
     // Verify each file
     for (const filename of formatEntry.files) {
-        const filePath = join(storyFormatsDir, formatName, version, filename);
+        validatePathComponent(filename);
+        const filePath = join(resolvedDir, formatName, version, filename);
+        ensureWithinBaseDir(filePath, resolvedDir);
         const expectedChecksum = formatEntry.checksums?.[filename];
 
         const result: VerificationResult = {

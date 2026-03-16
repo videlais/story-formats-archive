@@ -1,4 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 /**
  * Checks if any story format files are installed using the following structure:
  * (A) `story-formats/format.js`, (B) `story-formats/<format-name>/format.js`, or
@@ -10,8 +11,8 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
  */
 export function checkInstalled() {
     // Check if the 'story-formats' directory exists in the current working directory.
-    const storyFormatsPath = './story-formats';
-    if (existsSync(storyFormatsPath) == false) {
+    const storyFormatsPath = resolve('./story-formats');
+    if (existsSync(storyFormatsPath) === false) {
         console.log('❌ There are no story formats installed.');
         return;
     }
@@ -27,14 +28,14 @@ export function checkInstalled() {
     // Each directory will contain a format.js file, which contains the version of the format.
     entries.forEach((dirent) => {
         // Is this a file?
-        if (dirent.isFile() && dirent.name == "format.js") {
+        if (dirent.isFile() && dirent.name === "format.js") {
             // Based on its path, read the file and check for a version.
             const filePath = `${storyFormatsPath}/${dirent.name}`;
             // Check the version of the format.
             const version = checkVersionOfFormat(filePath);
             // If a version was found, add it to the list.
             // If no version was found, skip the file.
-            if (version != "") {
+            if (version !== "") {
                 installedFormats.push(`${dirent.name} (version: ${version})`);
             }
         }
@@ -48,10 +49,10 @@ export function checkInstalled() {
             let foundFormat = false;
             // For every entry in the subdirectory, check if it is "format.js".
             subEntries.forEach((subDirent) => {
-                if (subDirent.isFile() && subDirent.name == "format.js") {
+                if (subDirent.isFile() && subDirent.name === "format.js") {
                     const filePath = `${subDirPath}/${subDirent.name}`;
                     const version = checkVersionOfFormat(filePath);
-                    if (version != "") {
+                    if (version !== "") {
                         installedFormats.push(`${dirent.name} (version: ${version})`);
                         foundFormat = true;
                     }
@@ -61,7 +62,7 @@ export function checkInstalled() {
                 if (!foundFormat && subDirent.isDirectory()) {
                     const versionPath = `${subDirPath}/${subDirent.name}/format.js`;
                     const version = checkVersionOfFormat(versionPath);
-                    if (version != "") {
+                    if (version !== "") {
                         installedFormats.push(`${dirent.name} (version: ${version})`);
                         foundFormat = true;
                     }

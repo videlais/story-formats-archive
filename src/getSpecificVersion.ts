@@ -1,8 +1,9 @@
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { downloadFiles, createDownloadTasks, type DownloadOptions } from './downloadUtils.js';
 
-import paths from './paths.js';
+import paths, { validatePathComponent } from './paths.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 
 // Define the base URL.
@@ -15,8 +16,8 @@ const base_URL = paths.base_URL;
 function makeDirectoryIfNotExists(dir: string) {
     // Does the directory exist?
     if (!existsSync(dir)){
-        // Create the directory.
-        mkdirSync(dir);
+        // Create the directory (recursive for safety).
+        mkdirSync(dir, { recursive: true });
     }
 }
 
@@ -36,7 +37,7 @@ export async function getSpecificVersion(
 ) {
 
     // Does 'name' exist in the database?
-    if (Object.prototype.hasOwnProperty.call(filteredDB, name) == false) {
+    if (Object.prototype.hasOwnProperty.call(filteredDB, name) === false) {
         console.error(`❌ Story format ${name} not found.`);
         return;
     }
@@ -56,7 +57,10 @@ export async function getSpecificVersion(
         files = format.files;
     }
 
-    const dir:string = './story-formats';
+    const dir:string = resolve('./story-formats');
+    // Validate path components
+    validatePathComponent(name);
+    validatePathComponent(version);
     // Make the directory if it doesn't exist.
     makeDirectoryIfNotExists(dir);
 
@@ -73,7 +77,7 @@ export async function getSpecificVersion(
         name,
         version,
         files,
-        './story-formats'
+        dir
     );
 
     // Download all files concurrently

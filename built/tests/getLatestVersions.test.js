@@ -1,10 +1,12 @@
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import * as downloadUtils from '../src/downloadUtils.js';
 import * as fs from 'node:fs';
+import { resolve } from 'node:path';
 jest.mock('../src/downloadUtils.js');
 jest.mock('node:fs');
 const mockFs = fs;
 const mockDownloadUtils = downloadUtils;
+const SF = resolve('./story-formats');
 describe('getLatestVersions', () => {
     const filteredDB = {
         'format1': [
@@ -97,8 +99,8 @@ describe('getLatestVersions', () => {
     it('should create directories for formats', async () => {
         mockFs.existsSync.mockReturnValue(false);
         await getLatestVersions(filteredDB, ['format1', 'format2']);
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats');
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats/format1');
-        expect(mockFs.mkdirSync).toHaveBeenCalledWith('./story-formats/format2');
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(SF, { recursive: true });
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(`${SF}/format1`, { recursive: true });
+        expect(mockFs.mkdirSync).toHaveBeenCalledWith(`${SF}/format2`, { recursive: true });
     });
 });

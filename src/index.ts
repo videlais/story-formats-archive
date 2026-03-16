@@ -62,7 +62,7 @@ async function getLatestJSONDatabase(): Promise<StoryFormatEntry[]> {
     const officialDatabase: OfficialDatabase = officialDatabasePromise.data as OfficialDatabase;
 
     // Check if the official database has the 'twine2' property.
-    if (Object.prototype.hasOwnProperty.call(officialDatabase, 'twine2') == false) {
+    if (Object.prototype.hasOwnProperty.call(officialDatabase, 'twine2') === false) {
         throw new Error('❌ Official database does not contain "twine2" listing.');
     }
 
@@ -279,10 +279,13 @@ function setupProgram(): void {
  */
 function getDownloadOptions(programInstance?: Command): DownloadOptions {
     const opts = (programInstance || program).opts();
+    const concurrency = parseInt(opts.concurrency, 10);
+    const retries = parseInt(opts.retries, 10);
+    const timeout = parseInt(opts.timeout, 10);
     return {
-        concurrency: parseInt(opts.concurrency, 10),
-        retries: parseInt(opts.retries, 10),
-        timeout: parseInt(opts.timeout, 10),
+        concurrency: Math.max(1, Math.min(Number.isFinite(concurrency) ? concurrency : 3, 20)),
+        retries: Math.max(0, Math.min(Number.isFinite(retries) ? retries : 3, 10)),
+        timeout: Math.max(1000, Math.min(Number.isFinite(timeout) ? timeout : 30000, 120000)),
         showProgress: opts.progress !== false
     };
 }

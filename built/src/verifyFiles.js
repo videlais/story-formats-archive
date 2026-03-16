@@ -1,6 +1,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { calculateChecksum } from './downloadUtils.js';
+import { validatePathComponent, ensureWithinBaseDir } from './paths.js';
 /**
  * Verify a single file against its expected checksum
  */
@@ -18,6 +19,10 @@ function verifyFile(filePath, expectedChecksum) {
  */
 export function verifyFormatVersion(filteredDB, formatName, version, storyFormatsDir = './story-formats') {
     const results = [];
+    const resolvedDir = resolve(storyFormatsDir);
+    // Validate path components to prevent directory traversal
+    validatePathComponent(formatName);
+    validatePathComponent(version);
     // Check if format exists in database
     if (!filteredDB[formatName]) {
         throw new Error(`Story format "${formatName}" not found in database`);
@@ -28,7 +33,9 @@ export function verifyFormatVersion(filteredDB, formatName, version, storyFormat
     }
     // Verify each file
     for (const filename of formatEntry.files) {
-        const filePath = join(storyFormatsDir, formatName, version, filename);
+        validatePathComponent(filename);
+        const filePath = join(resolvedDir, formatName, version, filename);
+        ensureWithinBaseDir(filePath, resolvedDir);
         const expectedChecksum = formatEntry.checksums?.[filename];
         const result = {
             format: formatName,

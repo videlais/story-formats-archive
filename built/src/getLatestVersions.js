@@ -1,4 +1,5 @@
 import { existsSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import semver from 'semver';
 import { downloadFiles, createDownloadTasks } from './downloadUtils.js';
 import paths from './paths.js';
@@ -7,8 +8,8 @@ const base_URL = paths.base_URL;
 function makeDirectoryIfNotExists(dir) {
     // Does the directory exist?
     if (!existsSync(dir)) {
-        // Create the directory.
-        mkdirSync(dir);
+        // Create the directory (recursive for safety).
+        mkdirSync(dir, { recursive: true });
     }
 }
 /**
@@ -43,7 +44,7 @@ export async function getLatestVersions(filteredDB, formats, options = {}) {
         console.error('❌ No story formats found in the database.');
         return;
     }
-    const dir = './story-formats';
+    const dir = resolve('./story-formats');
     makeDirectoryIfNotExists(dir);
     // Filter latestVersions based on the formats array.
     latestVersions = Object.keys(latestVersions).reduce((acc, key) => {
