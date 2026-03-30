@@ -89,10 +89,8 @@ async function filterDatabase(database: StoryFormatEntry[]): Promise<FilteredDat
 
     // Based on the names, create a filtered database.
     Object.keys(twine2ByName).forEach((storyFormatName:string) => {
-        // Create temporary array to hold the filtered items.
-        let tempArray:StoryFormatEntry[] = [];
         // Filter based on the name.
-        tempArray = database.filter((item:StoryFormatEntry) => {
+        const tempArray:StoryFormatEntry[] = database.filter((item:StoryFormatEntry) => {
             return item.name === storyFormatName;
         });
         // Add the filtered array to the filtered database.
