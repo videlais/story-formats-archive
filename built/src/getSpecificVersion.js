@@ -29,7 +29,6 @@ export async function getSpecificVersion(filteredDB, name, version, options = {}
         console.error(`❌ Story format ${name} not found.`);
         return;
     }
-    let files = [];
     // Search for the specific version in the database.
     // 'filteredDB[name]' is an array of StoryFormatEntry objects.
     const format = filteredDB[name].find((item) => item.version === version);
@@ -38,10 +37,8 @@ export async function getSpecificVersion(filteredDB, name, version, options = {}
         console.error(`❌ Version ${version} for ${name} not found.`);
         return;
     }
-    else {
-        console.log(`✅ Found version ${version} for ${name}.`);
-        files = format.files;
-    }
+    console.log(`✅ Found version ${version} for ${name}.`);
+    const files = format.files;
     const dir = resolve('./story-formats');
     // Validate path components
     validatePathComponent(name);

@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { getSpecificVersion } from '../src/getSpecificVersion.js';
 import * as downloadUtils from '../src/downloadUtils.js';
 import * as fs from 'node:fs';
@@ -41,7 +42,7 @@ describe('getSpecificVersion', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockFs.existsSync.mockReturnValue(true);
-        mockFs.mkdirSync.mockImplementation();
+        mockFs.mkdirSync.mockImplementation(() => undefined);
         mockDownloadUtils.downloadFiles.mockResolvedValue([
             { success: true, filePath: './story-formats/format1/2.0/file3.js' },
             { success: true, filePath: './story-formats/format1/2.0/file4.js' }
@@ -64,7 +65,7 @@ describe('getSpecificVersion', () => {
         expect(tasks.every((task) => task.url.includes('format1/2.0'))).toBe(true);
     });
     it('should handle a non-existent story format name', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
         const nonExistentName = 'nonExistentFormat';
         await getSpecificVersion(filteredDB, nonExistentName, '1.0');
         expect(consoleSpy).toHaveBeenCalledWith(`❌ Story format ${nonExistentName} not found.`);
@@ -72,7 +73,7 @@ describe('getSpecificVersion', () => {
         consoleSpy.mockRestore();
     });
     it('should handle a non-existent version for a story format', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
         const nonExistentVersion = 'nonExistentVersion';
         await getSpecificVersion(filteredDB, 'format1', nonExistentVersion);
         expect(consoleSpy).toHaveBeenCalledWith(`❌ Version ${nonExistentVersion} for format1 not found.`);
@@ -97,7 +98,7 @@ describe('getSpecificVersion', () => {
         expect(mockDownloadUtils.downloadFiles).toHaveBeenCalledWith(expect.any(Array), options);
     });
     it('should log successful downloads', async () => {
-        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
         await getSpecificVersion(filteredDB, 'format1', '2.0');
         expect(consoleSpy).toHaveBeenCalledWith('✅ Found version 2.0 for format1.');
         expect(consoleSpy).toHaveBeenCalledWith('\tDownloaded file3.js to ./story-formats/format1/2.0/file3.js');

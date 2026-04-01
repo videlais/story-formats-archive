@@ -1,3 +1,4 @@
+import { describe, it, expect, jest } from '@jest/globals';
 import axios from 'axios';
 import { getJSONDatabase } from '../src/getJSONDatabase.js';
 
@@ -9,7 +10,7 @@ describe('getJSONDatabase', () => {
     it('should return data when the request is successful', async () => {
        const mockData = { data: { key: 'value' } };
         
-        (axios.get as jest.Mock).mockResolvedValue(mockData); 
+        jest.mocked(axios.get).mockResolvedValue(mockData); 
 
         const result = await getJSONDatabase(path);
         expect(result).toEqual(mockData);
@@ -17,7 +18,7 @@ describe('getJSONDatabase', () => {
 
     it('should throw an error when the request fails', async () => {
         const errorMessage = 'Network Error';
-        (axios.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+        jest.mocked(axios.get).mockRejectedValue(new Error(errorMessage));
 
         await expect(getJSONDatabase(path)).rejects.toThrow(errorMessage);
     });

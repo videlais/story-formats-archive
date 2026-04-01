@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { getSpecificVersion } from '../src/getSpecificVersion.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import * as downloadUtils from '../src/downloadUtils.js';
@@ -46,7 +47,7 @@ describe('getSpecificVersion', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockFs.existsSync.mockReturnValue(true);
-        mockFs.mkdirSync.mockImplementation();
+        mockFs.mkdirSync.mockImplementation(() => undefined as never);
         mockDownloadUtils.downloadFiles.mockResolvedValue([
             { success: true, filePath: './story-formats/format1/2.0/file3.js' },
             { success: true, filePath: './story-formats/format1/2.0/file4.js' }
@@ -74,7 +75,7 @@ describe('getSpecificVersion', () => {
     });
 
     it('should handle a non-existent story format name', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         const nonExistentName = 'nonExistentFormat';
         
         await getSpecificVersion(filteredDB, nonExistentName, '1.0');
@@ -86,7 +87,7 @@ describe('getSpecificVersion', () => {
     });
 
     it('should handle a non-existent version for a story format', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         const nonExistentVersion = 'nonExistentVersion';
         
         await getSpecificVersion(filteredDB, 'format1', nonExistentVersion);
@@ -127,7 +128,7 @@ describe('getSpecificVersion', () => {
     });
 
     it('should log successful downloads', async () => {
-        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
         
         await getSpecificVersion(filteredDB, 'format1', '2.0');
         

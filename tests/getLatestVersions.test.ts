@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import * as downloadUtils from '../src/downloadUtils.js';
@@ -46,7 +47,7 @@ describe('getLatestVersions', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockFs.existsSync.mockReturnValue(true);
-        mockFs.mkdirSync.mockImplementation();
+        mockFs.mkdirSync.mockImplementation(() => undefined as never);
         mockDownloadUtils.downloadFiles.mockResolvedValue([
             { success: true, filePath: './story-formats/format1/2.0.0/file3.js' },
             { success: true, filePath: './story-formats/format1/2.0.0/file4.js' },
@@ -85,7 +86,7 @@ describe('getLatestVersions', () => {
     });
 
     it('should handle formats with no versions', async () => {
-        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
         const noVersionDB: FilteredDatabase = {
             'format1': []
         };

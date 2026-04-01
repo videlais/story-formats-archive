@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
+import { describe, expect, test, beforeEach, afterEach, jest } from '@jest/globals';
 import { verifyFormatVersion, verifyAllInstalledFiles, printVerificationResults } from '../src/verifyFiles.js';
 import { existsSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -173,7 +173,7 @@ describe('verifyFiles', () => {
     describe('printVerificationResults', () => {
         let consoleSpy;
         beforeEach(() => {
-            consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
         });
         afterEach(() => {
             consoleSpy.mockRestore();

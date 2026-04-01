@@ -63,10 +63,8 @@ async function filterDatabase(database) {
     const filteredDB = {};
     // Based on the names, create a filtered database.
     Object.keys(twine2ByName).forEach((storyFormatName) => {
-        // Create temporary array to hold the filtered items.
-        let tempArray = [];
         // Filter based on the name.
-        tempArray = database.filter((item) => {
+        const tempArray = database.filter((item) => {
             return item.name === storyFormatName;
         });
         // Add the filtered array to the filtered database.

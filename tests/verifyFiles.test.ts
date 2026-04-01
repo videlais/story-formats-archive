@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
+import { describe, expect, test, beforeEach, afterEach, jest } from '@jest/globals';
 import { verifyFormatVersion, verifyAllInstalledFiles, printVerificationResults, VerificationResult } from '../src/verifyFiles.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
@@ -214,10 +214,10 @@ describe('verifyFiles', () => {
     });
 
     describe('printVerificationResults', () => {
-        let consoleSpy: jest.SpyInstance;
+        let consoleSpy: ReturnType<typeof jest.spyOn>;
 
         beforeEach(() => {
-            consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
         });
 
         afterEach(() => {

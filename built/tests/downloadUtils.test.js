@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { downloadFiles, createDownloadTasks, calculateChecksum, verifyChecksum } from '../src/downloadUtils.js';
 import axios from 'axios';
 import * as fs from 'node:fs';

@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { getLatestVersions } from '../src/getLatestVersions.js';
 import * as downloadUtils from '../src/downloadUtils.js';
 import * as fs from 'node:fs';
@@ -41,7 +42,7 @@ describe('getLatestVersions', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockFs.existsSync.mockReturnValue(true);
-        mockFs.mkdirSync.mockImplementation();
+        mockFs.mkdirSync.mockImplementation(() => undefined);
         mockDownloadUtils.downloadFiles.mockResolvedValue([
             { success: true, filePath: './story-formats/format1/2.0.0/file3.js' },
             { success: true, filePath: './story-formats/format1/2.0.0/file4.js' },
@@ -73,7 +74,7 @@ describe('getLatestVersions', () => {
         expect(mockDownloadUtils.downloadFiles).not.toHaveBeenCalled();
     });
     it('should handle formats with no versions', async () => {
-        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => { });
         const noVersionDB = {
             'format1': []
         };
