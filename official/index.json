@@ -198,6 +198,23 @@
                 "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
             }
         },
+         {
+            "name": "chapbook",
+            "author": "Chris Klimas",
+            "version": "2.3.1",
+            "proofing": false,
+            "description": "A Twine story format emphasizing ease of authoring, multimedia, and playability on many different types of devices. Visit the <a href=\"https://klembot.github.io/chapbook/guide/\">guide</a> for more information.",
+            "files": [
+                "LICENSE",
+                "format.js",
+                "logo.svg"
+            ],
+            "checksums": {
+                "LICENSE": "ba02438bbb6d84bcef2bab40b6c4779bf7b1f4e80c78e16b90389e7fdba6612b",
+                "format.js": "a3a4d223ba57d7e04f103ff838b44057f7de385f21d8e59f253dc8b2c18523ca",
+                "logo.svg": "d1988bb300924742eba863508739e267a4b5536ccba742834c81c3d0ba595695"
+            }
+        },
         {
             "name": "harlowe",
             "author": "Leon Arnott",
