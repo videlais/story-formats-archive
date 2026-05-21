@@ -264,7 +264,7 @@ async function initializeDatabase() {
  */
 async function main() {
     setupProgram();
-    program.parse();
+    await program.parseAsync();
 }
 // Only run main if this file is executed directly
 // Use a more robust check that works in both Node.js and test environments  
@@ -275,4 +275,4 @@ if (isMainModule) {
         process.exit(1);
     });
 }
-export { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, getDownloadOptions, setupProgram };
+export { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, getDownloadOptions, setupProgram, program };

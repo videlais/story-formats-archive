@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, setupProgram, getDownloadOptions } from '../src/index.js';
+import { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, setupProgram, getDownloadOptions, program } from '../src/index.js';
 import axios from 'axios';
 import { StoryFormatEntry } from '../types/StoryFormatEntry.js';
 import { FilteredDatabase } from '../types/FilteredDatabase.js';
@@ -276,6 +276,70 @@ describe('setupProgram', () => {
     });
 });
 
+describe('getDownloadOptions - boundary clamping', () => {
+    function makeOpts(overrides: Record<string, unknown>) {
+        return {
+            opts: jest.fn().mockReturnValue({
+                concurrency: '3',
+                retries: '3',
+                timeout: '30000',
+                progress: true,
+                ...overrides
+            })
+        } as unknown as Parameters<typeof getDownloadOptions>[0];
+    }
+
+    it('should clamp concurrency below 1 up to 1', () => {
+        const result = getDownloadOptions(makeOpts({ concurrency: '0' }));
+        expect(result.concurrency).toBe(1);
+    });
+
+    it('should clamp concurrency above 20 down to 20', () => {
+        const result = getDownloadOptions(makeOpts({ concurrency: '999' }));
+        expect(result.concurrency).toBe(20);
+    });
+
+    it('should use default concurrency of 3 for a NaN value', () => {
+        const result = getDownloadOptions(makeOpts({ concurrency: 'abc' }));
+        expect(result.concurrency).toBe(3);
+    });
+
+    it('should clamp retries below 0 up to 0', () => {
+        const result = getDownloadOptions(makeOpts({ retries: '-5' }));
+        expect(result.retries).toBe(0);
+    });
+
+    it('should clamp retries above 10 down to 10', () => {
+        const result = getDownloadOptions(makeOpts({ retries: '100' }));
+        expect(result.retries).toBe(10);
+    });
+
+    it('should use default retries of 3 for a NaN value', () => {
+        const result = getDownloadOptions(makeOpts({ retries: 'abc' }));
+        expect(result.retries).toBe(3);
+    });
+
+    it('should clamp timeout below 1000 up to 1000', () => {
+        const result = getDownloadOptions(makeOpts({ timeout: '50' }));
+        expect(result.timeout).toBe(1000);
+    });
+
+    it('should clamp timeout above 120000 down to 120000', () => {
+        const result = getDownloadOptions(makeOpts({ timeout: '999999' }));
+        expect(result.timeout).toBe(120000);
+    });
+
+    it('should use default timeout of 30000 for a NaN value', () => {
+        const result = getDownloadOptions(makeOpts({ timeout: 'abc' }));
+        expect(result.timeout).toBe(30000);
+    });
+
+    it('should set showProgress to false when progress option is false', () => {
+        const result = getDownloadOptions(makeOpts({ progress: false }));
+        expect(result.showProgress).toBe(false);
+    });
+});
+
 describe('package.json handling', () => {
     it('should handle package.json loading gracefully', () => {
         // This tests the fallback mechanism when package.json can't be loaded
@@ -346,6 +410,184 @@ describe('CLI command integration', () => {
         } finally {
             process.argv = originalArgv;
         }
+    });
+});
+
+describe('CLI commands via program.parseAsync', () => {
+    const mockDatabase = {
+        twine2: [
+            { name: 'chapbook', version: '1.0.0', author: 'Test', proofing: false, description: '', files: [] }
+        ]
+    };
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        mockGetJSONDatabase.mockResolvedValue({ data: mockDatabase });
+        jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+        jest.spyOn(console, 'log').mockImplementation(() => {});
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    describe('main()', () => {
+        it('should set up and parse arguments without throwing', async () => {
+            process.argv = ['node', 'sfa-get', 'list'];
+            await expect(main()).resolves.toBeUndefined();
+        });
+    });
+
+    describe('list command', () => {
+        it('should print each available format name', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'list']);
+            expect(console.log).toHaveBeenCalledWith(expect.stringContaining('chapbook'));
+        });
+
+        it('should handle a database error and exit with code 1', async () => {
+            mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'list']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'network error');
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+    });
+
+    describe('latest command', () => {
+        it('should download all formats when no format names are given', async () => {
+            const getLatestVersionsMock = jest.spyOn(
+                await import('../src/getLatestVersions.js'), 'getLatestVersions'
+            ).mockResolvedValue(undefined);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'latest']);
+            expect(getLatestVersionsMock).toHaveBeenCalledWith(
+                expect.objectContaining({ chapbook: expect.anything() }),
+                ['chapbook'],
+                expect.any(Object)
+            );
+        });
+
+        it('should download only the specified formats', async () => {
+            const getLatestVersionsMock = jest.spyOn(
+                await import('../src/getLatestVersions.js'), 'getLatestVersions'
+            ).mockResolvedValue(undefined);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'latest', 'chapbook']);
+            expect(getLatestVersionsMock).toHaveBeenCalledWith(
+                expect.any(Object),
+                ['chapbook'],
+                expect.any(Object)
+            );
+        });
+
+        it('should handle a database error and exit with code 1', async () => {
+            mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'latest']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'network error');
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+    });
+
+    describe('get command', () => {
+        it('should download a specific format version', async () => {
+            const getSpecificVersionMock = jest.spyOn(
+                await import('../src/getSpecificVersion.js'), 'getSpecificVersion'
+            ).mockResolvedValue(undefined);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'get', 'chapbook', '1.0.0']);
+            expect(getSpecificVersionMock).toHaveBeenCalledWith(
+                expect.any(Object), 'chapbook', '1.0.0', expect.any(Object)
+            );
+        });
+
+        it('should call getLatestVersions when version is "latest"', async () => {
+            const getLatestVersionsMock = jest.spyOn(
+                await import('../src/getLatestVersions.js'), 'getLatestVersions'
+            ).mockResolvedValue(undefined);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'get', 'chapbook', 'latest']);
+            expect(getLatestVersionsMock).toHaveBeenCalledWith(
+                expect.any(Object), ['chapbook'], expect.any(Object)
+            );
+        });
+
+        it('should print an error and exit when the format is not in the database', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'get', 'unknown-format', '1.0.0']);
+            expect(console.error).toHaveBeenCalledWith(
+                '❌ Story format "unknown-format" not found in the database.'
+            );
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+
+        it('should handle a database error and exit with code 1', async () => {
+            mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'get', 'chapbook', '1.0.0']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'network error');
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+    });
+
+    describe('verify command', () => {
+        let mockVerifyFormatVersion: jest.MockedFunction<(...args: unknown[]) => unknown>;
+        let mockVerifyAllInstalledFiles: jest.MockedFunction<(...args: unknown[]) => unknown>;
+        let mockPrintVerificationResults: jest.MockedFunction<(...args: unknown[]) => unknown>;
+
+        beforeEach(async () => {
+            const verifyModule = await import('../src/verifyFiles.js');
+            mockVerifyFormatVersion = jest.spyOn(verifyModule, 'verifyFormatVersion').mockReturnValue([]) as jest.MockedFunction<(...args: unknown[]) => unknown>;
+            mockVerifyAllInstalledFiles = jest.spyOn(verifyModule, 'verifyAllInstalledFiles').mockReturnValue([{ format: 'chapbook', version: '1.0.0', file: 'format.js', status: 'valid' as const, path: './story-formats/chapbook/1.0.0/format.js' }]) as jest.MockedFunction<(...args: unknown[]) => unknown>;
+            mockPrintVerificationResults = jest.spyOn(verifyModule, 'printVerificationResults').mockImplementation(() => {}) as jest.MockedFunction<(...args: unknown[]) => unknown>;
+        });
+
+        it('should verify a specific format and version', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify', 'chapbook', '1.0.0']);
+            expect(mockVerifyFormatVersion).toHaveBeenCalledWith(expect.any(Object), 'chapbook', '1.0.0');
+            expect(mockPrintVerificationResults).toHaveBeenCalled();
+        });
+
+        it('should verify all versions of a specific format when found', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify', 'chapbook']);
+            expect(mockVerifyAllInstalledFiles).toHaveBeenCalled();
+            expect(mockPrintVerificationResults).toHaveBeenCalled();
+        });
+
+        it('should exit with code 1 when a specific format has no installed files', async () => {
+            (mockVerifyAllInstalledFiles as jest.MockedFunction<typeof mockVerifyAllInstalledFiles>)
+                .mockReturnValue([]);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify', 'chapbook']);
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+
+        it('should verify all installed files when no arguments are given', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify']);
+            expect(mockVerifyAllInstalledFiles).toHaveBeenCalled();
+            expect(mockPrintVerificationResults).toHaveBeenCalled();
+        });
+
+        it('should exit with code 1 when no installed formats are found', async () => {
+            (mockVerifyAllInstalledFiles as jest.MockedFunction<typeof mockVerifyAllInstalledFiles>)
+                .mockReturnValue([]);
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify']);
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
+
+        it('should handle a database error and exit with code 1', async () => {
+            mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'verify']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'network error');
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
     });
 });
 

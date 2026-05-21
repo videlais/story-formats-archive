@@ -304,7 +304,7 @@ async function initializeDatabase(): Promise<{ filteredDB: FilteredDatabase }> {
  */
 async function main(): Promise<void> {
     setupProgram();
-    program.parse();
+    await program.parseAsync();
 }
 
 // Only run main if this file is executed directly
@@ -317,4 +317,4 @@ if (isMainModule) {
     });
 }
 
-export { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, getDownloadOptions, setupProgram };
+export { main, getLatestJSONDatabase, filterDatabase, runInteractiveMode, getDownloadOptions, setupProgram, program };
