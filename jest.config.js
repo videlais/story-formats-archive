@@ -6,7 +6,7 @@ export const testMatch = ['**/__tests__/**/*.js?(x)', '**/?(*.)+(spec|test).js?(
 export const moduleFileExtensions = ['js', 'json', 'jsx', 'node'];
 export const extensionsToTreatAsEsm = ['.ts'];
 export const transformIgnorePatterns = [
-    'node_modules/(?!(p-limit|yocto-queue|cli-progress)/)'
+    'node_modules/(?!(commander|p-limit|yocto-queue|cli-progress)/)'
 ];
 export const transform = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
