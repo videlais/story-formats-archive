@@ -1,3 +1,4 @@
-export const presets = [['@babel/preset-env', { targets: { node: 'current' } }],
-    '@babel/preset-typescript'];
-export const plugins = ["babel-plugin-transform-import-meta"];
+export default {
+    presets: [['@babel/preset-env', { targets: { node: 'current' } }], '@babel/preset-typescript'],
+    plugins: ['babel-plugin-transform-import-meta']
+};

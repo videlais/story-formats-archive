@@ -9,6 +9,5 @@ export const transformIgnorePatterns = [
     'node_modules/(?!(commander|p-limit|yocto-queue|cli-progress)/)'
 ];
 export const transform = {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest'
 };
