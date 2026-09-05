@@ -1,0 +1,132 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://videlais.github.io/story-formats-archive/schema/index.schema.json",
+    "title": "Story Formats Archive Index",
+    "description": "Schema for official/index.json and unofficial/index.json. Each entry is either an official record (bundled files with SHA-256 checksums) or an unofficial record (a reference to an external repository).",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "twine1": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/entry"
+            }
+        },
+        "twine2": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/entry"
+            }
+        }
+    },
+    "$defs": {
+        "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+        },
+        "entry": {
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/officialEntry"
+                },
+                {
+                    "$ref": "#/$defs/unofficialEntry"
+                }
+            ]
+        },
+        "officialEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "version",
+                "proofing",
+                "description",
+                "files",
+                "checksums"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "author": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                },
+                "proofing": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "checksums": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/sha256"
+                    }
+                }
+            }
+        },
+        "unofficialEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "author",
+                "repo",
+                "proofing",
+                "description",
+                "files",
+                "checksums"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "author": {
+                    "type": "string"
+                },
+                "repo": {
+                    "type": "string"
+                },
+                "proofing": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "basedOn": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "checksums": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/sha256"
+                    }
+                }
+            }
+        }
+    }
+}

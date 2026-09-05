@@ -2,7 +2,9 @@
 
 This is a flat-file database of JSON files describing story formats for Twine beginning with 2015 (Twine 1.4.2).
 
-Each official story format in the collection contains all necessary files and individual software licenses. For unofficial story formats, a repository or website is listed.
+Each official story format in the collection contains all necessary files and individual software licenses.
+
+For unofficial story formats, a repository or website is listed.
 
 ## SFA: Search
 
@@ -147,17 +149,30 @@ Each unofficial story format has the following properties:
         {
             "name": "DotGraph",
             "author": "M. C. DeMarco",
-            "version": "2.2.0",
             "repo": "https://github.com/mcdemarco/dotgraph",
             "proofing": true,
             "description": "Displays a graph of your story, with several options for color-coding, clustering, and labeling nodes; it also detects unreachable nodes and terminal leaves",
             "basedOn": "",
-            "files": [
-            ]
+            "files": [],
+            "checksums": {}
         }
     ]
 }
 ```
+
+## Schema and Validation
+
+Both index files are described by a JSON Schema (Draft 2020-12) at [`schema/index.schema.json`](schema/index.schema.json). It defines two record variants — official (bundled `files` with 64-character hex SHA-256 `checksums`) and unofficial (an external `repo` reference) — and enforces required fields, types, a semantic `version` pattern, and the checksum format.
+
+The schema is the source of truth for record shape. On every push and pull request to `main`, the [`Verify Checksums`](.github/workflows/verify-checksums.yml) GitHub Action runs [`.github/scripts/verify_checksums.ts`](.github/scripts/verify_checksums.ts), which first validates both index files against the schema and then verifies every listed file's SHA-256 checksum against the file on disk.
+
+Run the same checks locally from the repository root:
+
+```bash
+deno run --allow-read --allow-env .github/scripts/verify_checksums.ts
+```
+
+When editing `official/index.json` or `unofficial/index.json` in VS Code, the workspace settings in [`.vscode/settings.json`](.vscode/settings.json) map the schema to those files, providing inline validation and autocompletion.
 
 ## Twine 2
 

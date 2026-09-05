@@ -1,12 +1,17 @@
 /**
- * Verifies SHA-256 checksums for all files listed in official/index.json
- * and unofficial/index.json against the files on disk.
+ * Validates official/index.json and unofficial/index.json against
+ * schema/index.schema.json, then verifies SHA-256 checksums for all listed
+ * files against the files on disk.
  *
  * Run from the repository root:
- *   deno run --allow-read .github/scripts/verify_checksums.ts
+ *   deno run --allow-read --allow-env .github/scripts/verify_checksums.ts
  *
- * Exits with code 1 if any checksum fails or a listed file is missing.
+ * Exits with code 1 if the schema is violated, any checksum fails, or a
+ * listed file is missing.
  */
+
+import Ajv2020 from "npm:ajv@8/dist/2020.js";
+import type { ValidateFunction } from "npm:ajv@8";
 
 interface FormatEntry {
   name: string;
@@ -18,6 +23,22 @@ interface FormatEntry {
 interface IndexFile {
   twine1?: FormatEntry[];
   twine2?: FormatEntry[];
+}
+
+async function validateSchema(
+  indexPath: string,
+  validate: ValidateFunction,
+): Promise<number> {
+  const data = JSON.parse(await Deno.readTextFile(indexPath));
+  if (validate(data)) {
+    console.log(`SCHEMA OK  ${indexPath}`);
+    return 0;
+  }
+  console.error(`SCHEMA FAIL  ${indexPath}`);
+  for (const err of validate.errors ?? []) {
+    console.error(`      ${err.instancePath || "/"} ${err.message}`);
+  }
+  return validate.errors?.length ?? 1;
 }
 
 async function sha256Hex(filePath: string): Promise<string> {
@@ -75,6 +96,16 @@ async function verifyIndex(
   return { passed, failed, missing };
 }
 
+const schema = JSON.parse(
+  await Deno.readTextFile("schema/index.schema.json"),
+);
+const ajv = new Ajv2020({ allErrors: true, strict: false });
+const validate = ajv.compile(schema);
+
+const schemaErrors =
+  (await validateSchema("official/index.json", validate)) +
+  (await validateSchema("unofficial/index.json", validate));
+
 const [officialResult, unofficialResult] = await Promise.all([
   verifyIndex("official/index.json", "official"),
   verifyIndex("unofficial/index.json", "unofficial"),
@@ -85,10 +116,11 @@ const failed = officialResult.failed + unofficialResult.failed;
 const missing = officialResult.missing + unofficialResult.missing;
 
 console.log(`\n--- Results ---`);
+console.log(`Schema errors: ${schemaErrors}`);
 console.log(`Passed:  ${passed}`);
 console.log(`Failed:  ${failed}`);
 console.log(`Missing: ${missing}`);
 
-if (failed > 0 || missing > 0) {
+if (schemaErrors > 0 || failed > 0 || missing > 0) {
   Deno.exit(1);
 }

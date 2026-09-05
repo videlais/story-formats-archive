@@ -20,5 +20,5 @@ jobs:
         with:
           deno-version: v2.x
 
-      - name: Run checksum verification
-        run: deno run --allow-read .github/scripts/verify_checksums.ts
+      - name: Run schema and checksum verification
+        run: deno run --allow-read --allow-env .github/scripts/verify_checksums.ts
