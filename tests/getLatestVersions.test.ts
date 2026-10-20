@@ -30,6 +30,7 @@ describe('getLatestVersions', () => {
                 description: 'Description for format 1',
                 author: 'Author 1',
                 proofing: false,
+                checksums: { 'file3.js': 'hash-3', 'file4.js': 'hash-4' }
             }
         ],
         'format2': [
@@ -54,11 +55,12 @@ describe('getLatestVersions', () => {
             { success: true, filePath: './story-formats/format2/1.0.0/file5.js' },
             { success: true, filePath: './story-formats/format2/1.0.0/file6.js' }
         ]);
-        mockDownloadUtils.createDownloadTasks.mockImplementation((baseUrl, format, version, files, baseDir) => {
+        mockDownloadUtils.createDownloadTasks.mockImplementation((baseUrl, format, version, files, baseDir, checksums) => {
             return files.map(file => ({
                 url: `${baseUrl}/${format}/${version}/${file}`,
                 filePath: `${baseDir}/${format}/${version}/${file}`,
-                filename: file
+                filename: file,
+                ...(checksums?.[file] ? { expectedChecksum: checksums[file] } : {})
             }));
         });
     });
@@ -76,6 +78,16 @@ describe('getLatestVersions', () => {
         // Check that it selected the latest versions
         expect(tasks.some((task: downloadUtils.DownloadTask) => task.url.includes('format1/2.0.0'))).toBe(true);
         expect(tasks.some((task: downloadUtils.DownloadTask) => task.url.includes('format2/1.0.0'))).toBe(true);
+        expect(tasks.find((task: downloadUtils.DownloadTask) => task.filename === 'file3.js')?.expectedChecksum).toBe('hash-3');
+    });
+
+    it('should reject when any download fails', async () => {
+        mockDownloadUtils.downloadFiles.mockResolvedValue([
+            { success: false, filePath: './story-formats/format1/2.0.0/file3.js', error: 'Network error' }
+        ]);
+
+        await expect(getLatestVersions(filteredDB, ['format1']))
+            .rejects.toThrow('Failed to download 1 file(s): ./story-formats/format1/2.0.0/file3.js: Network error');
     });
 
     it('should handle empty filteredDB', async () => {

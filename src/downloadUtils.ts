@@ -202,7 +202,8 @@ export function createDownloadTasks(
     format: string,
     version: string,
     files: string[],
-    baseDir: string
+    baseDir: string,
+    checksums?: { [filename: string]: string }
 ): DownloadTask[] {
     // Validate path components to prevent directory traversal
     validatePathComponent(format);
@@ -228,7 +229,8 @@ export function createDownloadTasks(
         return {
             url,
             filePath,
-            filename: file
+            filename: file,
+            ...(checksums?.[file] ? { expectedChecksum: checksums[file] } : {})
         };
     });
 }

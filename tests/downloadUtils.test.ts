@@ -66,6 +66,19 @@ describe('downloadUtils', () => {
                 filename: 'file2.css'
             });
         });
+
+        it('should include an expected checksum when provided', () => {
+            const tasks = createDownloadTasks(
+                'https://example.com',
+                'testformat',
+                '1.0.0',
+                ['file1.js'],
+                './downloads',
+                { 'file1.js': 'expected-hash' }
+            );
+
+            expect(tasks[0].expectedChecksum).toBe('expected-hash');
+        });
     });
 
     describe('downloadFiles', () => {

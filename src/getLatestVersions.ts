@@ -92,7 +92,8 @@ export async function getLatestVersions(
             key,
             version.version,
             version.files,
-            dir
+            dir,
+            version.checksums
         );
         
         allDownloadTasks.push(...formatTasks);
@@ -101,7 +102,15 @@ export async function getLatestVersions(
     // Download all files concurrently
     if (allDownloadTasks.length > 0) {
         const downloadResults = await downloadFiles(allDownloadTasks, options);
-        
+
+        const failed = downloadResults.filter(result => !result.success);
+        if (failed.length > 0) {
+            const details = failed
+                .map(result => `${result.filePath}: ${result.error ?? 'Unknown error'}`)
+                .join('; ');
+            throw new Error(`Failed to download ${failed.length} file(s): ${details}`);
+        }
+
         // Log individual successful downloads
         const successful = downloadResults.filter(r => r.success);
         successful.forEach(result => {

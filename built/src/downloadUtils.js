@@ -130,7 +130,7 @@ export async function downloadFiles(tasks, options = {}) {
 /**
  * Create download tasks from file lists
  */
-export function createDownloadTasks(baseUrl, format, version, files, baseDir) {
+export function createDownloadTasks(baseUrl, format, version, files, baseDir, checksums) {
     // Validate path components to prevent directory traversal
     validatePathComponent(format);
     validatePathComponent(version);
@@ -150,7 +150,8 @@ export function createDownloadTasks(baseUrl, format, version, files, baseDir) {
         return {
             url,
             filePath,
-            filename: file
+            filename: file,
+            ...(checksums?.[file] ? { expectedChecksum: checksums[file] } : {})
         };
     });
 }

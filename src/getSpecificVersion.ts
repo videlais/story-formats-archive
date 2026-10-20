@@ -75,13 +75,22 @@ export async function getSpecificVersion(
         name,
         version,
         files,
-        dir
+        dir,
+        format.checksums
     );
 
     // Download all files concurrently
     if (downloadTasks.length > 0) {
         const downloadResults = await downloadFiles(downloadTasks, options);
-        
+
+        const failed = downloadResults.filter(result => !result.success);
+        if (failed.length > 0) {
+            const details = failed
+                .map(result => `${result.filePath}: ${result.error ?? 'Unknown error'}`)
+                .join('; ');
+            throw new Error(`Failed to download ${failed.length} file(s): ${details}`);
+        }
+
         // Log individual successful downloads
         const successful = downloadResults.filter(r => r.success);
         successful.forEach(result => {
