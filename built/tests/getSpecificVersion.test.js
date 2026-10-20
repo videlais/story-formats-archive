@@ -26,6 +26,7 @@ describe('getSpecificVersion', () => {
                 description: 'Description for format 1',
                 author: 'Author 1',
                 proofing: false,
+                checksums: { 'file3.js': 'hash-3', 'file4.js': 'hash-4' }
             }
         ],
         'format2': [
@@ -47,11 +48,12 @@ describe('getSpecificVersion', () => {
             { success: true, filePath: './story-formats/format1/2.0/file3.js' },
             { success: true, filePath: './story-formats/format1/2.0/file4.js' }
         ]);
-        mockDownloadUtils.createDownloadTasks.mockImplementation((baseUrl, format, version, files, baseDir) => {
+        mockDownloadUtils.createDownloadTasks.mockImplementation((baseUrl, format, version, files, baseDir, checksums) => {
             return files.map(file => ({
                 url: `${baseUrl}/${format}/${version}/${file}`,
                 filePath: `${baseDir}/${format}/${version}/${file}`,
-                filename: file
+                filename: file,
+                ...(checksums?.[file] ? { expectedChecksum: checksums[file] } : {})
             }));
         });
     });
@@ -63,6 +65,14 @@ describe('getSpecificVersion', () => {
         const [tasks] = mockDownloadUtils.downloadFiles.mock.calls[0];
         expect(tasks).toHaveLength(2); // 2 files for format1 v2.0
         expect(tasks.every((task) => task.url.includes('format1/2.0'))).toBe(true);
+        expect(tasks.find((task) => task.filename === 'file3.js')?.expectedChecksum).toBe('hash-3');
+    });
+    it('should reject when any download fails', async () => {
+        mockDownloadUtils.downloadFiles.mockResolvedValue([
+            { success: false, filePath: './story-formats/format1/2.0/file3.js', error: 'Network error' }
+        ]);
+        await expect(getSpecificVersion(filteredDB, 'format1', '2.0', { showProgress: false }))
+            .rejects.toThrow('Failed to download 1 file(s): ./story-formats/format1/2.0/file3.js: Network error');
     });
     it('should handle a non-existent story format name', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });

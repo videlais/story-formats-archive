@@ -51,10 +51,17 @@ export async function getSpecificVersion(filteredDB, name, version, options = {}
     const versionDir = `${dirName}/${version}`;
     makeDirectoryIfNotExists(versionDir);
     // Create download tasks for all files
-    const downloadTasks = createDownloadTasks(base_URL, name, version, files, dir);
+    const downloadTasks = createDownloadTasks(base_URL, name, version, files, dir, format.checksums);
     // Download all files concurrently
     if (downloadTasks.length > 0) {
         const downloadResults = await downloadFiles(downloadTasks, options);
+        const failed = downloadResults.filter(result => !result.success);
+        if (failed.length > 0) {
+            const details = failed
+                .map(result => `${result.filePath}: ${result.error ?? 'Unknown error'}`)
+                .join('; ');
+            throw new Error(`Failed to download ${failed.length} file(s): ${details}`);
+        }
         // Log individual successful downloads
         const successful = downloadResults.filter(r => r.success);
         successful.forEach(result => {

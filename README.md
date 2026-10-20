@@ -40,7 +40,7 @@ npx sfa-get ls
 npx sfa-get latest
 
 # Download latest versions of specific formats
-npx sfa-get latest --formats harlowe sugarcube
+npx sfa-get latest harlowe sugarcube
 ```
 
 #### Download Specific Version
