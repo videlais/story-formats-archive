@@ -255,19 +255,16 @@ function setupProgram(): void {
             }
         });
 
-    // If no command is provided, run in interactive mode
-    if (process.argv.length === 2) {
-        (async () => {
-            try {
-                const downloadOptions: DownloadOptions = getDownloadOptions();
-                const { filteredDB } = await initializeDatabase();
-                await runInteractiveMode(filteredDB, downloadOptions);
-            } catch (error) {
-                console.error('❌ An error occurred:', (error as Error).message);
-                process.exit(1);
-            }
-        })();
-    }
+    program.action(async () => {
+        try {
+            const downloadOptions: DownloadOptions = getDownloadOptions();
+            const { filteredDB } = await initializeDatabase();
+            await runInteractiveMode(filteredDB, downloadOptions);
+        } catch (error) {
+            console.error('❌ An error occurred:', (error as Error).message);
+            process.exit(1);
+        }
+    });
 }
 
 
