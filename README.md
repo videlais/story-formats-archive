@@ -165,7 +165,7 @@ Alternatively, if choosing `specific`, it will ask for the story format name in 
 Specific story formats can also be accessed by name and version. For example, to retrieve only Harlowe 3.3.9, it would be the following:
 
 ```bash
-npx sfa-get harlowe 3.3.9
+npx sfa-get get harlowe 3.3.9
 ```
 
 The previous command would create only the directory `./story-formats/harlowe/3.3.9/` with the following files based on the [GitHub directory of the same name and version](https://github.com/videlais/story-formats-archive/tree/docs/official/twine2/harlowe/3.3.9):
