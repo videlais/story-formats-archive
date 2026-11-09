@@ -363,6 +363,16 @@ describe('CLI commands via program.parseAsync', () => {
             await expect(main()).resolves.toBeUndefined();
         });
     });
+    it('should run interactive mode when a global option is provided without a command', async () => {
+        select.mockResolvedValue('latest');
+        const getLatestVersionsMock = jest.spyOn(await import('../src/getLatestVersions.js'), 'getLatestVersions').mockResolvedValue(undefined);
+        setupProgram();
+        await program.parseAsync(['node', 'sfa-get', '--no-progress']);
+        expect(select).toHaveBeenCalledWith(expect.objectContaining({
+            message: 'Select installation'
+        }));
+        expect(getLatestVersionsMock).toHaveBeenCalledWith(expect.objectContaining({ chapbook: expect.anything() }), ['chapbook'], expect.objectContaining({ showProgress: false }));
+    });
     describe('list command', () => {
         it('should print each available format name', async () => {
             setupProgram();
@@ -389,6 +399,12 @@ describe('CLI commands via program.parseAsync', () => {
             setupProgram();
             await program.parseAsync(['node', 'sfa-get', 'latest', 'chapbook']);
             expect(getLatestVersionsMock).toHaveBeenCalledWith(expect.any(Object), ['chapbook'], expect.any(Object));
+        });
+        it('should report an error and exit when a requested format is unknown', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'latest', 'chapboook']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'Story format "chapboook" not found in database.');
+            expect(process.exit).toHaveBeenCalledWith(1);
         });
         it('should handle a database error and exit with code 1', async () => {
             mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
@@ -541,22 +557,6 @@ describe('Additional index.ts coverage', () => {
         // Test that it sets up the program structure
         setupProgram();
         expect(typeof setupProgram).toBe('function');
-    });
-    it('should handle process.argv.length === 2 check', () => {
-        const originalArgv = process.argv;
-        try {
-            // Test the condition that triggers interactive mode
-            process.argv = ['node', 'script.js'];
-            const shouldTriggerInteractive = process.argv.length === 2;
-            expect(shouldTriggerInteractive).toBe(true);
-            // Test with more arguments
-            process.argv = ['node', 'script.js', 'command'];
-            const shouldNotTriggerInteractive = process.argv.length === 2;
-            expect(shouldNotTriggerInteractive).toBe(false);
-        }
-        finally {
-            process.argv = originalArgv;
-        }
     });
     it('should handle database filtering with empty input', async () => {
         const emptyDatabase = [];

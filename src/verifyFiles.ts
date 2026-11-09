@@ -70,10 +70,10 @@ export function verifyFormatVersion(
             status: 'missing'
         };
 
-        if (!expectedChecksum) {
-            result.status = 'no-checksum';
-        } else if (!existsSync(filePath)) {
+        if (!existsSync(filePath)) {
             result.status = 'missing';
+        } else if (!expectedChecksum) {
+            result.status = 'no-checksum';
         } else {
             try {
                 const { valid, actualChecksum } = verifyFile(filePath, expectedChecksum);

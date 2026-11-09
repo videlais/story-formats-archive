@@ -101,6 +101,12 @@ describe('getLatestVersions', () => {
         expect(tasks).toHaveLength(2); // Only 2 files for format1
         expect(tasks.every((task) => task.url.includes('format1'))).toBe(true);
     });
+    it('should reject unknown formats before creating directories or downloading', async () => {
+        await expect(getLatestVersions(filteredDB, ['chapboook']))
+            .rejects.toThrow('Story format "chapboook" not found in database.');
+        expect(mockFs.mkdirSync).not.toHaveBeenCalled();
+        expect(mockDownloadUtils.downloadFiles).not.toHaveBeenCalled();
+    });
     it('should use semver to select the latest version', async () => {
         await getLatestVersions(filteredDB, ['format1']);
         const [tasks] = mockDownloadUtils.downloadFiles.mock.calls[0];
