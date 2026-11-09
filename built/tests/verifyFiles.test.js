@@ -87,9 +87,26 @@ describe('verifyFiles', () => {
             const dbWithoutChecksums = {
                 'nochecksum': [entryWithoutChecksums]
             };
+            const formatDir = join(testDir, 'nochecksum', '1.0.0');
+            mkdirSync(formatDir, { recursive: true });
+            writeFileSync(join(formatDir, 'LICENSE'), 'License content');
             const results = verifyFormatVersion(dbWithoutChecksums, 'nochecksum', '1.0.0', testDir);
             expect(results).toHaveLength(1);
             expect(results[0].status).toBe('no-checksum');
+        });
+        test('should report missing files even when they have no checksum', () => {
+            const entryWithoutChecksums = {
+                name: 'nochecksum',
+                author: 'Test Author',
+                version: '1.0.0',
+                proofing: false,
+                description: 'Test format without checksums',
+                files: ['LICENSE'],
+                checksums: undefined
+            };
+            const results = verifyFormatVersion({ 'nochecksum': [entryWithoutChecksums] }, 'nochecksum', '1.0.0', testDir);
+            expect(results).toHaveLength(1);
+            expect(results[0].status).toBe('missing');
         });
     });
     describe('verifyAllInstalledFiles', () => {
