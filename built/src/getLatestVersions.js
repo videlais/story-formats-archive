@@ -19,6 +19,10 @@ function makeDirectoryIfNotExists(dir) {
  * @param options:DownloadOptions
  */
 export async function getLatestVersions(filteredDB, formats, options = {}) {
+    const unknownFormats = formats.filter(format => !Object.prototype.hasOwnProperty.call(filteredDB, format));
+    if (unknownFormats.length > 0) {
+        throw new Error(`Story format "${unknownFormats[0]}" not found in database.`);
+    }
     // Get the latest version of each story format.
     let latestVersions = Object.keys(filteredDB).reduce((acc, key) => {
         // Get the versions for the specific story format.

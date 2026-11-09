@@ -400,6 +400,12 @@ describe('CLI commands via program.parseAsync', () => {
             await program.parseAsync(['node', 'sfa-get', 'latest', 'chapbook']);
             expect(getLatestVersionsMock).toHaveBeenCalledWith(expect.any(Object), ['chapbook'], expect.any(Object));
         });
+        it('should report an error and exit when a requested format is unknown', async () => {
+            setupProgram();
+            await program.parseAsync(['node', 'sfa-get', 'latest', 'chapboook']);
+            expect(console.error).toHaveBeenCalledWith('❌ An error occurred:', 'Story format "chapboook" not found in database.');
+            expect(process.exit).toHaveBeenCalledWith(1);
+        });
         it('should handle a database error and exit with code 1', async () => {
             mockGetJSONDatabase.mockRejectedValue(new Error('network error'));
             setupProgram();
